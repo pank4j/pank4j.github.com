@@ -26,7 +26,11 @@ title: 'CodePwn'
   {% for page in (1..paginator.total_pages) %}
     {% if page == paginator.page %}
     <!--<em>{{ page }}</em>-->
-    <a href="{{ site:paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}"><u><b>{{ page }}</b></u></a>
+     {% if page == 1 %}
+     <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}"><u><b>{{ page }}</b></u></a>
+     {% else %}
+     <a href="{{ site:paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}"><u><b>{{ page }}</b></u></a>
+     {% endif %}
       {% elsif page == 1 %}
       <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
     {% else %}
@@ -37,7 +41,7 @@ title: 'CodePwn'
   {% if paginator.next_page %}
     <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
   {% else %}
-    <span>Next &raquo;</span>
+  <!--<span>Next &raquo;</span>-->
   {% endif %}
 </div>
 {% endif %}
