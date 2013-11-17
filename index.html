@@ -5,13 +5,14 @@ title: 'CodePwn'
 {% include JB/setup %}
 
 {% for post in paginator.posts %}
-  <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+  <p>&nbsp;</p><h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
   <p class="author">
     <span class="date">{{ post.date }}</span>
   </p>
   <div class="content">
     {{ post.content }}
   </div>
+  <hr/>
 {% endfor %}
 
 {% if paginator.total_pages > 1 %}
@@ -25,7 +26,7 @@ title: 'CodePwn'
   {% for page in (1..paginator.total_pages) %}
     {% if page == paginator.page %}
     <!--<em>{{ page }}</em>-->
-    {{ page }}
+    <a href="{{ site:paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}"><u><b>{{ page }}</b></u></a>
       {% elsif page == 1 %}
       <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
     {% else %}
