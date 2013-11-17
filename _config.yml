@@ -1,6 +1,6 @@
 # This is the default format. 
 # For more see: http://jekyllrb.com/docs/permalinks/
-permalink: /:year/:month/:title 
+permalink: /:year/:month/:title.html
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 pygments: true
@@ -15,8 +15,10 @@ author :
   email : pankaj208@gmail.com
   github : pank4j
   twitter : pank4j
-  feedburner : feedname
+  feedburner : false
 
+paginate: 2
+paginate_path: "page:num"
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
 # Most places will/should use BASE_PATH to make the urls
@@ -25,7 +27,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://pank4j.github.io
+production_url : http://www.codepwn.com
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
