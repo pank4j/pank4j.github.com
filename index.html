@@ -4,45 +4,68 @@ title: 'CodePwn'
 ---
 {% include JB/setup %}
 
-{% for post in paginator.posts %}
-  <p>&nbsp;</p><h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
-  <p class="author">
-    <span class="date">{{ post.date }}</span>
-  </p>
-  <div class="content">
-    {{ post.content }}
+{% assign post = site.posts.first %}
+{% assign content = post.content %}
+
+
+
+<!--<div class="page-header">
+  <h1>
+    {{ site.posts.first.title }} 
+  </h1>
+</div>-->
+<p></p>
+<p></p>
+<h1 class="entry-title">
+	{% if site.posts.first.title %}
+	<a href="{{ root_url }}{{ site.posts.first.url }}">{{ site.posts.first.title }}</a>
+	{% endif %}
+</h1>
+
+<div class="row">
+  <div class="span8">
+    {{ site.posts.first.content }}
+    <hr>
+    <div class="pagination btn-group">
+      {% if site.posts.first.previous %}
+        <a class="btn prev" href="{{ BASE_PATH }}{{ site.posts.first.previous.url }}" title="{{ site.posts.first.previous.title }}">&larr; Previous</a>
+      {% else %}
+        <a class="btn disabled prev">&larr; Previous</a>
+      {% endif %}
+        <a class="btn" href="{{ BASE_PATH }}{{ site.JB.archive_path }}">Archive</a>
+      {% if site.posts.first.next %}
+        <a class="btn next" href="{{ BASE_PATH }}{{ site.posts.first.next.url }}" title="{{ site.posts.first.next.title }}">Next &rarr;</a>
+      {% else %}
+        <a class="btn next disabled">Next &rarr;</a>
+      {% endif %}
+    </div>
+    <hr>
+    {% include JB/comments %}
   </div>
-  <hr/>
-{% endfor %}
-
-{% if paginator.total_pages > 1 %}
-<div class="pagination">
-  {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
-  {% else %}  
-  <!--<span>&laquo; Prev</span>-->
-  {% endif %}
-
-  {% for page in (1..paginator.total_pages) %}
-    {% if page == paginator.page %}
-    <!--<em>{{ page }}</em>-->
-     {% if page == 1 %}
-     <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}"><u><b>{{ page }}</b></u></a>
-     {% else %}
-     <a href="{{ site:paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}"><u><b>{{ page }}</b></u></a>
-     {% endif %}
-      {% elsif page == 1 %}
-      <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
-    {% else %}
-      <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-    {% endif %}
-  {% endfor %}
-
-  {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
-  {% else %}
-  <!--<span>Next &raquo;</span>-->
-  {% endif %}
+  
+  <div class="span4">
+    <section>
+      <h4>Published</h4>
+      <div class="date"><span>{{ site.posts.first.date | date_to_long_string }}</span></div>
+    </section>
+    {% if site.posts.first.categories %}
+      <section>
+        <h4>Category</h4>
+        <span class="category">
+		<!--{{ site.posts.first.categories }}-->
+		{% assign categories_list = site.posts.first.categories %}
+		{% include JB/categories_list %}
+        </span>
+      </section>
+      {% endif %}
+    {% unless site.posts.first.tags == empty %}
+      <section>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+          {% assign tags_list = site.posts.first.tags %}
+          {% include JB/tags_list %}
+        </ul>
+      </section>
+    {% endunless %}         
+  </div>
 </div>
-{% endif %}
-
