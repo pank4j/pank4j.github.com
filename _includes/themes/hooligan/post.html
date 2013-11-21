@@ -33,12 +33,13 @@
       <h4>Published</h4>
       <div class="date"><span>{{ page.date | date_to_long_string }}</span></div>
     </section>
-    {% if page.category %}
+    {% if page.categories %}
       <section>
-        <h4>Category</h4>
-        <span class="category">
-          {{ page.category }}
-        </span>
+      <h4>Category</h4>
+      <ul class="tag_box">
+	 {% assign categories_list = page.categories %}
+	 {% include JB/categories_list %}
+      </ul>
       </section>
     {% endif %}     
     {% unless page.tags == empty %}

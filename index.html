@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'CodePwn'
+title: 'CodePwn: Stuff about Security'
 ---
 {% include JB/setup %}
 
@@ -52,9 +52,10 @@ title: 'CodePwn'
       <section>
         <h4>Category</h4>
         <span class="category">
-		<!--{{ site.posts.first.categories }}-->
-		{% assign categories_list = site.posts.first.categories %}
-		{% include JB/categories_list %}
+		<ul class="tag_box">
+		     {% assign categories_list = site.posts.first.categories %}
+		     {% include JB/categories_list %}
+		</ul>
         </span>
       </section>
       {% endif %}
