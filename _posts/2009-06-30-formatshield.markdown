@@ -34,4 +34,4 @@ void vsyslog(int priority, const char *format, va_list ap)
 
 On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the [research paper](http://www.codepwn.com/wp-content/uploads/2009/06/formatshield-acisp08.pdf).
 
-[Formatshield source]{https://github.com/pank4j/formatshield is licensed as GNU GPL v3 and is archived on github. It is available only for testing/research, please use it at your own risk.
+[Formatshield source](https://github.com/pank4j/formatshield) is licensed as GNU GPL v3 and is archived on github. It is available only for testing/research, please use it at your own risk.
