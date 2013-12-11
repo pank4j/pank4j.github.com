@@ -5,6 +5,7 @@ date: 2009-06-30 15:14:29+00:00
 layout: post
 slug: formatshield
 title: 'FormatShield: A tool to defend against format string attacks'
+description: 'FormatShield: Download formatshield source'
 wordpress_id: 291
 categories:
 - Archive

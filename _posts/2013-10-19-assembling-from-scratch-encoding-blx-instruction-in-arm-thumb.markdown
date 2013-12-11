@@ -5,6 +5,7 @@ date: 2013-10-19 05:23:25+00:00
 layout: post
 slug: assembling-from-scratch-encoding-blx-instruction-in-arm-thumb
 title: 'Assembling from scratch: Encoding BLX instruction in ARM / THUMB'
+description: 'Assembling from scratch: Encoding BLX instruction in ARM / THUMB'
 wordpress_id: 171
 categories:
 - ARM

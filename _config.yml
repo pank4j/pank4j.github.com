@@ -10,6 +10,8 @@ timezone: Asia/Singapore
 #
 title : CodePwn
 tagline: Stuff about Security
+description: 'Security, Hacking and Tweaking'
+keywords: 'iOS apps hacking, web application security, format string attacks, mobile application security'
 author :
   name : Pankaj Kohli
   email : pankaj208@gmail.com

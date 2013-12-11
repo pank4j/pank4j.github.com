@@ -5,6 +5,7 @@ date: 2013-11-03 16:38:07+00:00
 layout: post
 slug: dirty-harry-hacking-for-free-drinks-in-singapore
 title: 'Dirty Harry: Hacking for free drinks in Singapore'
+description: 'Hacking Appy Hour iOS app to win free drinks'
 wordpress_id: 358
 categories:
 - iOS
