@@ -6,4 +6,12 @@ rdiscount:
   extensions: [smart]
 
 
+title : CodePwn
+tagline: Stuff about Security
+description: 'Security blog by Pankaj Kohli'
+keywords: 'iOS apps hacking, web application security, exploits, format string attacks, mobile application security'
+author :
+  name : Pankaj Kohli
+
+production_url : http://www.codepwn.com
 
