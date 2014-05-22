@@ -4,7 +4,7 @@
  <title>Danish Khan</title>
  <link href="http://danishkhan.org/atom.xml" rel="self"/>
  <link href="http://danishkhan.org/"/>
- <updated>2013-12-31T16:33:26+08:00</updated>
+ <updated>2014-05-22T22:53:29+08:00</updated>
  <id>http://danishkhan.org</id>
  <author>
    <name>Danish Khan</name>
@@ -227,7 +227,9 @@
 
 &lt;p&gt;One of such intriguing instructions in ARM is BLX. BLX instruction performs a PC relative unconditional branch, and optionally changes mode to ARM or THUMB depending on the target address. It encodes to a 32-bit word under THUMB mode 2. It's encoding varies depending upon the relative offset between the instruction and the target address. For e.g. the instruction at 0x2EA6 in the disassembly above encodes to &lt;code&gt;D8 F0 08 E8&lt;/code&gt; while another BLX instruction at 0x30C4 encodes to &lt;code&gt;8E F3 C4 E9&lt;/code&gt;. The encoded instruction itself is divided into two 16-bit halves, each of which is shown in little-endian. The actual encodings are therefore F0 D8 E8 08 and F3 8E E9 C4. The encoding is explained in the THUMB instruction set (available &lt;a href=&quot;https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf&quot;&gt;here&lt;/a&gt;).&lt;/p&gt;
 
+&lt;p&gt;
 &lt;center&gt;&lt;img src=&quot;/images/blxasm1.png&quot; /&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &lt;img src=&quot;/images/blxasm2.png&quot; /&gt;&lt;/center&gt;
+&lt;/p&gt;
 
 
 &lt;h2&gt;Calculating the offset&lt;/h2&gt;

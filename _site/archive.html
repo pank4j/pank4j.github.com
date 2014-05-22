@@ -3,12 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>{{ page.title }}</title>
-    {% if page.description %}<meta name="description" content="{{ page.description }}">
-    {% else %}<meta name="description" content="{{site.description }}" />{% endif %}
-    {% if page.categories %}<meta name="keywords" content="{{page.tags | join: ', ' }}" />
-    {% else %}<meta name="keywords" content="{{site.keywords | join: ', ' }}" />{% endif %}
-    <meta name="author" content="{{ site.author.name }}">
+    <title>CodePwn: Archive</title>
+    <meta name="description" content="Security blog by Pankaj Kohli" />
+    <meta name="keywords" content="iOS apps hacking, web application security, exploits, format string attacks, mobile application security" />
+    <meta name="author" content="Pankaj Kohli">
 
     <!--<link rel="stylesheet" href="https://github.com/themes/minimal/stylesheets/styles.css">-->
         <link rel="stylesheet" href="/js/libs/styles.css">
@@ -62,26 +60,7 @@
 	<p class="view"><a href="/archive.html">Archive<small> My past work</small></a></p>
 	<p class="view"><a href="/contact.html">Contact Me<small> Drop me a message</small></a></p>
 
-        {% if page.repository_url %}
-          <h3>Project Info</h3>
-          <ul>
-            {% if page.zip_url %}
-              <li><a href="{{ page.zip_url }}">Download <strong>ZIP File</strong></a></li>
-            {% endif %}
-            {% if page.tar_url %}
-              <li><a href="{{ page.tar_url }}">Download <strong>TAR Ball</strong></a></li>
-            {% endif %}
-            {% if page.gem_url %}
-              <li><a href="{{ page.gem_url }}">Download <strong>Rubygem</strong></a></li>
-            {% endif %}
-            {% if page.issue_url %}
-              <li><a href="{{ page.issue_url }}">Report<strong>An Issue</strong></a></li>
-            {% endif %}
-            {% if page.repository_url %}
-              <li><a href="{{ page.repository_url }}">Fork On <strong>GitHub</strong></a></li>
-            {% endif %}
-          </ul>
-        {% endif %}
+        
 
         <h3>Follow Me On</h3>
         <p class="view"><a href="https://github.com/pank4j" target="tab">GitHub<small> If social coding is your thing</small></a></li>
@@ -89,7 +68,19 @@
 
       </header>
       <section id="main">
-        {{ content }}
+        <h1>Archive</h1>
+<hr/>
+<p>
+Some of my past work is archived over here.
+</p>
+
+<h3>Research Papers</h3>
+<li>P. Kohli: "Coarse-grained Dynamic Taint Analysis for Defeating Control and Non-control Data Attacks". Unpublished manuscript. <a href="http://arxiv.org/abs/0906.4481">http://arxiv.org/abs/0906.4481</a></li>
+<li>P. Kohli, B. Bruhadeshwar: "FormatShield: A Binary Rewriting Defense against Format String Attacks", in proceedings of 13th Australasian Conference on Information Security and Privacy (ACISP), Wollongong, Australia, July 2008. [<a href="/files/formatshield-acisp08.pdf" title="FormatShield: A Binary Rewriting Defense against Format String Attacks">PDF</a>]</li> <a href="/posts/formatshield/">More info</a>
+<li>V. S. Sathyanarayan, P. Kohli, B. Bruhadeshwar: "Signature Generation and Detection of Malware Families", in proceedings of 13th Australasian Conference on Information Security and Privacy (ACISP), Wollongong, Australia, July 2008. [<a href="/files/malw-acisp08.pdf" title="Signature Generation and Detection of Malware Families">PDF</a>]</li>
+
+
+
       </section>
       <footer>
         <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
