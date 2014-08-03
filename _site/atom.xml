@@ -4,7 +4,7 @@
  <title>Danish Khan</title>
  <link href="http://danishkhan.org/atom.xml" rel="self"/>
  <link href="http://danishkhan.org/"/>
- <updated>2014-06-18T23:24:09+08:00</updated>
+ <updated>2014-08-03T11:44:58+08:00</updated>
  <id>http://danishkhan.org</id>
  <author>
    <name>Danish Khan</name>
@@ -275,7 +275,7 @@
    <link href="http://danishkhan.org/posts/exploiting-file-uploads-for-fun-and-profit"/>
    <updated>2013-06-29T08:57:50Z</updated>
    <id>http://danishkhan.org/posts/exploiting-file-uploads-for-fun-and-profit</id>
-   <content type="html">&lt;p&gt;So I have been working on web application security for past some time. I also happened to write an article titled &amp;ldquo;Exploiting File Uploads for Fun and Profit&quot; for &lt;a href=&quot;http://hakin9.org/learn-how-to-perform-advanced-web-attacks-and-exploitation-with-more-than-70-pages-of-hakin9-tutorials/&quot;&gt;Hakin9&lt;/a&gt; magazine , which has been published recently. The article explains the various restrictions that are often imposed by web applications on the file being uploaded and how to get around these restrictions.&lt;/p&gt;
+   <content type="html">&lt;p&gt;So I have been working on web application security for past some time. I also happened to write an article titled &amp;ldquo;Exploiting File Uploads for Fun and Profit&quot; for &lt;a href=&quot;http://hakin9.org/learn-how-to-perform-advanced-web-attacks-and-exploitation-with-more-than-70-pages-of-hakin9-tutorials/&quot;&gt;Hakin9&lt;/a&gt; magazine , which has been published recently. The article explains the various restrictions that are often imposed by web applications on the file being uploaded and how to get around these restrictions. Credit for the techniques described in the article goes to their respective authors.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/ExploitingFileUploadsForFunAndProfit-1024x548.png&quot; alt=&quot;Exploiting File Uploads For Fun And Profit&quot; /&gt;&lt;/p&gt;
 
