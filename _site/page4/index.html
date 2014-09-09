@@ -11,7 +11,7 @@
 
   <title>
     
-      HTMLDOC 'html' File Handling Remote Stack Buffer Overflow Exploit (Linux)
+      CodePwn &middot; Stuff about Security
     
   </title>
 
@@ -115,65 +115,56 @@
 
 
     <div class="content container">
-      <div class="post">
-  <h1 class="post-title">HTMLDOC 'html' File Handling Remote Stack Buffer Overflow Exploit (Linux)</h1>
-  <span class="post-date">20 Aug 2009</span>
-  <p>The vulnerability exists in HTMLDOC version 1.8.27 and earlier due to an unsafe call to <code>sscanf()</code> in the <code>set_page_size()</code> function in <code>htmldoc/util.cxx</code>. This can be exploited to cause a stack-based buffer overflow when an HTML document containing e.g. a specially crafted &quot;MEDIA SIZE&quot; comment is being processed.</p>
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/posts/vlc-media-player-smb-uri-handling-remote-buffer-overflow-vulnerability-exploit">
+        VLC Media Player 'smb://' URI Handling Remote Buffer Overflow Vulnerability Exploit
+      </a>
+    </h1>
 
-<script src="https://gist.github.com/95e360d4694d7e92e98e.js"> </script>
+    <span class="post-date">07 Aug 2009</span>
 
+    <p>A stack-based buffer overflow exists in the <code>Win32AddConnection</code> function in <code>modules/access/smb.c</code> in VideoLAN VLC media player 0.9.9, when running on Microsoft Windows, that allows remote attackers to execute arbitrary code via a long smb URI in a playlist file.</p>
+
+<script src="https://gist.github.com/aa6c6809f7c124b19add.js"> </script>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/posts/formatshield">
+        FormatShield: A tool to defend against format string attacks
+      </a>
+    </h1>
+
+    <span class="post-date">30 Jun 2009</span>
+
+    <p>FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.</p>
+
+<p>FormatShield provides wrappers for the following libc functions:</p>
+
+<script src="https://gist.github.com/bb3a6193cadaabaca33a.js"> </script>
+
+<p>On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the <a href="/public/formatshield-acisp08.pdf">research paper</a>.</p>
+
+<p><a href="https://github.com/pank4j/formatshield">Formatshield source</a> is licensed as GNU GPL v3 and is archived on github. It is available only for testing/research, please use it at your own risk.</p>
+
+  </div>
+  
 </div>
 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_developer = 1;
-    var disqus_shortname = 'codepwn'; // required: replace example with your forum shortname
-    var disqus_identifier = '49 /?p=49';
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
     
-      <li>
-        <h3>
-          <a href="/posts/appminder-jailbreak-detection-analysis">
-            AppMinder jailbreak detection analysis
-            <small>28 Dec 2013</small>
-          </a>
-        </h3>
-      </li>
+      <a class="pagination-item newer" href="/page3">Newer</a>
     
-      <li>
-        <h3>
-          <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
-            Dirty Harry: Hacking for free drinks in Singapore
-            <small>04 Nov 2013</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb">
-            Assembling from scratch: Encoding BLX instruction in ARM / THUMB
-            <small>19 Oct 2013</small>
-          </a>
-        </h3>
-      </li>
-    
-  </ul>
+  
 </div>
-
-
     </div>
 
   </body>

@@ -1,226 +1,167 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Dirty Harry: Hacking for free drinks in Singapore</title>
-    <meta name="description" content="Hacking Appy Hour iOS app to win free drinks">
-    
-    <meta name="keywords" content="Appy Hour, free drinks, Harry's bar, iOS" />
-    
-    <meta name="author" content="Pankaj Kohli">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-    <!--<link rel="stylesheet" href="https://github.com/themes/minimal/stylesheets/styles.css">-->
-        <link rel="stylesheet" href="/js/libs/styles.css">
-    <style>
-      header { zoom: 1.2; }
-      header h1 { margin-bottom: 5px; }
-      header h1 a { color: #494949; font-weight: bold; }
-      header h3 { margin-top: 20px; margin-bottom: 5px; }
-      header p.view { margin-bottom: 5px; }
-      header p.view small { padding-top: 2px; }
-      header ul {
-        zoom: 0.7;
-        margin-top: 25px;
-      }
-      section p { margin-top: 10px; }
-      section h1 { margin-bottom: 15px; }
-      section h2 { margin-bottom: 10px; }
-      section h2 { margin-bottom: 10px; }
-      footer { bottom: 20px; }
-      footer p { margin-bottom: 5px; }
-      .half-width {
-        float: left;
-        width: 200px;
-        list-style: none;
-        padding: 5px;
-        margin: 7px;
-        margin-bottom: 10px;
-      }
-      .half-width h4 {
-        margin-bottom: 5px;
-      }
-      .half-width ul {
-        padding-left: 0;
-      }
-      .half-width ul li {
-        list-style: inside;
-        font-size: 15px;
-      }
-      .clear-fix {
-        clear: both;
-      }
-    </style>
-    <script src="https://github.com/themes/minimal/javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  </head>
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Dirty Harry: Hacking for free drinks in Singapore
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/pic.png">
+                                 <link rel="shortcut icon" href="/public/pic.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+<!--  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
+	
+	<link rel="stylesheet" href="/public/css/prettygist.min.css">
+	<!-- Below is our theme (many more are included in the repo) -->
+	<link rel="stylesheet" href="/public/css/syntax-styles/pojoaque.css">
+	<script src="/public/css/jquery.min.js"></script>
+	<script src="/public/css/jquery.prettygist.min.js"></script>
+	<!-- Below is the main highlight.js include -->
+	<script src="/public/css/highlight.pack.js"></script>
+	<script type="text/javascript">
+    		$(document).ready(function(){
+	        $(".gist").prettyGist();
+    	});
+	</script>
+	-->
+</head>
+
+
   <body>
-    <div class="wrapper">
-      <header>
-      <h1><a href="/">CodePwn</a></h1>
-	<p class="view"><a href="/posts.html">Blog<small> My ramblings</small></a></p>
-	<p class="view"><a href="/archive.html">Archive<small> My past work</small></a></p>
-	<p class="view"><a href="/contact.html">Contact Me<small> Drop me a message</small></a></p>
 
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          CodePwn
+        </a>
+      </h1>
+      <p class="lead">Stuff about Security</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
         
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive.html">Archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
 
-        <h3>Follow Me On</h3>
-        <p class="view"><a href="https://github.com/pank4j" target="tab">GitHub<small> If social coding is your thing</small></a></li>
-	<p class="view"><a href="https://twitter.com/pank4j" target="tab">Twitter<small> If you tweet</small></a></li>
-	<p class="view"><a href="http://sg.linkedin.com/in/pank4j/" target="tab">LinkedIn<small> Professional profile</small></a></li>
+      <a class="sidebar-nav-item" href="/contact.html">Contact</a>
+      <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
+      <!--<span class="sidebar-nav-item">Currently v2.1.0</span>-->
+    </nav>
 
-      </header>
-      <section id="main">
-        <article>
-<h1>Dirty Harry: Hacking for free drinks in Singapore</h1>
-<hr/>
-<p><a href="http://harrys.com.sg/">Harry&rsquo;s bar</a> is one of the most popular bar chains in Singapore. It has an iOS app &ldquo;Appy Hour&rdquo; that lets users spin the Harry&rsquo;s &ldquo;wheel of fortune&rdquo; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.</p>
-
-<p>Now there may not be any such thing as a free lunch, but there are free drinks! Let&rsquo;s see how.</p>
-
-<center><img src="/images/win240x360.png" /></center>
-
-
-<p></p>
-
-
-<h2>The &lsquo;luck factor&rsquo;</h2>
-
-<blockquote><p><em>&ldquo;&hellip; you&rsquo;ve got to ask yourself one question: "Do I feel lucky?&rdquo; Well, do ya, punk?&ldquo;</em></p></blockquote>
-
-<p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the &ldquo;luck factor&rdquo; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &lsquo;Better Luck Next Time&rsquo;.</p>
-
-<div class="highlight"><pre><code class="console"><span class="go">GET /harrys_1_1_beta/venues.xml HTTP/1.1</span>
-<span class="go">Host: www.exhost.se</span>
-<span class="go">User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
-<span class="go">Connection: keep-alive</span>
-<span class="go">Accept-Encoding: gzip</span>
-
-<span class="go">HTTP/1.1 200 OK</span>
-<span class="go">Age: 1659</span>
-<span class="go">Connection: Keep-Alive</span>
-<span class="go">Content-Length: 3071</span>
-<span class="go">Content-Type: application/xml</span>
-<span class="go">Date: Fri, 01 Nov 2013 06:27:45 GMT</span>
-<span class="go">ETag: &quot;3c8066-bff-4d7ddfaa98300&quot;</span>
-<span class="go">Last-Modified: Thu, 14 Mar 2013 08:05:00 GMT</span>
-<span class="go">Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6</span>
-<span class="go">Via: 1.1 qt-mfc4:80</span>
-
-<span class="go">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="go">&lt;Prizes&gt;</span>
-<span class="go">&lt;Prize&gt;</span>
-<span class="go">&lt;Description&gt;Better Luck*Next Time&lt;/Description&gt;</span>
-<span class="go">&lt;Units&gt;1&lt;/Units&gt;</span>
-<span class="go">&lt;ID&gt;1&lt;/ID&gt;</span>
-<span class="go">&lt;Active&gt;1&lt;/Active&gt;</span>
-<span class="go">&lt;Possibility&gt;13&lt;/Possibility&gt;</span>
-<span class="go">&lt;IsPrize&gt;0&lt;/IsPrize&gt;</span>
-<span class="go">&lt;PrizeFile&gt;img/1.png&lt;/PrizeFile&gt;</span>
-<span class="go">&lt;/Prize&gt;</span>
-<span class="go">&lt;Prize&gt;</span>
-<span class="go">&lt;Description&gt;1-for-1 Bacardi*Sup Gls&lt;/Description&gt;</span>
-<span class="go">&lt;Units&gt;1&lt;/Units&gt;</span>
-<span class="go">&lt;ID&gt;2&lt;/ID&gt;</span>
-<span class="go">&lt;Active&gt;1&lt;/Active&gt;</span>
-<span class="go">&lt;Possibility&gt;5&lt;/Possibility&gt;</span>
-<span class="go">&lt;IsPrize&gt;1&lt;/IsPrize&gt;</span>
-<span class="go">&lt;PrizeFile&gt;img/2.png&lt;/PrizeFile&gt;</span>
-<span class="go">&lt;/Prize&gt;</span>
-<span class="go">--snipped--</span>
-</code></pre></div>
+    <p>&copy; 2014. All rights reserved.</p>
+  </div>
+</div>
 
 
-<p><br/></p>
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Dirty Harry: Hacking for free drinks in Singapore</h1>
+  <span class="post-date">04 Nov 2013</span>
+  <p><a href="http://harrys.com.sg/">Harry&#39;s bar</a> is one of the most popular bar chains in Singapore. It has an iOS app &quot;Appy Hour&quot; that lets users spin the Harry&#39;s &quot;wheel of fortune&quot; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.</p>
+
+<p>Now there may not be any such thing as a free lunch, but there are free drinks! Let&#39;s see how.</p>
+
+<p><center><img src="/public/win240x360.png" /></center>
+<p></p></p>
+
+<h2>The &#39;luck factor&#39;</h2>
+
+<p><cite>&quot;... you&#39;ve got to ask yourself one question: &quot;Do I feel lucky?&quot; Well, do ya, punk?&quot;</cite></p>
+
+<p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the &quot;luck factor&quot; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &#39;Better Luck Next Time&#39;.</p>
+
+<script src="https://gist.github.com/1fd3fb43e9c7ed639b52.js"> </script>
 
 <h2>Time Restriction</h2>
 
-<p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone&rsquo;s UDID, a timestamp and the bar&rsquo;s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
+<p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone&#39;s UDID, a timestamp and the bar&#39;s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">GET /harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30 HTTP/1.1</span>
-<span class="go">Host: www.exhost.se</span>
-<span class="go">User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
-<span class="go">Connection: keep-alive</span>
-<span class="go">Accept-Encoding: gzip</span>
-
-<span class="go">HTTP/1.1 200 OK</span>
-<span class="go">Date: Fri, 01 Nov 2013 06:56:16 GMT</span>
-<span class="go">Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6</span>
-<span class="go">X-Powered-By: PHP/5.3.10</span>
-<span class="go">Keep-Alive: timeout=5, max=100</span>
-<span class="go">Connection: Keep-Alive</span>
-<span class="go">Transfer-Encoding: chunked</span>
-<span class="go">Content-Type: text/html</span>
-
-<span class="go">true</span>
-</code></pre></div>
-
-
-<p><br/></p>
+<script src="https://gist.github.com/7af63a6d30a1ac868c65.js"> </script>
 
 <h2>Getting past everything</h2>
 
 <p>Well, the simplest way to get past everything would be to make the app communicate with another server instead of <code>www.exhost.se</code>. First we will crawl <code>www.exhost.se</code> to get all the required files. The link <code>http://www.exhost.se/harrys_1_1_beta/</code> does not contain a default <code>index.html</code> or similar file, which makes crawling possible.</p>
 
-<div class="highlight"><pre><code class="console"><span class="gp">pankaj@zion:~/code/ipa/harrys$</span> wget -nv -r --no-parent --reject <span class="s2">&quot;index.html*&quot;</span> http://www.exhost.se/harrys_1_1_beta/
+<script src="https://gist.github.com/bbb9df9ffc9032ac418f.js"> </script>
 
-<span class="go">2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ [639/639] -&gt; /&quot;www.exhost.se/harrys_1_1_beta/index.html&quot; [1] </span>
-<span class="go">http://www.exhost.se/robots.txt:</span>
-<span class="go">2013-11-03 23:37:09 ERROR 404: Not Found.</span>
-<span class="go">2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/cms.php [169] -&gt; &quot;www.exhost.se/harrys_1_1_beta/cms.php&quot; [1]</span>
-<span class="go">2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/connect.php [0/0] -&gt; &quot;www.exhost.se/harrys_1_1_beta/connect.php&quot; [1]</span>
-<span class="go">2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/fetchdata.php [5] -&gt; &quot;www.exhost.se/harrys_1_1_beta/fetchdata.php&quot; [1]</span>
-<span class="go">2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/img/ [1037/1037] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/index.html&quot; [1]</span>
-<span class="go">2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/js/ [461/461] -&gt; &quot;www.exhost.se/harrys_1_1_beta/js/index.html&quot; [1]</span>
-<span class="go">2013-11-03 23:37:12 URL:http://www.exhost.se/harrys_1_1_beta/venues.xml [3071/3071] -&gt; &quot;www.exhost.se/harrys_1_1_beta/venues.xml&quot; [1]</span>
-<span class="go">2013-11-03 23:37:19 URL:http://www.exhost.se/harrys_1_1_beta/img/1.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/1.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:23 URL:http://www.exhost.se/harrys_1_1_beta/img/10.png [62543/62543] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/10.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:24 URL:http://www.exhost.se/harrys_1_1_beta/img/11.png [23376/23376] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/11.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:26 URL:http://www.exhost.se/harrys_1_1_beta/img/12.png [33471/33471] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/12.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:29 URL:http://www.exhost.se/harrys_1_1_beta/img/13.png [58419/58419] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/13.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:31 URL:http://www.exhost.se/harrys_1_1_beta/img/14.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/14.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:32 URL:http://www.exhost.se/harrys_1_1_beta/img/15.png [50119/50119] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/15.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:33 URL:http://www.exhost.se/harrys_1_1_beta/img/16.png [23376/23376] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/16.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:34 URL:http://www.exhost.se/harrys_1_1_beta/img/2.png [44208/44208] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/2.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:36 URL:http://www.exhost.se/harrys_1_1_beta/img/3.png [62543/62543] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/3.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:38 URL:http://www.exhost.se/harrys_1_1_beta/img/4.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/4.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:40 URL:http://www.exhost.se/harrys_1_1_beta/img/5.png [60030/60030] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/5.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:44 URL:http://www.exhost.se/harrys_1_1_beta/img/6.jpg [124823/124823] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/6.jpg&quot; [1]</span>
-<span class="go">2013-11-03 23:37:46 URL:http://www.exhost.se/harrys_1_1_beta/img/6.png [50119/50119] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/6.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:47 URL:http://www.exhost.se/harrys_1_1_beta/img/7.png [45129/45129] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/7.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:49 URL:http://www.exhost.se/harrys_1_1_beta/img/8.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/8.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:50 URL:http://www.exhost.se/harrys_1_1_beta/img/9.png [40394/40394] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/9.png&quot; [1]</span>
-<span class="go">2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js [85925/85925] -&gt; &quot;www.exhost.se/harrys_1_1_beta/js/jquery.min.js&quot; [1]</span>
-<span class="go">FINISHED --2013-11-03 23:37:52--</span>
-<span class="go">Total wall clock time: 54s</span>
-<span class="go">Downloaded: 25 files, 950K in 34s (28.1 KB/s)</span>
-</code></pre></div>
+<script src="https://gist.github.com/c326edb435bee1dfca4a.js"> </script>
 
+<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. </p>
 
-
-
-<div class="highlight"><pre><code class="console"><span class="gp">iPhone:~ root#</span> strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys <span class="p">|</span> grep <span class="s2">&quot;http://www.exhost.se&quot;</span>
-<span class="go">839501 http://www.exhost.se/harrys_1_1_beta/</span>
-<span class="go">842849 http://www.exhost.se/harrys_1_1_beta/venues.xml</span>
-<span class="go">843075 http://www.exhost.se/harrys_1_1_beta/fetchdata.php</span>
-</code></pre></div>
-
-
-<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor.</p>
-
-<p><img src="/images/strings.png" alt="Strings as seen in the disassembler after modification" /></p>
+<p><img src="/public/strings.png" alt="Strings as seen in the disassembler after modification"></p>
 
 <p>Once edited, we can run the app any number of times while signed in the same bar, and win a drink on every spin!</p>
 
 <p>Cheers!</p>
 
-</article>
+</div>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_developer = 1;
     var disqus_shortname = 'codepwn'; // required: replace example with your forum shortname
-    var disqus_identifier = '358 http://www.codepwn.com/?p=358';
+    var disqus_identifier = '358 /?p=358';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -231,12 +172,42 @@
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/posts/appminder-jailbreak-detection-analysis">
+            AppMinder jailbreak detection analysis
+            <small>28 Dec 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb">
+            Assembling from scratch: Encoding BLX instruction in ARM / THUMB
+            <small>19 Oct 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/exploiting-file-uploads-for-fun-and-profit">
+            Exploiting File Uploads for Fun and Profit
+            <small>29 Jun 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
 
 
-      </section>
-      <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
     </div>
+
   </body>
 </html>

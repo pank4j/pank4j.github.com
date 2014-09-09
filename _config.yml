@@ -1,17 +1,29 @@
-markdown: rdiscount
-pygments: true
+# Dependencies
+markdown:         redcarpet
+pygments:         true
+
+# Permalinks
+#permalink:        pretty
 permalink: /posts/:title
 #auto: true
 rdiscount:
-  extensions: [smart]
+extensions: [smart]
 
+# Setup
+title:            CodePwn
+tagline:          'Stuff about Security'
+description:      'Stuff about Security'
+url:              http://www.codepwn.com
+baseurl:          /
 
-title : CodePwn
-tagline: Stuff about Security
-description: 'Security blog by Pankaj Kohli'
-keywords: 'iOS apps hacking, web application security, exploits, format string attacks, mobile application security'
-author :
-  name : Pankaj Kohli
+author:
+  name:           'Pankaj Kohli'
+  url:            https://twitter.com/pank4j
 
-production_url : http://www.codepwn.com
+paginate:         2
 
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/pank4j
