@@ -99,12 +99,7 @@
           
         
       
-        
-          
-        
-      
 
-      <a class="sidebar-nav-item" href="/contact.html">Contact</a>
       <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
       <!--<span class="sidebar-nav-item">Currently v2.1.0</span>-->
     </nav>
@@ -127,8 +122,6 @@
 
 <h2>The &#39;luck factor&#39;</h2>
 
-<p><cite>&quot;... you&#39;ve got to ask yourself one question: &quot;Do I feel lucky?&quot; Well, do ya, punk?&quot;</cite></p>
-
 <p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the &quot;luck factor&quot; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &#39;Better Luck Next Time&#39;.</p>
 
 <script src="https://gist.github.com/1fd3fb43e9c7ed639b52.js"> </script>
@@ -143,9 +136,8 @@
 
 <p>Well, the simplest way to get past everything would be to make the app communicate with another server instead of <code>www.exhost.se</code>. First we will crawl <code>www.exhost.se</code> to get all the required files. The link <code>http://www.exhost.se/harrys_1_1_beta/</code> does not contain a default <code>index.html</code> or similar file, which makes crawling possible.</p>
 
-<script src="https://gist.github.com/bbb9df9ffc9032ac418f.js"> </script>
-
-<script src="https://gist.github.com/c326edb435bee1dfca4a.js"> </script>
+<p><img src="/public/wget-harrys.png" alt="wget">
+<img src="/public/strings-harrys.png" alt="strings"></p>
 
 <p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. </p>
 

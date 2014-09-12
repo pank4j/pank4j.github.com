@@ -4,7 +4,7 @@
  <title>CodePwn</title>
  <link href="http://www.codepwn.com/atom.xml" rel="self"/>
  <link href="http://www.codepwn.com/"/>
- <updated>2014-09-09T23:10:27+08:00</updated>
+ <updated>2014-09-13T03:47:19+08:00</updated>
  <id>http://www.codepwn.com</id>
  <author>
    <name>Pankaj Kohli</name>
@@ -59,8 +59,6 @@
 
 &lt;h2&gt;The &amp;#39;luck factor&amp;#39;&lt;/h2&gt;
 
-&lt;p&gt;&lt;cite&gt;&amp;quot;... you&amp;#39;ve got to ask yourself one question: &amp;quot;Do I feel lucky?&amp;quot; Well, do ya, punk?&amp;quot;&lt;/cite&gt;&lt;/p&gt;
-
 &lt;p&gt;The app communicates with &lt;code&gt;www.exhost.se&lt;/code&gt; over HTTP. When started, the first thing the app does is to define the &amp;quot;luck factor&amp;quot; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &amp;#39;Better Luck Next Time&amp;#39;.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/1fd3fb43e9c7ed639b52.js&quot;&gt; &lt;/script&gt;
@@ -75,9 +73,8 @@
 
 &lt;p&gt;Well, the simplest way to get past everything would be to make the app communicate with another server instead of &lt;code&gt;www.exhost.se&lt;/code&gt;. First we will crawl &lt;code&gt;www.exhost.se&lt;/code&gt; to get all the required files. The link &lt;code&gt;http://www.exhost.se/harrys_1_1_beta/&lt;/code&gt; does not contain a default &lt;code&gt;index.html&lt;/code&gt; or similar file, which makes crawling possible.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/bbb9df9ffc9032ac418f.js&quot;&gt; &lt;/script&gt;
-
-&lt;script src=&quot;https://gist.github.com/c326edb435bee1dfca4a.js&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;img src=&quot;/public/wget-harrys.png&quot; alt=&quot;wget&quot;&gt;
+&lt;img src=&quot;/public/strings-harrys.png&quot; alt=&quot;strings&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;Once we have the crawled files, we can edit the &lt;code&gt;venues.xml&lt;/code&gt; file to change the probabilities. We can even change the drinks! ;-) Also, the file &lt;code&gt;fetchdata.php&lt;/code&gt; should contain &lt;code&gt;true&lt;/code&gt; for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. &lt;/p&gt;
 

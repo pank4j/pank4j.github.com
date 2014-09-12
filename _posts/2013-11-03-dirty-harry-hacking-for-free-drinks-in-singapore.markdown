@@ -24,13 +24,8 @@ Now there may not be any such thing as a free lunch, but there are free drinks! 
 <center><img src="/public/win240x360.png" /></center>
 <p></p>
 
+
 ## The 'luck factor'
-
-
-
-
-<cite>"... you've got to ask yourself one question: "Do I feel lucky?" Well, do ya, punk?"</cite>
-
 
 The app communicates with ``www.exhost.se`` over HTTP. When started, the first thing the app does is to define the "luck factor" of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield 'Better Luck Next Time'.
 
@@ -48,9 +43,8 @@ Once the user has checked in the bar, the app checks if the user has already tri
 
 Well, the simplest way to get past everything would be to make the app communicate with another server instead of ``www.exhost.se``. First we will crawl ``www.exhost.se`` to get all the required files. The link ``http://www.exhost.se/harrys_1_1_beta/`` does not contain a default ``index.html`` or similar file, which makes crawling possible.
 
-{% gist bbb9df9ffc9032ac418f %}
-
-{% gist c326edb435bee1dfca4a %}
+![wget](/public/wget-harrys.png)
+![strings](/public/strings-harrys.png)
 
 Once we have the crawled files, we can edit the ``venues.xml`` file to change the probabilities. We can even change the drinks! ;-) Also, the file ``fetchdata.php`` should contain ``true`` for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. 
 
