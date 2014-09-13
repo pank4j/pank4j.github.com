@@ -28,6 +28,10 @@
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
+  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <script src="/public/css/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 
 
@@ -109,13 +113,65 @@
 
 <p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the &quot;luck factor&quot; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &#39;Better Luck Next Time&#39;.</p>
 
-<script src="https://gist.github.com/1fd3fb43e9c7ed639b52.js"> </script>
+<div class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/venues.xml</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">www.exhost.se</span>
+<span class="na">User-Agent</span><span class="o">:</span> <span class="l">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
+<span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
+<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip</span>
+
+HTTP/1.1 200 OK
+Age: 1659
+Connection: Keep-Alive
+Content-Length: 3071
+Content-Type: application/xml
+Date: Fri, 01 Nov 2013 06:27:45 GMT
+ETag: &quot;3c8066-bff-4d7ddfaa98300&quot;
+Last-Modified: Thu, 14 Mar 2013 08:05:00 GMT
+Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
+Via: 1.1 qt-mfc4:80
+ 
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Prizes&gt;
+&lt;Prize&gt;
+&lt;Description&gt;Better Luck*Next Time&lt;/Description&gt;
+&lt;Units&gt;1&lt;/Units&gt;
+&lt;ID&gt;1&lt;/ID&gt;
+&lt;Active&gt;1&lt;/Active&gt;
+&lt;Possibility&gt;13&lt;/Possibility&gt;
+&lt;IsPrize&gt;0&lt;/IsPrize&gt;
+&lt;PrizeFile&gt;img/1.png&lt;/PrizeFile&gt;
+&lt;/Prize&gt;
+&lt;Prize&gt;
+&lt;Description&gt;1-for-1 Bacardi*Sup Gls&lt;/Description&gt;
+&lt;Units&gt;1&lt;/Units&gt;
+&lt;ID&gt;2&lt;/ID&gt;
+&lt;Active&gt;1&lt;/Active&gt;
+&lt;Possibility&gt;5&lt;/Possibility&gt;
+&lt;IsPrize&gt;1&lt;/IsPrize&gt;
+&lt;PrizeFile&gt;img/2.png&lt;/PrizeFile&gt;
+&lt;/Prize&gt;
+--snipped--</code></pre></div>
 
 <h2>Time Restriction</h2>
 
 <p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone&#39;s UDID, a timestamp and the bar&#39;s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
 
-<script src="https://gist.github.com/7af63a6d30a1ac868c65.js"> </script>
+<div class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">www.exhost.se</span>
+<span class="na">User-Agent</span><span class="o">:</span> <span class="l">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
+<span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
+<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip</span>
+
+HTTP/1.1 200 OK
+Date: Fri, 01 Nov 2013 06:56:16 GMT
+Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
+X-Powered-By: PHP/5.3.10
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html
+
+true</code></pre></div>
 
 <h2>Getting past everything</h2>
 

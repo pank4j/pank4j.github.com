@@ -18,7 +18,15 @@ tags:
 
 Neso Lab's [AppMinder](http://appminder.nesolabs.de/) project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app's source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused ``push``, ``pop`` and ``cmp`` instructions.
 
-{% gist 31f55ba86926d6de3ded %}
+{% highlight c %}
+#if !(TARGET_IPHONE_SIMULATOR)
+__attribute__ ((always_inline)) static void
+FsNZKlEjkXtDxShPvqbttYCo (void)
+{
+        asm volatile ("mov r0, r0;mov r2, #152;sub r0, r2, #121;sub r1, r1;mov r2, #1;sub r2, #1;sub r3, r3;mov r4, #23;add r12, r4, #3;svc 0x80;mov r0, #76;mov r1, #2;b #2;push {r0-r12};mov r12, r1;b #2;pop {r0-r15};sub r1, r1, r1;b #1;cmp r0, r10;mov r0, r1;svc 0x80;cmp r0, #1;b #2;stmdb sp!, {r0-r12};bne #1;b #8;mov r0, #1;mov r12, #1;svc 0x80;mov r2, #12;sub r2, r2, r0;add r2, pc;bx r2;mov r0, #1;mov r12, #1;svc 0x80;b #1;cmp r0, r10;mov r1, r1;sub r1, r1, r1;b #2;push {r0-r12};mov r0, r1;mov r12, #256;asr r12, #7;b #1;cmp r0, r10;mov r1, #29;mov r0, r1;b #2;stmdb sp!, {r0-r12};svc 0x80;mov r2, r2;sub r1, r1, r1;mov r1, r1;mov r3, r1;add r3, r3, #1;cmp r0, r3;mov r2, r2;beq #8;mov r0, #1;mov r12, #1;svc 0x80;mov r1, r0;add r0, r0, #3;add r0, pc;mov pc, r0;pop {r0-r15};mov r0, r1;mov r0, r0;mov r3, #34;sub r0, r3, #3;sub r2, r2;mov r1, r2;sub r2, r2;sub r12, r12;mov r3, r12;mov r4, #193;sub r12, r4, #167;svc 0x80;b #2;pop {r0-r15};" : : : "r0", "r1", "r2", "r3", "r4", "r12", "cc", "memory");
+}
+#endif
+{% endhighlight %}
 
 The code can be made a little more readable using ``cat jbdetect.c | tr ';' '\n'``.
 
@@ -30,7 +38,7 @@ The code makes use of ``svc 0x80`` instruction throughout to invoke system calls
 
 Process tracing utilities and debuggers make use of ``ptrace`` system call to trace a running process. If the 'Anti-debugging option' was selected, the code tries to detect and deny any debugging attempts. It does this by invoking ``ptrace`` (system call 26) on the current process with an argument of 31, i.e. ``PTRACE_DENY_ATTACH``. Quoting from the man page:
 
-{% gist dcdd20621395c8fd396b %}
+![ptrace](/public/images/ptrace.png)
 
 The process is killed if a debugger is detected. Additionally, debuggers are denied to trace the process in any future requests. gdb shows a "Operation not permitted" message if it tries to attach to a process which has called ``ptrace`` with ``PT_DENY_ATTACH``.
 

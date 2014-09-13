@@ -29,15 +29,70 @@ Now there may not be any such thing as a free lunch, but there are free drinks! 
 
 The app communicates with ``www.exhost.se`` over HTTP. When started, the first thing the app does is to define the "luck factor" of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield 'Better Luck Next Time'.
 
-{% gist 1fd3fb43e9c7ed639b52 %}
+{% highlight http %}
+GET /harrys_1_1_beta/venues.xml HTTP/1.1
+Host: www.exhost.se
+User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
+Connection: keep-alive
+Accept-Encoding: gzip
+
+HTTP/1.1 200 OK
+Age: 1659
+Connection: Keep-Alive
+Content-Length: 3071
+Content-Type: application/xml
+Date: Fri, 01 Nov 2013 06:27:45 GMT
+ETag: "3c8066-bff-4d7ddfaa98300"
+Last-Modified: Thu, 14 Mar 2013 08:05:00 GMT
+Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
+Via: 1.1 qt-mfc4:80
+ 
+<?xml version="1.0" encoding="UTF-8"?>
+<Prizes>
+<Prize>
+<Description>Better Luck*Next Time</Description>
+<Units>1</Units>
+<ID>1</ID>
+<Active>1</Active>
+<Possibility>13</Possibility>
+<IsPrize>0</IsPrize>
+<PrizeFile>img/1.png</PrizeFile>
+</Prize>
+<Prize>
+<Description>1-for-1 Bacardi*Sup Gls</Description>
+<Units>1</Units>
+<ID>2</ID>
+<Active>1</Active>
+<Possibility>5</Possibility>
+<IsPrize>1</IsPrize>
+<PrizeFile>img/2.png</PrizeFile>
+</Prize>
+--snipped--
+{% endhighlight %}
 
 
 ## Time Restriction
 
 Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone's UDID, a timestamp and the bar's id. The response simply consists of ``true`` if the user is allowed to spin the wheel, or ``false`` otherwise.
 
-{% gist 7af63a6d30a1ac868c65 %}
+{% highlight http %}
+GET /harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&time=2013-01-11%02:56:15&venue=30 HTTP/1.1
+Host: www.exhost.se
+User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
+Connection: keep-alive
+Accept-Encoding: gzip
 
+HTTP/1.1 200 OK
+Date: Fri, 01 Nov 2013 06:56:16 GMT
+Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
+X-Powered-By: PHP/5.3.10
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html
+
+true
+{% endhighlight %}
 
 ## Getting past everything
 

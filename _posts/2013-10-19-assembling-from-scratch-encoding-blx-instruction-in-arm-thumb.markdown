@@ -56,6 +56,30 @@ The instruction at 0x2EA6 branches to `_obj_msgSend`, which is at 0xDAEB8. The o
 
 The offset is then used to encode the instruction as follows:
 
-{% gist 140b298c1038bc17c138 %}
+{% highlight vim %}
+Offset = 0xD8010
+ 
+      00            0D            80            10
+ 
+Bits 31-24         23-16         15-8           7-0
+   0000 0000     0000 1101     1000 0000     0001 0000
+ 
+Bits 31-25      24 23 22       21-12          11-2         10
+     0000000     0  0  0     0011011000     0000000100     00
+                 S I1  I2         H              L
+ 
+J1 = ~I1 ^ S = 1
+J2 = ~I2 ^ S = 1
+ 
+Encoded instruction:
+ 
+Bits 32-28    27       26-17      16-15 14 13 12     11-1          0
+               S          H             J1    J2        L
+     11110     0     0011011000     11  1  0  1     0000000100     0
+ 
+      1111 0000     1101 1000     1110 1000     0000 1000
+ 
+         F0            D8             E8           08
+{% endhighlight %}
 
 which explains the encoding seen in the disassembler `(D8 F0 08 E8)`. :-)
