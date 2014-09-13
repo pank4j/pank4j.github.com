@@ -4,7 +4,7 @@
  <title>CodePwn</title>
  <link href="http://www.codepwn.com/atom.xml" rel="self"/>
  <link href="http://www.codepwn.com/"/>
- <updated>2014-09-13T03:47:19+08:00</updated>
+ <updated>2014-09-13T15:53:59+08:00</updated>
  <id>http://www.codepwn.com</id>
  <author>
    <name>Pankaj Kohli</name>
@@ -54,7 +54,7 @@
 
 &lt;p&gt;Now there may not be any such thing as a free lunch, but there are free drinks! Let&amp;#39;s see how.&lt;/p&gt;
 
-&lt;p&gt;&lt;center&gt;&lt;img src=&quot;/public/win240x360.png&quot; /&gt;&lt;/center&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src=&quot;/public/images/win240x360.png&quot; /&gt;&lt;/center&gt;
 &lt;p&gt;&lt;/p&gt;&lt;/p&gt;
 
 &lt;h2&gt;The &amp;#39;luck factor&amp;#39;&lt;/h2&gt;
@@ -73,12 +73,12 @@
 
 &lt;p&gt;Well, the simplest way to get past everything would be to make the app communicate with another server instead of &lt;code&gt;www.exhost.se&lt;/code&gt;. First we will crawl &lt;code&gt;www.exhost.se&lt;/code&gt; to get all the required files. The link &lt;code&gt;http://www.exhost.se/harrys_1_1_beta/&lt;/code&gt; does not contain a default &lt;code&gt;index.html&lt;/code&gt; or similar file, which makes crawling possible.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/public/wget-harrys.png&quot; alt=&quot;wget&quot;&gt;
-&lt;img src=&quot;/public/strings-harrys.png&quot; alt=&quot;strings&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/images/wget-harrys.png&quot; alt=&quot;wget&quot;&gt;
+&lt;img src=&quot;/public/images/strings-harrys.png&quot; alt=&quot;strings&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;Once we have the crawled files, we can edit the &lt;code&gt;venues.xml&lt;/code&gt; file to change the probabilities. We can even change the drinks! ;-) Also, the file &lt;code&gt;fetchdata.php&lt;/code&gt; should contain &lt;code&gt;true&lt;/code&gt; for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. &lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/public/strings.png&quot; alt=&quot;Strings as seen in the disassembler after modification&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/images/strings.png&quot; alt=&quot;Strings as seen in the disassembler after modification&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;Once edited, we can run the app any number of times while signed in the same bar, and win a drink on every spin!&lt;/p&gt;
 
@@ -91,7 +91,7 @@
    <link href="http://www.codepwn.com/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb"/>
    <updated>2013-10-19T13:23:25+08:00</updated>
    <id>http://www.codepwn.com/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb</id>
-   <content type="html">&lt;p&gt;&lt;center&gt;&lt;img src=&quot;/public/blx.png&quot; /&gt;&lt;/center&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;center&gt;&lt;img src=&quot;/public/images/blx.png&quot; /&gt;&lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.&lt;/p&gt;
 
@@ -111,7 +111,7 @@
 }
 &lt;/style&gt;
 &lt;div id=&quot;images&quot;&gt;
-&lt;img class=&quot;pic&quot; src=&quot;/public/blxasm1.png&quot; /&gt;&lt;img class=&quot;pic&quot; src=&quot;/public/blxasm2.png&quot; /&gt;
+&lt;img class=&quot;pic&quot; src=&quot;/public/images/blxasm1.png&quot; /&gt;&lt;img class=&quot;pic&quot; src=&quot;/public/images/blxasm2.png&quot; /&gt;
 &lt;/div&gt;
 &lt;/p&gt;
 
@@ -136,9 +136,9 @@
    <id>http://www.codepwn.com/posts/exploiting-file-uploads-for-fun-and-profit</id>
    <content type="html">&lt;p&gt;So I have been working on web application security for past some time. I also happened to write an article titled &amp;quot;Exploiting File Uploads for Fun and Profit&amp;quot; for &lt;a href=&quot;http://hakin9.org/learn-how-to-perform-advanced-web-attacks-and-exploitation-with-more-than-70-pages-of-hakin9-tutorials/&quot;&gt;Hakin9&lt;/a&gt; magazine , which has been published recently. The article explains the various restrictions that are often imposed by web applications on the file being uploaded and how to get around these restrictions. Credit for the techniques described in the article goes to their respective authors.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/public/ExploitingFileUploadsForFunAndProfit-1024x548.png&quot; alt=&quot;Exploiting File Uploads For Fun And Profit&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/images/ExploitingFileUploadsForFunAndProfit-1024x548.png&quot; alt=&quot;Exploiting File Uploads For Fun And Profit&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;You can download the complete article &lt;a href=&quot;/public/ExploitingFileUploadsForFunAndProfit.pdf&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;You can download the complete article &lt;a href=&quot;/public/files/ExploitingFileUploadsForFunAndProfit.pdf&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
@@ -188,7 +188,7 @@
 
 &lt;script src=&quot;https://gist.github.com/bb3a6193cadaabaca33a.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the &lt;a href=&quot;/public/formatshield-acisp08.pdf&quot;&gt;research paper&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the &lt;a href=&quot;/public/files/formatshield-acisp08.pdf&quot;&gt;research paper&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/pank4j/formatshield&quot;&gt;Formatshield source&lt;/a&gt; is licensed as GNU GPL v3 and is archived on github. It is available only for testing/research, please use it at your own risk.&lt;/p&gt;
 </content>

@@ -17,7 +17,7 @@ tags:
 - Thumb
 ---
    
-<center><img src="/public/blx.png" /></center>
+<center><img src="/public/images/blx.png" /></center>
 
 If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.
    
@@ -37,7 +37,7 @@ One of such intriguing instructions in ARM is BLX. BLX instruction performs a PC
 }
 </style>
 <div id="images">
-<img class="pic" src="/public/blxasm1.png" /><img class="pic" src="/public/blxasm2.png" />
+<img class="pic" src="/public/images/blxasm1.png" /><img class="pic" src="/public/images/blxasm2.png" />
 </div>
 </p>
 

@@ -27,21 +27,7 @@
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
-<!--  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
-	
-	<link rel="stylesheet" href="/public/css/prettygist.min.css">
-	<!-- Below is our theme (many more are included in the repo) -->
-	<link rel="stylesheet" href="/public/css/syntax-styles/pojoaque.css">
-	<script src="/public/css/jquery.min.js"></script>
-	<script src="/public/css/jquery.prettygist.min.js"></script>
-	<!-- Below is the main highlight.js include -->
-	<script src="/public/css/highlight.pack.js"></script>
-	<script type="text/javascript">
-    		$(document).ready(function(){
-	        $(".gist").prettyGist();
-    	});
-	</script>
-	-->
+
 </head>
 
 
@@ -101,7 +87,6 @@
       
 
       <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
-      <!--<span class="sidebar-nav-item">Currently v2.1.0</span>-->
     </nav>
 
     <p>&copy; 2014. All rights reserved.</p>
@@ -113,7 +98,7 @@
       <div class="post">
   <h1 class="post-title">Assembling from scratch: Encoding BLX instruction in ARM / THUMB</h1>
   <span class="post-date">19 Oct 2013</span>
-  <p><center><img src="/public/blx.png" /></center></p>
+  <p><center><img src="/public/images/blx.png" /></center></p>
 
 <p>If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.</p>
 
@@ -133,7 +118,7 @@
 }
 </style>
 <div id="images">
-<img class="pic" src="/public/blxasm1.png" /><img class="pic" src="/public/blxasm2.png" />
+<img class="pic" src="/public/images/blxasm1.png" /><img class="pic" src="/public/images/blxasm2.png" />
 </div>
 </p>
 

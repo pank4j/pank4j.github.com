@@ -21,7 +21,7 @@ tags:
 
 Now there may not be any such thing as a free lunch, but there are free drinks! Let's see how.
 
-<center><img src="/public/win240x360.png" /></center>
+<center><img src="/public/images/win240x360.png" /></center>
 <p></p>
 
 
@@ -43,12 +43,12 @@ Once the user has checked in the bar, the app checks if the user has already tri
 
 Well, the simplest way to get past everything would be to make the app communicate with another server instead of ``www.exhost.se``. First we will crawl ``www.exhost.se`` to get all the required files. The link ``http://www.exhost.se/harrys_1_1_beta/`` does not contain a default ``index.html`` or similar file, which makes crawling possible.
 
-![wget](/public/wget-harrys.png)
-![strings](/public/strings-harrys.png)
+![wget](/public/images/wget-harrys.png)
+![strings](/public/images/strings-harrys.png)
 
 Once we have the crawled files, we can edit the ``venues.xml`` file to change the probabilities. We can even change the drinks! ;-) Also, the file ``fetchdata.php`` should contain ``true`` for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. 
 
-![Strings as seen in the disassembler after modification](/public/strings.png)
+![Strings as seen in the disassembler after modification](/public/images/strings.png)
 
 Once edited, we can run the app any number of times while signed in the same bar, and win a drink on every spin!
 
