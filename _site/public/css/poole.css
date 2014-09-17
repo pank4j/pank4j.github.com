@@ -155,8 +155,7 @@ pre {
 code {
   padding: .25em .5em;
   font-size: 85%;
-  /*color: #bf616a;*/
-  color: #000000;
+  color: #bf616a;
   background-color: #f9f9f9;
   border-radius: 3px;
 }
@@ -201,7 +200,7 @@ pre code {
   background-color: transparent;
 }
 .gist .gist-file .gist-data {
-  font-size: .6rem !important;
+  font-size: .8rem !important;
   line-height: 1.4;
 }
 .gist code {

@@ -20,7 +20,7 @@ FormatShield is a library that intercepts call to vulnerable functions and uses 
 
 FormatShield provides wrappers for the following libc functions:
 
-{% highlight c %}
+```
 int printf(const char *format, ...)
 int fprintf(FILE *stream, const char *format, ...)
 int sprintf(char *str, const char *format, ...)
@@ -31,7 +31,7 @@ int vsprintf(char *str, const char *format, va_list ap)
 int vsnprintf(char *str, size_t size, const char *format, va_list ap)
 void syslog(int priority, const char *format, ...)
 void vsyslog(int priority, const char *format, va_list ap)
-{% endhighlight %}
+```
 
 On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the [research paper](/public/files/formatshield-acisp08.pdf).
 

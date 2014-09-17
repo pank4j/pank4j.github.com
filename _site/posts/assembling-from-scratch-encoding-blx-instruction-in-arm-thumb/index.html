@@ -28,9 +28,9 @@
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
-  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <!--<link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
   <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.initHighlightingOnLoad();</script>-->
 
 </head>
 
@@ -133,31 +133,30 @@
 <h2>Encoding the instruction</h2>
 
 <p>The offset is then used to encode the instruction as follows:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Offset = 0xD8010
 
-<div class="highlight"><pre><code class="language-vim" data-lang="vim">Offset <span class="p">=</span> <span class="m">0</span>xD<span class="m">8010</span>
- 
-      <span class="m">00</span>            <span class="m">0</span>D            <span class="m">80</span>            <span class="m">10</span>
- 
-Bits <span class="m">31-24</span>         <span class="m">23-16</span>         <span class="m">15-8</span>           <span class="m">7-0</span>
-   <span class="m">0000</span> <span class="m">0000</span>     <span class="m">0000</span> <span class="m">1101</span>     <span class="m">1000</span> <span class="m">0000</span>     <span class="m">0001</span> <span class="m">0000</span>
- 
-Bits <span class="m">31-25</span>      <span class="m">24</span> <span class="m">23</span> <span class="m">22</span>       <span class="m">21-12</span>          <span class="m">11-2</span>         <span class="m">10</span>
-     <span class="m">0000000</span>     <span class="m">0</span>  <span class="m">0</span>  <span class="m">0</span>     <span class="m">0011011000</span>     <span class="m">0000000100</span>     <span class="m">00</span>
+      00            0D            80            10
+
+Bits 31-24         23-16         15-8           7-0
+   0000 0000     0000 1101     1000 0000     0001 0000
+
+Bits 31-25      24 23 22       21-12          11-2         10
+     0000000     0  0  0     0011011000     0000000100     00
                  S I1  I2         H              L
- 
-J1 <span class="p">=</span> <span class="p">~</span>I1 ^ S <span class="p">=</span> <span class="m">1</span>
-J2 <span class="p">=</span> <span class="p">~</span>I2 ^ S <span class="p">=</span> <span class="m">1</span>
- 
-Encoded instruction:
- 
-Bits <span class="m">32-28</span>    <span class="m">27</span>       <span class="m">26-17</span>      <span class="m">16-15</span> <span class="m">14</span> <span class="m">13</span> <span class="m">12</span>     <span class="m">11-1</span>          <span class="m">0</span>
-               S          H             J1    J2        L
-     <span class="m">11110</span>     <span class="m">0</span>     <span class="m">0011011000</span>     <span class="m">11</span>  <span class="m">1</span>  <span class="m">0</span>  <span class="m">1</span>     <span class="m">0000000100</span>     <span class="m">0</span>
- 
-      <span class="m">1111</span> <span class="m">0000</span>     <span class="m">1101</span> <span class="m">1000</span>     <span class="m">1110</span> <span class="m">1000</span>     <span class="m">0000</span> <span class="m">1000</span>
- 
-         F0            D8             E8           <span class="m">08</span></code></pre></div>
 
+J1 = ~I1 ^ S = 1
+J2 = ~I2 ^ S = 1
+
+Encoded instruction:
+
+Bits 32-28    27       26-17      16-15 14 13 12     11-1          0
+               S          H             J1    J2        L
+     11110     0     0011011000     11  1  0  1     0000000100     0
+
+      1111 0000     1101 1000     1110 1000     0000 1000
+
+         F0            D8             E8           08
+</code></pre></div>
 <p>which explains the encoding seen in the disassembler <code>(D8 F0 08 E8)</code>. :-)</p>
 
 </div>
