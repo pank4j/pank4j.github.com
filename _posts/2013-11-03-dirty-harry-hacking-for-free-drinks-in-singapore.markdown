@@ -29,7 +29,7 @@ Now there may not be any such thing as a free lunch, but there are free drinks! 
 
 The app communicates with ``www.exhost.se`` over HTTP. When started, the first thing the app does is to define the "luck factor" of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield 'Better Luck Next Time'.
 
-```
+{% highlight http %}
 GET /harrys_1_1_beta/venues.xml HTTP/1.1
 Host: www.exhost.se
 User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
@@ -68,13 +68,13 @@ Via: 1.1 qt-mfc4:80
 <PrizeFile>img/2.png</PrizeFile>
 </Prize>
 --snipped--
-```
+{% endhighlight %}
 
 ## Time Restriction
 
 Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone's UDID, a timestamp and the bar's id. The response simply consists of ``true`` if the user is allowed to spin the wheel, or ``false`` otherwise.
 
-```
+{% highlight http %}
 GET /harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&time=2013-01-11%02:56:15&venue=30 HTTP/1.1
 Host: www.exhost.se
 User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
@@ -91,13 +91,13 @@ Transfer-Encoding: chunked
 Content-Type: text/html
 
 true
-```
+{% endhighlight %}
 
 ## Getting past everything
 
 Well, the simplest way to get past everything would be to make the app communicate with another server instead of ``www.exhost.se``. First we will crawl ``www.exhost.se`` to get all the required files. The link ``http://www.exhost.se/harrys_1_1_beta/`` does not contain a default ``index.html`` or similar file, which makes crawling possible.
 
-```
+{% highlight bash %}
 $ wget -nv -r --no-parent --reject "index.html*" http://www.exhost.se/harrys_1_1_beta/
 
 2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ [639/639] -> /"www.exhost.se/harrys_1_1_beta/index.html" [1] 
@@ -130,14 +130,14 @@ http://www.exhost.se/robots.txt:
 FINISHED --2013-11-03 23:37:52--
 Total wall clock time: 54s
 Downloaded: 25 files, 950K in 34s (28.1 KB/s)
-```
+{% endhighlight %}
 
-```
+{% highlight bash %}
 iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys | grep "http://www.exhost.se"
 839501 http://www.exhost.se/harrys_1_1_beta/
 842849 http://www.exhost.se/harrys_1_1_beta/venues.xml
 843075 http://www.exhost.se/harrys_1_1_beta/fetchdata.php
-```
+{% endhighlight %}
 
 Once we have the crawled files, we can edit the ``venues.xml`` file to change the probabilities. We can even change the drinks! ;-) Also, the file ``fetchdata.php`` should contain ``true`` for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. 
 

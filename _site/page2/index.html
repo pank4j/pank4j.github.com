@@ -28,9 +28,9 @@
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
-  <!--<link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
   <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>-->
+  <script>hljs.initHighlightingOnLoad();</script>
 
 </head>
 
@@ -72,6 +72,8 @@
         
       
         
+          
+        
       
         
           
@@ -93,13 +95,145 @@
       <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
     </nav>
 
-    <p>&copy; 2014. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
+        Dirty Harry: Hacking for free drinks in Singapore
+      </a>
+    </h1>
+
+    <span class="post-date">04 Nov 2013</span>
+
+    <p><a href="http://harrys.com.sg/">Harry&#39;s bar</a> is one of the most popular bar chains in Singapore. It has an iOS app &quot;Appy Hour&quot; that lets users spin the Harry&#39;s &quot;wheel of fortune&quot; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.</p>
+
+<p>Now there may not be any such thing as a free lunch, but there are free drinks! Let&#39;s see how.</p>
+
+<p><center><img src="/public/images/win240x360.png" /></center>
+<p></p></p>
+
+<h2>The &#39;luck factor&#39;</h2>
+
+<p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the &quot;luck factor&quot; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &#39;Better Luck Next Time&#39;.</p>
+
+<div class="highlight"><pre><code class="language-http" data-lang="http">GET /harrys_1_1_beta/venues.xml HTTP/1.1
+Host: www.exhost.se
+User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
+Connection: keep-alive
+Accept-Encoding: gzip
+
+HTTP/1.1 200 OK
+Age: 1659
+Connection: Keep-Alive
+Content-Length: 3071
+Content-Type: application/xml
+Date: Fri, 01 Nov 2013 06:27:45 GMT
+ETag: &quot;3c8066-bff-4d7ddfaa98300&quot;
+Last-Modified: Thu, 14 Mar 2013 08:05:00 GMT
+Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
+Via: 1.1 qt-mfc4:80
+ 
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Prizes&gt;
+&lt;Prize&gt;
+&lt;Description&gt;Better Luck*Next Time&lt;/Description&gt;
+&lt;Units&gt;1&lt;/Units&gt;
+&lt;ID&gt;1&lt;/ID&gt;
+&lt;Active&gt;1&lt;/Active&gt;
+&lt;Possibility&gt;13&lt;/Possibility&gt;
+&lt;IsPrize&gt;0&lt;/IsPrize&gt;
+&lt;PrizeFile&gt;img/1.png&lt;/PrizeFile&gt;
+&lt;/Prize&gt;
+&lt;Prize&gt;
+&lt;Description&gt;1-for-1 Bacardi*Sup Gls&lt;/Description&gt;
+&lt;Units&gt;1&lt;/Units&gt;
+&lt;ID&gt;2&lt;/ID&gt;
+&lt;Active&gt;1&lt;/Active&gt;
+&lt;Possibility&gt;5&lt;/Possibility&gt;
+&lt;IsPrize&gt;1&lt;/IsPrize&gt;
+&lt;PrizeFile&gt;img/2.png&lt;/PrizeFile&gt;
+&lt;/Prize&gt;
+--snipped--</code></pre></div>
+
+<h2>Time Restriction</h2>
+
+<p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone&#39;s UDID, a timestamp and the bar&#39;s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
+
+<div class="highlight"><pre><code class="language-http" data-lang="http">GET /harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30 HTTP/1.1
+Host: www.exhost.se
+User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
+Connection: keep-alive
+Accept-Encoding: gzip
+
+HTTP/1.1 200 OK
+Date: Fri, 01 Nov 2013 06:56:16 GMT
+Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
+X-Powered-By: PHP/5.3.10
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html
+
+true</code></pre></div>
+
+<h2>Getting past everything</h2>
+
+<p>Well, the simplest way to get past everything would be to make the app communicate with another server instead of <code>www.exhost.se</code>. First we will crawl <code>www.exhost.se</code> to get all the required files. The link <code>http://www.exhost.se/harrys_1_1_beta/</code> does not contain a default <code>index.html</code> or similar file, which makes crawling possible.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ wget -nv -r --no-parent --reject &quot;index.html*&quot; http://www.exhost.se/harrys_1_1_beta/
+
+2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ [639/639] -&gt; /&quot;www.exhost.se/harrys_1_1_beta/index.html&quot; [1] 
+http://www.exhost.se/robots.txt:
+2013-11-03 23:37:09 ERROR 404: Not Found.
+2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/cms.php [169] -&gt; &quot;www.exhost.se/harrys_1_1_beta/cms.php&quot; [1]
+2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/connect.php [0/0] -&gt; &quot;www.exhost.se/harrys_1_1_beta/connect.php&quot; [1]
+2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/fetchdata.php [5] -&gt; &quot;www.exhost.se/harrys_1_1_beta/fetchdata.php&quot; [1]
+2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/img/ [1037/1037] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/index.html&quot; [1]
+2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/js/ [461/461] -&gt; &quot;www.exhost.se/harrys_1_1_beta/js/index.html&quot; [1]
+2013-11-03 23:37:12 URL:http://www.exhost.se/harrys_1_1_beta/venues.xml [3071/3071] -&gt; &quot;www.exhost.se/harrys_1_1_beta/venues.xml&quot; [1]
+2013-11-03 23:37:19 URL:http://www.exhost.se/harrys_1_1_beta/img/1.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/1.png&quot; [1]
+2013-11-03 23:37:23 URL:http://www.exhost.se/harrys_1_1_beta/img/10.png [62543/62543] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/10.png&quot; [1]
+2013-11-03 23:37:24 URL:http://www.exhost.se/harrys_1_1_beta/img/11.png [23376/23376] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/11.png&quot; [1]
+2013-11-03 23:37:26 URL:http://www.exhost.se/harrys_1_1_beta/img/12.png [33471/33471] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/12.png&quot; [1]
+2013-11-03 23:37:29 URL:http://www.exhost.se/harrys_1_1_beta/img/13.png [58419/58419] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/13.png&quot; [1]
+2013-11-03 23:37:31 URL:http://www.exhost.se/harrys_1_1_beta/img/14.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/14.png&quot; [1]
+2013-11-03 23:37:32 URL:http://www.exhost.se/harrys_1_1_beta/img/15.png [50119/50119] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/15.png&quot; [1]
+2013-11-03 23:37:33 URL:http://www.exhost.se/harrys_1_1_beta/img/16.png [23376/23376] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/16.png&quot; [1]
+2013-11-03 23:37:34 URL:http://www.exhost.se/harrys_1_1_beta/img/2.png [44208/44208] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/2.png&quot; [1]
+2013-11-03 23:37:36 URL:http://www.exhost.se/harrys_1_1_beta/img/3.png [62543/62543] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/3.png&quot; [1]
+2013-11-03 23:37:38 URL:http://www.exhost.se/harrys_1_1_beta/img/4.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/4.png&quot; [1]
+2013-11-03 23:37:40 URL:http://www.exhost.se/harrys_1_1_beta/img/5.png [60030/60030] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/5.png&quot; [1]
+2013-11-03 23:37:44 URL:http://www.exhost.se/harrys_1_1_beta/img/6.jpg [124823/124823] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/6.jpg&quot; [1]
+2013-11-03 23:37:46 URL:http://www.exhost.se/harrys_1_1_beta/img/6.png [50119/50119] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/6.png&quot; [1]
+2013-11-03 23:37:47 URL:http://www.exhost.se/harrys_1_1_beta/img/7.png [45129/45129] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/7.png&quot; [1]
+2013-11-03 23:37:49 URL:http://www.exhost.se/harrys_1_1_beta/img/8.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/8.png&quot; [1]
+2013-11-03 23:37:50 URL:http://www.exhost.se/harrys_1_1_beta/img/9.png [40394/40394] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/9.png&quot; [1]
+2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js [85925/85925] -&gt; &quot;www.exhost.se/harrys_1_1_beta/js/jquery.min.js&quot; [1]
+FINISHED --2013-11-03 23:37:52--
+Total wall clock time: 54s
+Downloaded: 25 files, 950K in 34s (28.1 KB/s)</code></pre></div>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys | grep &quot;http://www.exhost.se&quot;
+839501 http://www.exhost.se/harrys_1_1_beta/
+842849 http://www.exhost.se/harrys_1_1_beta/venues.xml
+843075 http://www.exhost.se/harrys_1_1_beta/fetchdata.php</code></pre></div>
+
+<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. </p>
+
+<p><img src="/public/images/strings.png" alt="Strings as seen in the disassembler after modification"></p>
+
+<p>Once edited, we can run the app any number of times while signed in the same bar, and win a drink on every spin!</p>
+
+<p>Cheers!</p>
+
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -141,48 +275,32 @@
 <h2>Encoding the instruction</h2>
 
 <p>The offset is then used to encode the instruction as follows:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Offset = 0xD8010
 
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Offset = 0xD8010
+ 
       00            0D            80            10
-
+ 
 Bits 31-24         23-16         15-8           7-0
    0000 0000     0000 1101     1000 0000     0001 0000
-
+ 
 Bits 31-25      24 23 22       21-12          11-2         10
      0000000     0  0  0     0011011000     0000000100     00
                  S I1  I2         H              L
-
+ 
 J1 = ~I1 ^ S = 1
 J2 = ~I2 ^ S = 1
-
+ 
 Encoded instruction:
-
+ 
 Bits 32-28    27       26-17      16-15 14 13 12     11-1          0
                S          H             J1    J2        L
      11110     0     0011011000     11  1  0  1     0000000100     0
-
+ 
       1111 0000     1101 1000     1110 1000     0000 1000
+ 
+         F0            D8             E8           08</code></pre></div>
 
-         F0            D8             E8           08
-</code></pre></div>
 <p>which explains the encoding seen in the disassembler <code>(D8 F0 08 E8)</code>. :-)</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/posts/exploiting-file-uploads-for-fun-and-profit">
-        Exploiting File Uploads for Fun and Profit
-      </a>
-    </h1>
-
-    <span class="post-date">29 Jun 2013</span>
-
-    <p>So I have been working on web application security for past some time. I also happened to write an article titled &quot;Exploiting File Uploads for Fun and Profit&quot; for <a href="http://hakin9.org/learn-how-to-perform-advanced-web-attacks-and-exploitation-with-more-than-70-pages-of-hakin9-tutorials/">Hakin9</a> magazine , which has been published recently. The article explains the various restrictions that are often imposed by web applications on the file being uploaded and how to get around these restrictions. Credit for the techniques described in the article goes to their respective authors.</p>
-
-<p><img src="/public/images/ExploitingFileUploadsForFunAndProfit-1024x548.png" alt="Exploiting File Uploads For Fun And Profit"></p>
-
-<p>You can download the complete article <a href="/public/files/ExploitingFileUploadsForFunAndProfit.pdf">here</a></p>
 
   </div>
   

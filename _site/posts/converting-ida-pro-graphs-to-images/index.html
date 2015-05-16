@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Converting IDA Pro graphs to images
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/pic.png">
+                                 <link rel="shortcut icon" href="/public/pic.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <script src="/public/css/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          CodePwn
+        </a>
+      </h1>
+      <p class="lead">Stuff about Security</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive.html">Archive</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Converting IDA Pro graphs to images</h1>
+  <span class="post-date">16 May 2015</span>
+  <p>It&#39;s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.</p>
+
+<p>IDA Pro provides an interesting feature to view the disassembly of a function as a flowchart. The flowchart shows the function in the form of a control flow graph, where each node in the graph represents a basic block and each edge represents a control transfer. In many instances, one would like to export it as an image. However, the wingraph32 utility does not provide such an option.</p>
+
+<p><center>
+<img src="/public/images/wingraph32.png" alt="wingraph32" title="A graph as shown by wingraph32">
+</center></p>
+
+<p>The graph can be exported from IDA Pro (or from wingraoh32) as a .gdl (graph description language) file. The .gdl file can be converted into an image (or many other formats) using the <a href="http://search.cpan.org/dist/Graph-Easy/bin/graph-easy">Graph::Easy</a> CPAN module.</p>
+
+<p>First install the Graph::Easy CPAN module. It requires <a href="http://www.graphviz.org/">Graphviz</a> to run, so install that as well.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">cpan Graph::Easy</code></pre></div>
+
+<p>Then, convert the .gdl file to an image.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">graph-easy --from gdl --input=graph.gdl --png --output=graph.png</code></pre></div>
+
+<p>This is how the final image of the above graph looks like.
+<center>
+<img src="/public/images/graph.png" alt="wingraph32" title="Graph converted by graph_easy">
+</center></p>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'codepwn'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/posts/appminder-jailbreak-detection-analysis">
+            AppMinder jailbreak detection analysis
+            <small>28 Dec 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
+            Dirty Harry: Hacking for free drinks in Singapore
+            <small>04 Nov 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb">
+            Assembling from scratch: Encoding BLX instruction in ARM / THUMB
+            <small>19 Oct 2013</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+    </div>
+
+  </body>
+</html>

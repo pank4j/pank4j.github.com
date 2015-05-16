@@ -56,7 +56,7 @@ The instruction at 0x2EA6 branches to `_obj_msgSend`, which is at 0xDAEB8. The o
 
 The offset is then used to encode the instruction as follows:
 
-```
+{% highlight bash %}
 Offset = 0xD8010
  
       00            0D            80            10
@@ -80,6 +80,7 @@ Bits 32-28    27       26-17      16-15 14 13 12     11-1          0
       1111 0000     1101 1000     1110 1000     0000 1000
  
          F0            D8             E8           08
-```
+{% endhighlight %}
 
 which explains the encoding seen in the disassembler `(D8 F0 08 E8)`. :-)
+

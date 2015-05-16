@@ -28,9 +28,9 @@
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
-  <!--<link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
   <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>-->
+  <script>hljs.initHighlightingOnLoad();</script>
 
 </head>
 
@@ -72,6 +72,8 @@
         
       
         
+          
+        
       
         
           
@@ -93,7 +95,7 @@
       <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
     </nav>
 
-    <p>&copy; 2014. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
@@ -112,7 +114,8 @@
 <h2>The &#39;luck factor&#39;</h2>
 
 <p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the &quot;luck factor&quot; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &#39;Better Luck Next Time&#39;.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">GET /harrys_1_1_beta/venues.xml HTTP/1.1
+
+<div class="highlight"><pre><code class="language-http" data-lang="http">GET /harrys_1_1_beta/venues.xml HTTP/1.1
 Host: www.exhost.se
 User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
 Connection: keep-alive
@@ -128,7 +131,7 @@ ETag: &quot;3c8066-bff-4d7ddfaa98300&quot;
 Last-Modified: Thu, 14 Mar 2013 08:05:00 GMT
 Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
 Via: 1.1 qt-mfc4:80
-
+ 
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;Prizes&gt;
 &lt;Prize&gt;
@@ -149,12 +152,13 @@ Via: 1.1 qt-mfc4:80
 &lt;IsPrize&gt;1&lt;/IsPrize&gt;
 &lt;PrizeFile&gt;img/2.png&lt;/PrizeFile&gt;
 &lt;/Prize&gt;
---snipped--
-</code></pre></div>
+--snipped--</code></pre></div>
+
 <h2>Time Restriction</h2>
 
 <p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone&#39;s UDID, a timestamp and the bar&#39;s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">GET /harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30 HTTP/1.1
+
+<div class="highlight"><pre><code class="language-http" data-lang="http">GET /harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30 HTTP/1.1
 Host: www.exhost.se
 User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
 Connection: keep-alive
@@ -169,12 +173,13 @@ Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
 
-true
-</code></pre></div>
+true</code></pre></div>
+
 <h2>Getting past everything</h2>
 
 <p>Well, the simplest way to get past everything would be to make the app communicate with another server instead of <code>www.exhost.se</code>. First we will crawl <code>www.exhost.se</code> to get all the required files. The link <code>http://www.exhost.se/harrys_1_1_beta/</code> does not contain a default <code>index.html</code> or similar file, which makes crawling possible.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ wget -nv -r --no-parent --reject &quot;index.html*&quot; http://www.exhost.se/harrys_1_1_beta/
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ wget -nv -r --no-parent --reject &quot;index.html*&quot; http://www.exhost.se/harrys_1_1_beta/
 
 2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ [639/639] -&gt; /&quot;www.exhost.se/harrys_1_1_beta/index.html&quot; [1] 
 http://www.exhost.se/robots.txt:
@@ -205,12 +210,13 @@ http://www.exhost.se/robots.txt:
 2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js [85925/85925] -&gt; &quot;www.exhost.se/harrys_1_1_beta/js/jquery.min.js&quot; [1]
 FINISHED --2013-11-03 23:37:52--
 Total wall clock time: 54s
-Downloaded: 25 files, 950K in 34s (28.1 KB/s)
-</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys | grep &quot;http://www.exhost.se&quot;
+Downloaded: 25 files, 950K in 34s (28.1 KB/s)</code></pre></div>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys | grep &quot;http://www.exhost.se&quot;
 839501 http://www.exhost.se/harrys_1_1_beta/
 842849 http://www.exhost.se/harrys_1_1_beta/venues.xml
-843075 http://www.exhost.se/harrys_1_1_beta/fetchdata.php
-</code></pre></div>
+843075 http://www.exhost.se/harrys_1_1_beta/fetchdata.php</code></pre></div>
+
 <p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. </p>
 
 <p><img src="/public/images/strings.png" alt="Strings as seen in the disassembler after modification"></p>
@@ -242,6 +248,15 @@ Downloaded: 25 files, 950K in 34s (28.1 KB/s)
     
       <li>
         <h3>
+          <a href="/posts/converting-ida-pro-graphs-to-images">
+            Converting IDA Pro graphs to images
+            <small>16 May 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/posts/appminder-jailbreak-detection-analysis">
             AppMinder jailbreak detection analysis
             <small>28 Dec 2013</small>
@@ -254,15 +269,6 @@ Downloaded: 25 files, 950K in 34s (28.1 KB/s)
           <a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb">
             Assembling from scratch: Encoding BLX instruction in ARM / THUMB
             <small>19 Oct 2013</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/exploiting-file-uploads-for-fun-and-profit">
-            Exploiting File Uploads for Fun and Profit
-            <small>29 Jun 2013</small>
           </a>
         </h3>
       </li>

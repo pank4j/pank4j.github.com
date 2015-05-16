@@ -28,9 +28,9 @@
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
-  <!--<link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
   <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>-->
+  <script>hljs.initHighlightingOnLoad();</script>
 
 </head>
 
@@ -72,6 +72,8 @@
         
       
         
+          
+        
       
         
           
@@ -93,13 +95,47 @@
       <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
     </nav>
 
-    <p>&copy; 2014. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/posts/converting-ida-pro-graphs-to-images">
+        Converting IDA Pro graphs to images
+      </a>
+    </h1>
+
+    <span class="post-date">16 May 2015</span>
+
+    <p>It&#39;s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.</p>
+
+<p>IDA Pro provides an interesting feature to view the disassembly of a function as a flowchart. The flowchart shows the function in the form of a control flow graph, where each node in the graph represents a basic block and each edge represents a control transfer. In many instances, one would like to export it as an image. However, the wingraph32 utility does not provide such an option.</p>
+
+<p><center>
+<img src="/public/images/wingraph32.png" alt="wingraph32" title="A graph as shown by wingraph32">
+</center></p>
+
+<p>The graph can be exported from IDA Pro (or from wingraoh32) as a .gdl (graph description language) file. The .gdl file can be converted into an image (or many other formats) using the <a href="http://search.cpan.org/dist/Graph-Easy/bin/graph-easy">Graph::Easy</a> CPAN module.</p>
+
+<p>First install the Graph::Easy CPAN module. It requires <a href="http://www.graphviz.org/">Graphviz</a> to run, so install that as well.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">cpan Graph::Easy</code></pre></div>
+
+<p>Then, convert the .gdl file to an image.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">graph-easy --from gdl --input=graph.gdl --png --output=graph.png</code></pre></div>
+
+<p>This is how the final image of the above graph looks like.
+<center>
+<img src="/public/images/graph.png" alt="wingraph32" title="Graph converted by graph_easy">
+</center></p>
+
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -111,14 +147,15 @@
     <span class="post-date">28 Dec 2013</span>
 
     <p>Neso Lab&#39;s <a href="http://appminder.nesolabs.de/">AppMinder</a> project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#39;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused <code>push</code>, <code>pop</code> and <code>cmp</code> instructions.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">#if !(TARGET_IPHONE_SIMULATOR)
+
+<div class="highlight"><pre><code class="language-c" data-lang="c">#if !(TARGET_IPHONE_SIMULATOR)
 __attribute__ ((always_inline)) static void
 FsNZKlEjkXtDxShPvqbttYCo (void)
 {
         asm volatile (&quot;mov r0, r0;mov r2, #152;sub r0, r2, #121;sub r1, r1;mov r2, #1;sub r2, #1;sub r3, r3;mov r4, #23;add r12, r4, #3;svc 0x80;mov r0, #76;mov r1, #2;b #2;push {r0-r12};mov r12, r1;b #2;pop {r0-r15};sub r1, r1, r1;b #1;cmp r0, r10;mov r0, r1;svc 0x80;cmp r0, #1;b #2;stmdb sp!, {r0-r12};bne #1;b #8;mov r0, #1;mov r12, #1;svc 0x80;mov r2, #12;sub r2, r2, r0;add r2, pc;bx r2;mov r0, #1;mov r12, #1;svc 0x80;b #1;cmp r0, r10;mov r1, r1;sub r1, r1, r1;b #2;push {r0-r12};mov r0, r1;mov r12, #256;asr r12, #7;b #1;cmp r0, r10;mov r1, #29;mov r0, r1;b #2;stmdb sp!, {r0-r12};svc 0x80;mov r2, r2;sub r1, r1, r1;mov r1, r1;mov r3, r1;add r3, r3, #1;cmp r0, r3;mov r2, r2;beq #8;mov r0, #1;mov r12, #1;svc 0x80;mov r1, r0;add r0, r0, #3;add r0, pc;mov pc, r0;pop {r0-r15};mov r0, r1;mov r0, r0;mov r3, #34;sub r0, r3, #3;sub r2, r2;mov r1, r2;sub r2, r2;sub r12, r12;mov r3, r12;mov r4, #193;sub r12, r4, #167;svc 0x80;b #2;pop {r0-r15};&quot; : : : &quot;r0&quot;, &quot;r1&quot;, &quot;r2&quot;, &quot;r3&quot;, &quot;r4&quot;, &quot;r12&quot;, &quot;cc&quot;, &quot;memory&quot;);
 }
-#endif
-</code></pre></div>
+#endif</code></pre></div>
+
 <p>The code can be made a little more readable using <code>cat jbdetect.c | tr &#39;;&#39; &#39;\n&#39;</code>.</p>
 
 <p>The code makes use of <code>svc 0x80</code> instruction throughout to invoke system calls. <code>svc 0x80</code> is the ARM counterpart of Intel&#39;s <code>int 0x80</code> instruction, used to invoke system calls. In iOS, which is a derivative of Darwin, the system call number is passed in r12 and the arguments in r0-r3. The return value is optionally returned in r0. <code>svc</code> also goes by the name of <code>swi</code> or <em>software interrupt</em>.</p>
@@ -140,134 +177,6 @@ FsNZKlEjkXtDxShPvqbttYCo (void)
 <p></p>
 
 <p>The code does not do anything new, and does not even conceal its presence. It can be easily identified in memory by simply looking for <code>svc 0x80</code> instructions, which assemble to <code>80 00 00 EF</code>. Given the fact that jailbreak detection is inherently self defeating, it becomes trivial to bypass the above checks.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
-        Dirty Harry: Hacking for free drinks in Singapore
-      </a>
-    </h1>
-
-    <span class="post-date">04 Nov 2013</span>
-
-    <p><a href="http://harrys.com.sg/">Harry&#39;s bar</a> is one of the most popular bar chains in Singapore. It has an iOS app &quot;Appy Hour&quot; that lets users spin the Harry&#39;s &quot;wheel of fortune&quot; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.</p>
-
-<p>Now there may not be any such thing as a free lunch, but there are free drinks! Let&#39;s see how.</p>
-
-<p><center><img src="/public/images/win240x360.png" /></center>
-<p></p></p>
-
-<h2>The &#39;luck factor&#39;</h2>
-
-<p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the &quot;luck factor&quot; of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield &#39;Better Luck Next Time&#39;.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">GET /harrys_1_1_beta/venues.xml HTTP/1.1
-Host: www.exhost.se
-User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
-Connection: keep-alive
-Accept-Encoding: gzip
-
-HTTP/1.1 200 OK
-Age: 1659
-Connection: Keep-Alive
-Content-Length: 3071
-Content-Type: application/xml
-Date: Fri, 01 Nov 2013 06:27:45 GMT
-ETag: &quot;3c8066-bff-4d7ddfaa98300&quot;
-Last-Modified: Thu, 14 Mar 2013 08:05:00 GMT
-Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
-Via: 1.1 qt-mfc4:80
-
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;Prizes&gt;
-&lt;Prize&gt;
-&lt;Description&gt;Better Luck*Next Time&lt;/Description&gt;
-&lt;Units&gt;1&lt;/Units&gt;
-&lt;ID&gt;1&lt;/ID&gt;
-&lt;Active&gt;1&lt;/Active&gt;
-&lt;Possibility&gt;13&lt;/Possibility&gt;
-&lt;IsPrize&gt;0&lt;/IsPrize&gt;
-&lt;PrizeFile&gt;img/1.png&lt;/PrizeFile&gt;
-&lt;/Prize&gt;
-&lt;Prize&gt;
-&lt;Description&gt;1-for-1 Bacardi*Sup Gls&lt;/Description&gt;
-&lt;Units&gt;1&lt;/Units&gt;
-&lt;ID&gt;2&lt;/ID&gt;
-&lt;Active&gt;1&lt;/Active&gt;
-&lt;Possibility&gt;5&lt;/Possibility&gt;
-&lt;IsPrize&gt;1&lt;/IsPrize&gt;
-&lt;PrizeFile&gt;img/2.png&lt;/PrizeFile&gt;
-&lt;/Prize&gt;
---snipped--
-</code></pre></div>
-<h2>Time Restriction</h2>
-
-<p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone&#39;s UDID, a timestamp and the bar&#39;s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">GET /harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30 HTTP/1.1
-Host: www.exhost.se
-User-Agent: Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)
-Connection: keep-alive
-Accept-Encoding: gzip
-
-HTTP/1.1 200 OK
-Date: Fri, 01 Nov 2013 06:56:16 GMT
-Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
-X-Powered-By: PHP/5.3.10
-Keep-Alive: timeout=5, max=100
-Connection: Keep-Alive
-Transfer-Encoding: chunked
-Content-Type: text/html
-
-true
-</code></pre></div>
-<h2>Getting past everything</h2>
-
-<p>Well, the simplest way to get past everything would be to make the app communicate with another server instead of <code>www.exhost.se</code>. First we will crawl <code>www.exhost.se</code> to get all the required files. The link <code>http://www.exhost.se/harrys_1_1_beta/</code> does not contain a default <code>index.html</code> or similar file, which makes crawling possible.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ wget -nv -r --no-parent --reject &quot;index.html*&quot; http://www.exhost.se/harrys_1_1_beta/
-
-2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ [639/639] -&gt; /&quot;www.exhost.se/harrys_1_1_beta/index.html&quot; [1] 
-http://www.exhost.se/robots.txt:
-2013-11-03 23:37:09 ERROR 404: Not Found.
-2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/cms.php [169] -&gt; &quot;www.exhost.se/harrys_1_1_beta/cms.php&quot; [1]
-2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/connect.php [0/0] -&gt; &quot;www.exhost.se/harrys_1_1_beta/connect.php&quot; [1]
-2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/fetchdata.php [5] -&gt; &quot;www.exhost.se/harrys_1_1_beta/fetchdata.php&quot; [1]
-2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/img/ [1037/1037] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/index.html&quot; [1]
-2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/js/ [461/461] -&gt; &quot;www.exhost.se/harrys_1_1_beta/js/index.html&quot; [1]
-2013-11-03 23:37:12 URL:http://www.exhost.se/harrys_1_1_beta/venues.xml [3071/3071] -&gt; &quot;www.exhost.se/harrys_1_1_beta/venues.xml&quot; [1]
-2013-11-03 23:37:19 URL:http://www.exhost.se/harrys_1_1_beta/img/1.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/1.png&quot; [1]
-2013-11-03 23:37:23 URL:http://www.exhost.se/harrys_1_1_beta/img/10.png [62543/62543] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/10.png&quot; [1]
-2013-11-03 23:37:24 URL:http://www.exhost.se/harrys_1_1_beta/img/11.png [23376/23376] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/11.png&quot; [1]
-2013-11-03 23:37:26 URL:http://www.exhost.se/harrys_1_1_beta/img/12.png [33471/33471] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/12.png&quot; [1]
-2013-11-03 23:37:29 URL:http://www.exhost.se/harrys_1_1_beta/img/13.png [58419/58419] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/13.png&quot; [1]
-2013-11-03 23:37:31 URL:http://www.exhost.se/harrys_1_1_beta/img/14.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/14.png&quot; [1]
-2013-11-03 23:37:32 URL:http://www.exhost.se/harrys_1_1_beta/img/15.png [50119/50119] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/15.png&quot; [1]
-2013-11-03 23:37:33 URL:http://www.exhost.se/harrys_1_1_beta/img/16.png [23376/23376] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/16.png&quot; [1]
-2013-11-03 23:37:34 URL:http://www.exhost.se/harrys_1_1_beta/img/2.png [44208/44208] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/2.png&quot; [1]
-2013-11-03 23:37:36 URL:http://www.exhost.se/harrys_1_1_beta/img/3.png [62543/62543] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/3.png&quot; [1]
-2013-11-03 23:37:38 URL:http://www.exhost.se/harrys_1_1_beta/img/4.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/4.png&quot; [1]
-2013-11-03 23:37:40 URL:http://www.exhost.se/harrys_1_1_beta/img/5.png [60030/60030] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/5.png&quot; [1]
-2013-11-03 23:37:44 URL:http://www.exhost.se/harrys_1_1_beta/img/6.jpg [124823/124823] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/6.jpg&quot; [1]
-2013-11-03 23:37:46 URL:http://www.exhost.se/harrys_1_1_beta/img/6.png [50119/50119] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/6.png&quot; [1]
-2013-11-03 23:37:47 URL:http://www.exhost.se/harrys_1_1_beta/img/7.png [45129/45129] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/7.png&quot; [1]
-2013-11-03 23:37:49 URL:http://www.exhost.se/harrys_1_1_beta/img/8.png [50769/50769] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/8.png&quot; [1]
-2013-11-03 23:37:50 URL:http://www.exhost.se/harrys_1_1_beta/img/9.png [40394/40394] -&gt; &quot;www.exhost.se/harrys_1_1_beta/img/9.png&quot; [1]
-2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js [85925/85925] -&gt; &quot;www.exhost.se/harrys_1_1_beta/js/jquery.min.js&quot; [1]
-FINISHED --2013-11-03 23:37:52--
-Total wall clock time: 54s
-Downloaded: 25 files, 950K in 34s (28.1 KB/s)
-</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys | grep &quot;http://www.exhost.se&quot;
-839501 http://www.exhost.se/harrys_1_1_beta/
-842849 http://www.exhost.se/harrys_1_1_beta/venues.xml
-843075 http://www.exhost.se/harrys_1_1_beta/fetchdata.php
-</code></pre></div>
-<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. </p>
-
-<p><img src="/public/images/strings.png" alt="Strings as seen in the disassembler after modification"></p>
-
-<p>Once edited, we can run the app any number of times while signed in the same bar, and win a drink on every spin!</p>
-
-<p>Cheers!</p>
 
   </div>
   

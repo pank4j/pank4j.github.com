@@ -28,9 +28,9 @@
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
-  <!--<link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
+  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
   <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>-->
+  <script>hljs.initHighlightingOnLoad();</script>
 
 </head>
 
@@ -72,6 +72,8 @@
         
       
         
+          
+        
       
         
           
@@ -93,7 +95,7 @@
       <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
     </nav>
 
-    <p>&copy; 2014. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
@@ -103,14 +105,15 @@
   <h1 class="post-title">AppMinder jailbreak detection analysis</h1>
   <span class="post-date">28 Dec 2013</span>
   <p>Neso Lab&#39;s <a href="http://appminder.nesolabs.de/">AppMinder</a> project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#39;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused <code>push</code>, <code>pop</code> and <code>cmp</code> instructions.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">#if !(TARGET_IPHONE_SIMULATOR)
+
+<div class="highlight"><pre><code class="language-c" data-lang="c">#if !(TARGET_IPHONE_SIMULATOR)
 __attribute__ ((always_inline)) static void
 FsNZKlEjkXtDxShPvqbttYCo (void)
 {
         asm volatile (&quot;mov r0, r0;mov r2, #152;sub r0, r2, #121;sub r1, r1;mov r2, #1;sub r2, #1;sub r3, r3;mov r4, #23;add r12, r4, #3;svc 0x80;mov r0, #76;mov r1, #2;b #2;push {r0-r12};mov r12, r1;b #2;pop {r0-r15};sub r1, r1, r1;b #1;cmp r0, r10;mov r0, r1;svc 0x80;cmp r0, #1;b #2;stmdb sp!, {r0-r12};bne #1;b #8;mov r0, #1;mov r12, #1;svc 0x80;mov r2, #12;sub r2, r2, r0;add r2, pc;bx r2;mov r0, #1;mov r12, #1;svc 0x80;b #1;cmp r0, r10;mov r1, r1;sub r1, r1, r1;b #2;push {r0-r12};mov r0, r1;mov r12, #256;asr r12, #7;b #1;cmp r0, r10;mov r1, #29;mov r0, r1;b #2;stmdb sp!, {r0-r12};svc 0x80;mov r2, r2;sub r1, r1, r1;mov r1, r1;mov r3, r1;add r3, r3, #1;cmp r0, r3;mov r2, r2;beq #8;mov r0, #1;mov r12, #1;svc 0x80;mov r1, r0;add r0, r0, #3;add r0, pc;mov pc, r0;pop {r0-r15};mov r0, r1;mov r0, r0;mov r3, #34;sub r0, r3, #3;sub r2, r2;mov r1, r2;sub r2, r2;sub r12, r12;mov r3, r12;mov r4, #193;sub r12, r4, #167;svc 0x80;b #2;pop {r0-r15};&quot; : : : &quot;r0&quot;, &quot;r1&quot;, &quot;r2&quot;, &quot;r3&quot;, &quot;r4&quot;, &quot;r12&quot;, &quot;cc&quot;, &quot;memory&quot;);
 }
-#endif
-</code></pre></div>
+#endif</code></pre></div>
+
 <p>The code can be made a little more readable using <code>cat jbdetect.c | tr &#39;;&#39; &#39;\n&#39;</code>.</p>
 
 <p>The code makes use of <code>svc 0x80</code> instruction throughout to invoke system calls. <code>svc 0x80</code> is the ARM counterpart of Intel&#39;s <code>int 0x80</code> instruction, used to invoke system calls. In iOS, which is a derivative of Darwin, the system call number is passed in r12 and the arguments in r0-r3. The return value is optionally returned in r0. <code>svc</code> also goes by the name of <code>swi</code> or <em>software interrupt</em>.</p>
@@ -156,6 +159,15 @@ FsNZKlEjkXtDxShPvqbttYCo (void)
     
       <li>
         <h3>
+          <a href="/posts/converting-ida-pro-graphs-to-images">
+            Converting IDA Pro graphs to images
+            <small>16 May 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
             Dirty Harry: Hacking for free drinks in Singapore
             <small>04 Nov 2013</small>
@@ -168,15 +180,6 @@ FsNZKlEjkXtDxShPvqbttYCo (void)
           <a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb">
             Assembling from scratch: Encoding BLX instruction in ARM / THUMB
             <small>19 Oct 2013</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/exploiting-file-uploads-for-fun-and-profit">
-            Exploiting File Uploads for Fun and Profit
-            <small>29 Jun 2013</small>
           </a>
         </h3>
       </li>
