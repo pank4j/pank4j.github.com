@@ -136,27 +136,27 @@
 
 <p>The offset is then used to encode the instruction as follows:</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">Offset = 0xD8010
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">Offset</span> <span class="o">=</span> 0xD8010
  
-      00            0D            80            10
+      <span class="m">00</span>            0D            <span class="m">80</span>            10
  
 Bits 31-24         23-16         15-8           7-0
-   0000 0000     0000 1101     1000 0000     0001 0000
+   <span class="m">0000</span> <span class="m">0000</span>     <span class="m">0000</span> <span class="m">1101</span>     <span class="m">1000</span> <span class="m">0000</span>     <span class="m">0001</span> 0000
  
-Bits 31-25      24 23 22       21-12          11-2         10
-     0000000     0  0  0     0011011000     0000000100     00
+Bits 31-25      <span class="m">24</span> <span class="m">23</span> <span class="m">22</span>       21-12          11-2         10
+     <span class="m">0000000</span>     <span class="m">0</span>  <span class="m">0</span>  <span class="m">0</span>     <span class="m">0011011000</span>     <span class="m">0000000100</span>     00
                  S I1  I2         H              L
  
-J1 = ~I1 ^ S = 1
-J2 = ~I2 ^ S = 1
+<span class="nv">J1</span> <span class="o">=</span> ~I1 ^ <span class="nv">S</span> <span class="o">=</span> 1
+<span class="nv">J2</span> <span class="o">=</span> ~I2 ^ <span class="nv">S</span> <span class="o">=</span> 1
  
 Encoded instruction:
  
-Bits 32-28    27       26-17      16-15 14 13 12     11-1          0
+Bits 32-28    <span class="m">27</span>       26-17      16-15 <span class="m">14</span> <span class="m">13</span> <span class="m">12</span>     11-1          0
                S          H             J1    J2        L
-     11110     0     0011011000     11  1  0  1     0000000100     0
+     <span class="m">11110</span>     <span class="m">0</span>     <span class="m">0011011000</span>     <span class="m">11</span>  <span class="m">1</span>  <span class="m">0</span>  <span class="m">1</span>     <span class="m">0000000100</span>     0
  
-      1111 0000     1101 1000     1110 1000     0000 1000
+      <span class="m">1111</span> <span class="m">0000</span>     <span class="m">1101</span> <span class="m">1000</span>     <span class="m">1110</span> <span class="m">1000</span>     <span class="m">0000</span> 1000
  
          F0            D8             E8           08</code></pre></div>
 
