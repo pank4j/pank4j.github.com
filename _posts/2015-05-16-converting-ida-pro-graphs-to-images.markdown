@@ -23,9 +23,9 @@ IDA Pro provides an interesting feature to view the disassembly of a function as
 ![wingraph32](/public/images/wingraph32.png "A graph as shown by wingraph32")
 </center>
 
-The graph can be exported from IDA Pro (or from wingraoh32) as a .gdl (graph description language) file. The .gdl file can be converted into an image (or many other formats) using the [Graph::Easy](http://search.cpan.org/dist/Graph-Easy/bin/graph-easy) CPAN module.
+The graph can be exported from IDA Pro (or from wingraoh32) as a .gdl (graph description language) file. GDL file is a text representation of graph, and can be opened using a text editor. It can be converted into an image using the [Graph::Easy](http://search.cpan.org/dist/Graph-Easy/bin/graph-easy) CPAN module.
 
-First install the Graph::Easy CPAN module. It requires [Graphviz](http://www.graphviz.org/) to run, so install that as well.
+To convert it into a PNG (or any other format) image, first install the Graph::Easy CPAN module. It requires [Graphviz](http://www.graphviz.org/) to run, so install that as well.
 
 {% highlight bash %}
 cpan Graph::Easy
