@@ -1,110 +1,164 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>FormatShield: A tool to defend against format string attacks &#8211; Pankaj Kohli</title>
+<meta name="description" content="FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.
 
-  <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+">
+<meta name="keywords" content="binary rewriting, format string attacks, formatshield, memory corruption attacks, blog">
 
-  <!-- Enable responsiveness on mobile devices-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>
-    
-      FormatShield: A tool to defend against format string attacks
-    
-  </title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/public/css/poole.css">
-  <link rel="stylesheet" href="/public/css/syntax.css">
-  <link rel="stylesheet" href="/public/css/hyde.css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="FormatShield: A tool to defend against format string attacks">
+<meta name="twitter:description" content="FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.
 
-  <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/pic.png">
-                                 <link rel="shortcut icon" href="/public/pic.ico">
+">
+<meta name="twitter:site" content="@pank4j">
+<meta name="twitter:creator" content="@pank4j">
 
-  <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/default-thumb.png">
 
-  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
-  <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FormatShield: A tool to defend against format string attacks">
+<meta property="og:description" content="FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.
+
+">
+<meta property="og:url" content="/posts/formatshield/">
+<meta property="og:site_name" content="Pankaj Kohli">
+
+<meta property="og:image" content="/images/default-thumb.png">
+
+
+
+
+
+
+<link rel="canonical" href="/posts/formatshield/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Pankaj Kohli Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 </head>
 
+<body class="post">
 
-  <body>
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
 
-    <div class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <h1>
-        <a href="/">
-          CodePwn
-        </a>
-      </h1>
-      <p class="lead">Stuff about Security</p>
-    </div>
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="/">Pankaj Kohli</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="/posts/" >Posts</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="/archive/" >Archive</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
 
-    <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/">Home</a>
 
-      
 
-      
-      
-        
-          
-        
-      
-        
-          
-            <a class="sidebar-nav-item" href="/about.html">About</a>
-          
-        
-      
-        
-          
-            <a class="sidebar-nav-item" href="/archive.html">Archive</a>
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
+<div id="main" role="main">
+  <div class="article-author-side">
+    
 
-      <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
-    </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
-  </div>
+<div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="/images/pic.png" class="bio-photo" alt="Pankaj Kohli bio photo">
+
+
+  <h3 itemprop="name">Pankaj Kohli</h3>
+  <p>Security Researcher</p>
+  
+  <a href="http://twitter.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </div>
 
-
-    <div class="content container">
-      <div class="post">
-  <h1 class="post-title">FormatShield: A tool to defend against format string attacks</h1>
-  <span class="post-date">30 Jun 2009</span>
-  <p>FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.</p>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="/posts/formatshield/" rel="bookmark" title="FormatShield: A tool to defend against format string attacks">FormatShield: A tool to defend against format string attacks</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.</p>
 
 <p>FormatShield provides wrappers for the following libc functions:</p>
 
@@ -119,63 +173,66 @@
 <span class="kt">void</span> <span class="n">syslog</span><span class="p">(</span><span class="kt">int</span> <span class="n">priority</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
 <span class="kt">void</span> <span class="n">vsyslog</span><span class="p">(</span><span class="kt">int</span> <span class="n">priority</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span></code></pre></div>
 
-<p>On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the <a href="/public/files/formatshield-acisp08.pdf">research paper</a>.</p>
+<p>On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the <a href="/assets/files/formatshield-acisp08.pdf">research paper</a>.</p>
 
 <p><a href="https://github.com/pank4j/formatshield">Formatshield source</a> is licensed as GNU GPL v3 and is archived on github. It is available only for testing/research, please use it at your own risk.</p>
 
-</div>
-
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_developer = 1;
-    var disqus_shortname = 'codepwn'; // required: replace example with your forum shortname
-    var disqus_identifier = '291 /?p=291';
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
-    
-      <li>
-        <h3>
-          <a href="/posts/converting-ida-pro-graphs-to-images">
-            Converting IDA Pro graphs to images
-            <small>16 May 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/appminder-jailbreak-detection-analysis">
-            AppMinder jailbreak detection analysis
-            <small>28 Dec 2013</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
-            Dirty Harry: Hacking for free drinks in Singapore
-            <small>04 Nov 2013</small>
-          </a>
-        </h3>
-      </li>
-    
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=/posts/formatshield/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/formatshield/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=/posts/formatshield/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
   </ul>
-</div>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>FormatShield: A tool to defend against format string attacks</strong> was published on <time datetime="2009-06-30T23:14:29+08:00">June 30, 2009</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/posts/converting-ida-pro-graphs-to-images/" title="Converting IDA Pro graphs to images">Converting IDA Pro graphs to images</a></li>
+    
+      <li><a href="/posts/appminder-jailbreak-detection-analysis/" title="AppMinder jailbreak detection analysis">AppMinder jailbreak detection analysis</a></li>
+    
+      <li><a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore/" title="Dirty Harry: Hacking for free drinks in Singapore">Dirty Harry: Hacking for free drinks in Singapore</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    
+
+<span>&copy; 2015 Pankaj Kohli. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
 
 
-    </div>
+  
 
-  </body>
+
+
+
+</body>
 </html>

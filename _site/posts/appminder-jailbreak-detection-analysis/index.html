@@ -1,110 +1,164 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>AppMinder jailbreak detection analysis &#8211; Pankaj Kohli</title>
+<meta name="description" content="Neso Lab&#8217;s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#8217;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
 
-  <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+">
+<meta name="keywords" content="AppMinder, Neso labs, jailbreak detection, iOS, blog">
 
-  <!-- Enable responsiveness on mobile devices-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>
-    
-      AppMinder jailbreak detection analysis
-    
-  </title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/public/css/poole.css">
-  <link rel="stylesheet" href="/public/css/syntax.css">
-  <link rel="stylesheet" href="/public/css/hyde.css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="AppMinder jailbreak detection analysis">
+<meta name="twitter:description" content="Neso Lab&#8217;s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#8217;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
 
-  <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/pic.png">
-                                 <link rel="shortcut icon" href="/public/pic.ico">
+">
+<meta name="twitter:site" content="@pank4j">
+<meta name="twitter:creator" content="@pank4j">
 
-  <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/default-thumb.png">
 
-  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
-  <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AppMinder jailbreak detection analysis">
+<meta property="og:description" content="Neso Lab&#8217;s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#8217;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
+
+">
+<meta property="og:url" content="/posts/appminder-jailbreak-detection-analysis/">
+<meta property="og:site_name" content="Pankaj Kohli">
+
+<meta property="og:image" content="/images/default-thumb.png">
+
+
+
+
+
+
+<link rel="canonical" href="/posts/appminder-jailbreak-detection-analysis/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Pankaj Kohli Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 </head>
 
+<body class="post">
 
-  <body>
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
 
-    <div class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <h1>
-        <a href="/">
-          CodePwn
-        </a>
-      </h1>
-      <p class="lead">Stuff about Security</p>
-    </div>
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="/">Pankaj Kohli</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="/posts/" >Posts</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="/archive/" >Archive</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
 
-    <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/">Home</a>
 
-      
 
-      
-      
-        
-          
-        
-      
-        
-          
-            <a class="sidebar-nav-item" href="/about.html">About</a>
-          
-        
-      
-        
-          
-            <a class="sidebar-nav-item" href="/archive.html">Archive</a>
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
+<div id="main" role="main">
+  <div class="article-author-side">
+    
 
-      <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
-    </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
-  </div>
+<div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="/images/pic.png" class="bio-photo" alt="Pankaj Kohli bio photo">
+
+
+  <h3 itemprop="name">Pankaj Kohli</h3>
+  <p>Security Researcher</p>
+  
+  <a href="http://twitter.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </div>
 
-
-    <div class="content container">
-      <div class="post">
-  <h1 class="post-title">AppMinder jailbreak detection analysis</h1>
-  <span class="post-date">28 Dec 2013</span>
-  <p>Neso Lab&#39;s <a href="http://appminder.nesolabs.de/">AppMinder</a> project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#39;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused <code>push</code>, <code>pop</code> and <code>cmp</code> instructions.</p>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="/posts/appminder-jailbreak-detection-analysis/" rel="bookmark" title="AppMinder jailbreak detection analysis">AppMinder jailbreak detection analysis</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Neso Lab’s <a href="http://appminder.nesolabs.de/">AppMinder</a> project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app’s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused <code>push</code>, <code>pop</code> and <code>cmp</code> instructions.</p>
 
 <div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#if !(TARGET_IPHONE_SIMULATOR)</span>
 <span class="n">__attribute__</span> <span class="p">((</span><span class="n">always_inline</span><span class="p">))</span> <span class="k">static</span> <span class="kt">void</span>
@@ -114,21 +168,24 @@
 <span class="p">}</span>
 <span class="cp">#endif</span></code></pre></div>
 
-<p>The code can be made a little more readable using <code>cat jbdetect.c | tr &#39;;&#39; &#39;\n&#39;</code>.</p>
+<p>The code can be made a little more readable using <code>cat jbdetect.c | tr ';' '\n'</code>.</p>
 
-<p>The code makes use of <code>svc 0x80</code> instruction throughout to invoke system calls. <code>svc 0x80</code> is the ARM counterpart of Intel&#39;s <code>int 0x80</code> instruction, used to invoke system calls. In iOS, which is a derivative of Darwin, the system call number is passed in r12 and the arguments in r0-r3. The return value is optionally returned in r0. <code>svc</code> also goes by the name of <code>swi</code> or <em>software interrupt</em>.</p>
+<p>The code makes use of <code>svc 0x80</code> instruction throughout to invoke system calls. <code>svc 0x80</code> is the ARM counterpart of Intel’s <code>int 0x80</code> instruction, used to invoke system calls. In iOS, which is a derivative of Darwin, the system call number is passed in r12 and the arguments in r0-r3. The return value is optionally returned in r0. <code>svc</code> also goes by the name of <code>swi</code> or <em>software interrupt</em>.</p>
 
-<h2>Debugger detection</h2>
+<h2 id="debugger-detection">Debugger detection</h2>
 
-<p>Process tracing utilities and debuggers make use of <code>ptrace</code> system call to trace a running process. If the &#39;Anti-debugging option&#39; was selected, the code tries to detect and deny any debugging attempts. It does this by invoking <code>ptrace</code> (system call 26) on the current process with an argument of 31, i.e. <code>PTRACE_DENY_ATTACH</code>. Quoting from the man page:</p>
+<p>Process tracing utilities and debuggers make use of <code>ptrace</code> system call to trace a running process. If the ‘Anti-debugging option’ was selected, the code tries to detect and deny any debugging attempts. It does this by invoking <code>ptrace</code> (system call 26) on the current process with an argument of 31, i.e. <code>PT_DENY_ATTACH</code>. Quoting from the man page:</p>
 
-<p><img src="/public/images/ptrace.png" alt="ptrace"></p>
+<figure align="center">
+    <img src="/images/ptrace.png" />
+    <figcaption>PT_DENY_ATTACH in the man page</figcaption>
+</figure>
 
-<p>The process is killed if a debugger is detected. Additionally, debuggers are denied to trace the process in any future requests. gdb shows a &quot;Operation not permitted&quot; message if it tries to attach to a process which has called <code>ptrace</code> with <code>PT_DENY_ATTACH</code>.</p>
+<p>The process is killed if a debugger is detected. Additionally, debuggers are denied to trace the process in any future requests. gdb shows a “Operation not permitted” message if it tries to attach to a process which has called <code>ptrace</code> with <code>PT_DENY_ATTACH</code>.</p>
 
 <p>A complete list of system calls can be found in <a href="http://www.opensource.apple.com/source/xnu/xnu-1228.5.20/bsd/sys/syscall.h">sys/syscall.h</a>.</p>
 
-<h2>Jailbreak Detection</h2>
+<h2 id="jailbreak-detection">Jailbreak Detection</h2>
 
 <p>The code detects jailbreaks using <code>fork</code>. On non-jailbroken iOS, the sandbox restricts the use of <code>fork</code>. Calling <code>fork</code> fails with a return value of 1. However, on a jailbroken iOS, <code>fork</code> succeeds and spawns a new process. The code terminates the process using <code>exit(1)</code> if <code>fork</code> does not return 1.</p>
 
@@ -136,59 +193,62 @@
 
 <p>The code does not do anything new, and does not even conceal its presence. It can be easily identified in memory by simply looking for <code>svc 0x80</code> instructions, which assemble to <code>80 00 00 EF</code>. Given the fact that jailbreak detection is inherently self defeating, it becomes trivial to bypass the above checks.</p>
 
-</div>
-
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_developer = 1;
-    var disqus_shortname = 'codepwn'; // required: replace example with your forum shortname
-    
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
-    
-      <li>
-        <h3>
-          <a href="/posts/converting-ida-pro-graphs-to-images">
-            Converting IDA Pro graphs to images
-            <small>16 May 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
-            Dirty Harry: Hacking for free drinks in Singapore
-            <small>04 Nov 2013</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb">
-            Assembling from scratch: Encoding BLX instruction in ARM / THUMB
-            <small>19 Oct 2013</small>
-          </a>
-        </h3>
-      </li>
-    
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=/posts/appminder-jailbreak-detection-analysis/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/appminder-jailbreak-detection-analysis/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=/posts/appminder-jailbreak-detection-analysis/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
   </ul>
-</div>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>AppMinder jailbreak detection analysis</strong> was published on <time datetime="2013-12-28T20:38:07+08:00">December 28, 2013</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/posts/converting-ida-pro-graphs-to-images/" title="Converting IDA Pro graphs to images">Converting IDA Pro graphs to images</a></li>
+    
+      <li><a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore/" title="Dirty Harry: Hacking for free drinks in Singapore">Dirty Harry: Hacking for free drinks in Singapore</a></li>
+    
+      <li><a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb/" title="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">Assembling from scratch: Encoding BLX instruction in ARM / THUMB</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    
+
+<span>&copy; 2015 Pankaj Kohli. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
 
 
-    </div>
+  
 
-  </body>
+
+
+
+</body>
 </html>

@@ -1,138 +1,181 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Assembling from scratch: Encoding BLX instruction in ARM / THUMB &#8211; Pankaj Kohli</title>
+<meta name="description" content="If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.
 
-  <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+">
+<meta name="keywords" content="ARM, assembly, BLX instruction, encoding, Thumb, blog">
 
-  <!-- Enable responsiveness on mobile devices-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>
-    
-      Assembling from scratch: Encoding BLX instruction in ARM / THUMB
-    
-  </title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/public/css/poole.css">
-  <link rel="stylesheet" href="/public/css/syntax.css">
-  <link rel="stylesheet" href="/public/css/hyde.css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">
+<meta name="twitter:description" content="If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.
 
-  <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/pic.png">
-                                 <link rel="shortcut icon" href="/public/pic.ico">
+">
+<meta name="twitter:site" content="@pank4j">
+<meta name="twitter:creator" content="@pank4j">
 
-  <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/default-thumb.png">
 
-  <link rel="stylesheet" href="/public/css/highlight/styles/monokai.css">
-  <script src="/public/css/highlight/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">
+<meta property="og:description" content="If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.
+
+">
+<meta property="og:url" content="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb/">
+<meta property="og:site_name" content="Pankaj Kohli">
+
+<meta property="og:image" content="/images/default-thumb.png">
+
+
+
+
+
+
+<link rel="canonical" href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Pankaj Kohli Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 </head>
 
+<body class="post">
 
-  <body>
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
 
-    <div class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <h1>
-        <a href="/">
-          CodePwn
-        </a>
-      </h1>
-      <p class="lead">Stuff about Security</p>
-    </div>
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="/">Pankaj Kohli</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="/about/" >About</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="/posts/" >Posts</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="/archive/" >Archive</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
 
-    <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/">Home</a>
 
-      
 
-      
-      
-        
-          
-        
-      
-        
-          
-            <a class="sidebar-nav-item" href="/about.html">About</a>
-          
-        
-      
-        
-          
-            <a class="sidebar-nav-item" href="/archive.html">Archive</a>
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
+<div id="main" role="main">
+  <div class="article-author-side">
+    
 
-      <a class="sidebar-nav-item" href="https://github.com/pank4j">GitHub</a>
-    </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
+<div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="/images/pic.png" class="bio-photo" alt="Pankaj Kohli bio photo">
+
+
+  <h3 itemprop="name">Pankaj Kohli</h3>
+  <p>Security Researcher</p>
+  
+  <a href="http://twitter.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
   </div>
-</div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb/" rel="bookmark" title="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">Assembling from scratch: Encoding BLX instruction in ARM / THUMB</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.</p>
 
+<figure align="center">
+    <img src="/images/blx.png" />
+</figure>
 
-    <div class="content container">
-      <div class="post">
-  <h1 class="post-title">Assembling from scratch: Encoding BLX instruction in ARM / THUMB</h1>
-  <span class="post-date">19 Oct 2013</span>
-  <p><center><img src="/public/images/blx.png" /></center></p>
+<p>One of such intriguing instructions in ARM is BLX. BLX instruction performs a PC relative unconditional branch, and optionally changes mode to ARM or THUMB depending on the target address. It encodes to a 32-bit word under THUMB mode 2. It’s encoding varies depending upon the relative offset between the instruction and the target address. For e.g. the instruction at 0x2EA6 in the disassembly above encodes to <code>D8 F0 08 E8</code> while another BLX instruction at 0x30C4 encodes to <code>8E F3 C4 E9</code>. The encoded instruction itself is divided into two 16-bit halves, each of which is shown in little-endian. The actual encodings are therefore F0 D8 E8 08 and F3 8E E9 C4. The encoding is explained in the THUMB instruction set (available <a href="https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf">here</a>).</p>
 
-<p>If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.</p>
+<figure align="center" class="helf">
+    <img src="/images/blxasm1.png" />
+    <img src="/images/blxasm2.png" />
+</figure>
 
-<p>One of such intriguing instructions in ARM is BLX. BLX instruction performs a PC relative unconditional branch, and optionally changes mode to ARM or THUMB depending on the target address. It encodes to a 32-bit word under THUMB mode 2. It&#39;s encoding varies depending upon the relative offset between the instruction and the target address. For e.g. the instruction at 0x2EA6 in the disassembly above encodes to <code>D8 F0 08 E8</code> while another BLX instruction at 0x30C4 encodes to <code>8E F3 C4 E9</code>. The encoded instruction itself is divided into two 16-bit halves, each of which is shown in little-endian. The actual encodings are therefore F0 D8 E8 08 and F3 8E E9 C4. The encoding is explained in the THUMB instruction set (available <a href="https://ece.uwaterloo.ca/%7Eece222/ARM/ARM7-TDMI-manual-pt3.pdf">here</a>).</p>
+<h2 id="calculating-the-offset">Calculating the offset</h2>
 
-<p>
-<style type="text/css">
-.pic {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: 10%;
-    /*height: 30px;*/
-}
+<p>The instruction at 0x2EA6 branches to <code>_obj_msgSend</code>, which is at 0xDAEB8. The offset for encoding is calculated from the current value of PC which is 4 bytes ahead due to pipeline, i.e. 0x2EAA. When the target of branch is 32-bit ARM code, the value used is align(PC, 4), which is PC rounded down to align it to 4 bytes, i.e. PC &amp; 0xFFFFFFFC (0x2EA8 in this case). The offset is therefore, 0xDAEB8 - 0x2EA8 = 0xD8010.<br /></p>
 
-#images {
-    text-align:center;
-}
-</style>
-<div id="images">
-<img class="pic" src="/public/images/blxasm1.png" /><img class="pic" src="/public/images/blxasm2.png" />
-</div>
-</p>
-
-<h2>Calculating the offset</h2>
-
-<p>The instruction at 0x2EA6 branches to <code>_obj_msgSend</code>, which is at 0xDAEB8. The offset for encoding is calculated from the current value of PC which is 4 bytes ahead due to pipeline, i.e. 0x2EAA. When the target of branch is 32-bit ARM code, the value used is align(PC, 4), which is PC rounded down to align it to 4 bytes, i.e. PC &amp; 0xFFFFFFFC (0x2EA8 in this case). The offset is therefore, 0xDAEB8 - 0x2EA8 = 0xD8010.<br/></p>
-
-<h2>Encoding the instruction</h2>
+<h2 id="encoding-the-instruction">Encoding the instruction</h2>
 
 <p>The offset is then used to encode the instruction as follows:</p>
 
@@ -162,59 +205,63 @@ Bits 32-28    <span class="m">27</span>       26-17      16-15 <span class="m">1
 
 <p>which explains the encoding seen in the disassembler <code>(D8 F0 08 E8)</code>. :-)</p>
 
-</div>
 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_developer = 1;
-    var disqus_shortname = 'codepwn'; // required: replace example with your forum shortname
-    var disqus_identifier = '171 /?p=171';
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
-    
-      <li>
-        <h3>
-          <a href="/posts/converting-ida-pro-graphs-to-images">
-            Converting IDA Pro graphs to images
-            <small>16 May 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/appminder-jailbreak-detection-analysis">
-            AppMinder jailbreak detection analysis
-            <small>28 Dec 2013</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore">
-            Dirty Harry: Hacking for free drinks in Singapore
-            <small>04 Nov 2013</small>
-          </a>
-        </h3>
-      </li>
-    
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
   </ul>
-</div>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Assembling from scratch: Encoding BLX instruction in ARM / THUMB</strong> was published on <time datetime="2013-10-19T13:23:25+08:00">October 19, 2013</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/posts/converting-ida-pro-graphs-to-images/" title="Converting IDA Pro graphs to images">Converting IDA Pro graphs to images</a></li>
+    
+      <li><a href="/posts/appminder-jailbreak-detection-analysis/" title="AppMinder jailbreak detection analysis">AppMinder jailbreak detection analysis</a></li>
+    
+      <li><a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore/" title="Dirty Harry: Hacking for free drinks in Singapore">Dirty Harry: Hacking for free drinks in Singapore</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    
+
+<span>&copy; 2015 Pankaj Kohli. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
 
 
-    </div>
+  
 
-  </body>
+
+
+
+</body>
 </html>
