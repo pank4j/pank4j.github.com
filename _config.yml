@@ -7,7 +7,7 @@ url:
 
 # Jekyll configuration
 
-permalink:   /posts/:title/
+permalink:   /posts/:title.html
 markdown:    kramdown
 highlighter: pygments
 sass:
