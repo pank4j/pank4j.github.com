@@ -9,7 +9,7 @@ url:
 
 permalink:   /posts/:title/
 markdown:    kramdown
-highlighter: rogue
+highlighter: pygments
 sass:
   sass_dir: _sass
   style: compressed
