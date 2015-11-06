@@ -9,7 +9,7 @@ url:
 
 permalink:   /posts/:title/
 markdown:    kramdown
-highlighter: pygments
+highlighter: rogue
 sass:
   sass_dir: _sass
   style: compressed
@@ -21,7 +21,7 @@ kramdown:
   footnote_nr: 1
   entity_output: as_char
   toc_levels: 1..6
-  use_coderay: false
+  enable_coderay: false
 
 
 # Site owner
@@ -30,12 +30,12 @@ owner:
   avatar: pic.png
   bio: "Security Researcher"
   email:
-  disqus-shortname:
+  disqus-shortname: codepwn
   twitter: pank4j
   facebook: #username
   google:
     plus: #username
-    analytics:
+    analytics: UA-69786233-1
     verify:
     ad-client:
     ad-slot:
