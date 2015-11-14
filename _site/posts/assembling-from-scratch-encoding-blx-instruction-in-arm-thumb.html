@@ -12,6 +12,7 @@
 <meta name="keywords" content="ARM, assembly, BLX instruction, encoding, Thumb, blog">
 
 
+
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">
 <meta name="twitter:description" content="If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.
@@ -93,11 +94,17 @@
 		    <ul>
 		        
 				    
+				        
+				    
 				    <li><a href="/about/" >About</a></li>
 				
 				    
+				        
+				    
 				    <li><a href="/posts/" >Posts</a></li>
 				
+				    
+				        
 				    
 				    <li><a href="/archive/" >Archive</a></li>
 				
@@ -111,6 +118,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
+
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -158,8 +166,9 @@
 
 <p>One of such intriguing instructions in ARM is BLX. BLX instruction performs a PC relative unconditional branch, and optionally changes mode to ARM or THUMB depending on the target address. It encodes to a 32-bit word under THUMB mode 2. It’s encoding varies depending upon the relative offset between the instruction and the target address. For e.g. the instruction at 0x2EA6 in the disassembly above encodes to <code>D8 F0 08 E8</code> while another BLX instruction at 0x30C4 encodes to <code>8E F3 C4 E9</code>. The encoded instruction itself is divided into two 16-bit halves, each of which is shown in little-endian. The actual encodings are therefore F0 D8 E8 08 and F3 8E E9 C4. The encoding is explained in the THUMB instruction set (available <a href="https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf">here</a>).</p>
 
-<figure align="center" class="helf">
+<figure align="center">
     <img src="/images/blxasm1.png" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <img src="/images/blxasm2.png" />
 </figure>
 
@@ -171,7 +180,7 @@
 
 <p>The offset is then used to encode the instruction as follows:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">Offset</span> <span class="o">=</span> 0xD8010
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">Offset</span> <span class="o">=</span> 0xD8010
  
       <span class="m">00</span>            0D            <span class="m">80</span>            10
  
@@ -193,7 +202,7 @@ Bits 32-28    <span class="m">27</span>       26-17      16-15 <span class="m">1
  
       <span class="m">1111</span> <span class="m">0000</span>     <span class="m">1101</span> <span class="m">1000</span>     <span class="m">1110</span> <span class="m">1000</span>     <span class="m">0000</span> 1000
  
-         F0            D8             E8           08</code></pre></figure>
+         F0            D8             E8           08</code></pre></div>
 
 <p>which explains the encoding seen in the disassembler <code>(D8 F0 08 E8)</code>. :-)</p>
 

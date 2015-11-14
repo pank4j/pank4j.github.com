@@ -12,6 +12,7 @@
 <meta name="keywords" content="binary rewriting, format string attacks, formatshield, memory corruption attacks, blog">
 
 
+
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="FormatShield: A tool to defend against format string attacks">
 <meta name="twitter:description" content="FormatShield is a library that intercepts call to vulnerable functions and uses binary rewriting to defend against format string attacks. It identifies the vulnerable call sites in a running process and dumps the corresponding context information in the ELF binary of the process. Attacks are detected when format specifiers are found at these contexts of the vulnerable call sites.
@@ -93,11 +94,17 @@
 		    <ul>
 		        
 				    
+				        
+				    
 				    <li><a href="/about/" >About</a></li>
 				
 				    
+				        
+				    
 				    <li><a href="/posts/" >Posts</a></li>
 				
+				    
+				        
 				    
 				    <li><a href="/archive/" >Archive</a></li>
 				
@@ -111,6 +118,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
+
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -154,7 +162,7 @@
 
 <p>FormatShield provides wrappers for the following libc functions:</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">printf</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">printf</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
 <span class="kt">int</span> <span class="n">fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
 <span class="kt">int</span> <span class="n">sprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
 <span class="kt">int</span> <span class="n">snprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
@@ -163,7 +171,7 @@
 <span class="kt">int</span> <span class="n">vsprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span>
 <span class="kt">int</span> <span class="n">vsnprintf</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span>
 <span class="kt">void</span> <span class="n">syslog</span><span class="p">(</span><span class="kt">int</span> <span class="n">priority</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
-<span class="kt">void</span> <span class="n">vsyslog</span><span class="p">(</span><span class="kt">int</span> <span class="n">priority</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span></code></pre></figure>
+<span class="kt">void</span> <span class="n">vsyslog</span><span class="p">(</span><span class="kt">int</span> <span class="n">priority</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">)</span></code></pre></div>
 
 <p>On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the <a href="/assets/files/formatshield-acisp08.pdf">research paper</a>.</p>
 

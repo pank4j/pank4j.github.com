@@ -40,39 +40,12 @@
     <loc>/</loc>
   </url>
   <url>
-    <loc>/archive/</loc>
+    <loc>/about/</loc>
   </url>
   <url>
-    <loc>/about/</loc>
+    <loc>/archive/</loc>
   </url>
   <url>
     <loc>/posts/</loc>
   </url>
-    <url>
-      <loc>/posts/formatshield.html</loc>
-    </url>
-    <url>
-      <loc>/posts/vlc-media-player-smb-uri-handling-remote-buffer-overflow-vulnerability-exploit.html</loc>
-    </url>
-    <url>
-      <loc>/posts/htmldoc-html-file-handling-remote-stack-buffer-overflow-exploit-linux.html</loc>
-    </url>
-    <url>
-      <loc>/posts/httpdx-1-4-get-request-remote-buffer-overflow-exploit-0day.html</loc>
-    </url>
-    <url>
-      <loc>/posts/exploiting-file-uploads-for-fun-and-profit.html</loc>
-    </url>
-    <url>
-      <loc>/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb.html</loc>
-    </url>
-    <url>
-      <loc>/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html</loc>
-    </url>
-    <url>
-      <loc>/posts/appminder-jailbreak-detection-analysis.html</loc>
-    </url>
-    <url>
-      <loc>/posts/converting-ida-pro-graphs-to-images.html</loc>
-    </url>
 </urlset>

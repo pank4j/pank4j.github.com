@@ -6,15 +6,16 @@
 <head>
 <meta charset="utf-8">
 <title>AppMinder jailbreak detection analysis &#8211; Pankaj Kohli</title>
-<meta name="description" content="Neso Lab’s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app’s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
+<meta name="description" content="Neso Lab&#8217;s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#8217;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
 
 ">
 <meta name="keywords" content="AppMinder, Neso labs, jailbreak detection, iOS, blog">
 
 
+
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="AppMinder jailbreak detection analysis">
-<meta name="twitter:description" content="Neso Lab’s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app’s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
+<meta name="twitter:description" content="Neso Lab&#8217;s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#8217;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
 
 ">
 <meta name="twitter:site" content="@pank4j">
@@ -27,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AppMinder jailbreak detection analysis">
-<meta property="og:description" content="Neso Lab’s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app’s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
+<meta property="og:description" content="Neso Lab&#8217;s AppMinder project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app&#8217;s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused push, pop and cmp instructions.
 
 ">
 <meta property="og:url" content="/posts/appminder-jailbreak-detection-analysis.html">
@@ -93,11 +94,17 @@
 		    <ul>
 		        
 				    
+				        
+				    
 				    <li><a href="/about/" >About</a></li>
 				
 				    
+				        
+				    
 				    <li><a href="/posts/" >Posts</a></li>
 				
+				    
+				        
 				    
 				    <li><a href="/archive/" >Archive</a></li>
 				
@@ -111,6 +118,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
+
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -152,13 +160,13 @@
     <div class="article-wrap">
       <p>Neso Lab’s <a href="http://appminder.nesolabs.de/">AppMinder</a> project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app’s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused <code>push</code>, <code>pop</code> and <code>cmp</code> instructions.</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#if !(TARGET_IPHONE_SIMULATOR)</span>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#if !(TARGET_IPHONE_SIMULATOR)</span>
 <span class="n">__attribute__</span> <span class="p">((</span><span class="n">always_inline</span><span class="p">))</span> <span class="k">static</span> <span class="kt">void</span>
 <span class="n">FsNZKlEjkXtDxShPvqbttYCo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="n">asm</span> <span class="k">volatile</span> <span class="p">(</span><span class="s">&quot;mov r0, r0;mov r2, #152;sub r0, r2, #121;sub r1, r1;mov r2, #1;sub r2, #1;sub r3, r3;mov r4, #23;add r12, r4, #3;svc 0x80;mov r0, #76;mov r1, #2;b #2;push {r0-r12};mov r12, r1;b #2;pop {r0-r15};sub r1, r1, r1;b #1;cmp r0, r10;mov r0, r1;svc 0x80;cmp r0, #1;b #2;stmdb sp!, {r0-r12};bne #1;b #8;mov r0, #1;mov r12, #1;svc 0x80;mov r2, #12;sub r2, r2, r0;add r2, pc;bx r2;mov r0, #1;mov r12, #1;svc 0x80;b #1;cmp r0, r10;mov r1, r1;sub r1, r1, r1;b #2;push {r0-r12};mov r0, r1;mov r12, #256;asr r12, #7;b #1;cmp r0, r10;mov r1, #29;mov r0, r1;b #2;stmdb sp!, {r0-r12};svc 0x80;mov r2, r2;sub r1, r1, r1;mov r1, r1;mov r3, r1;add r3, r3, #1;cmp r0, r3;mov r2, r2;beq #8;mov r0, #1;mov r12, #1;svc 0x80;mov r1, r0;add r0, r0, #3;add r0, pc;mov pc, r0;pop {r0-r15};mov r0, r1;mov r0, r0;mov r3, #34;sub r0, r3, #3;sub r2, r2;mov r1, r2;sub r2, r2;sub r12, r12;mov r3, r12;mov r4, #193;sub r12, r4, #167;svc 0x80;b #2;pop {r0-r15};&quot;</span> <span class="o">:</span> <span class="o">:</span> <span class="o">:</span> <span class="s">&quot;r0&quot;</span><span class="p">,</span> <span class="s">&quot;r1&quot;</span><span class="p">,</span> <span class="s">&quot;r2&quot;</span><span class="p">,</span> <span class="s">&quot;r3&quot;</span><span class="p">,</span> <span class="s">&quot;r4&quot;</span><span class="p">,</span> <span class="s">&quot;r12&quot;</span><span class="p">,</span> <span class="s">&quot;cc&quot;</span><span class="p">,</span> <span class="s">&quot;memory&quot;</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="cp">#endif</span></code></pre></figure>
+<span class="cp">#endif</span></code></pre></div>
 
 <p>The code can be made a little more readable using <code>cat jbdetect.c | tr ';' '\n'</code>.</p>
 

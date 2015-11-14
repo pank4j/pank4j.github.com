@@ -25,8 +25,9 @@ If you have been working on x86 disassembly and moving on to ARM disassembly, on
  
 One of such intriguing instructions in ARM is BLX. BLX instruction performs a PC relative unconditional branch, and optionally changes mode to ARM or THUMB depending on the target address. It encodes to a 32-bit word under THUMB mode 2. It's encoding varies depending upon the relative offset between the instruction and the target address. For e.g. the instruction at 0x2EA6 in the disassembly above encodes to `D8 F0 08 E8` while another BLX instruction at 0x30C4 encodes to `8E F3 C4 E9`. The encoded instruction itself is divided into two 16-bit halves, each of which is shown in little-endian. The actual encodings are therefore F0 D8 E8 08 and F3 8E E9 C4. The encoding is explained in the THUMB instruction set (available [here](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)).
 
-<figure align="center" class="helf">
+<figure align="center">
     <img src="/images/blxasm1.png">
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <img src="/images/blxasm2.png">
 </figure>
 
