@@ -6,16 +6,15 @@
 <head>
 <meta charset="utf-8">
 <title>Dirty Harry: Hacking for free drinks in Singapore &#8211; Pankaj Kohli</title>
-<meta name="description" content="Harry&#8217;s bar is one of the most popular bar chains in Singapore. It has an iOS app &#8220;Appy Hour&#8221; that lets users spin the Harry&#8217;s &#8220;wheel of fortune&#8221; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
+<meta name="description" content="Harry’s bar is one of the most popular bar chains in Singapore. It has an iOS app “Appy Hour” that lets users spin the Harry’s “wheel of fortune” to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
 
 ">
 <meta name="keywords" content="Appy Hour, free drinks, Harry's bar, iOS, blog">
 
 
-
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="Dirty Harry: Hacking for free drinks in Singapore">
-<meta name="twitter:description" content="Harry&#8217;s bar is one of the most popular bar chains in Singapore. It has an iOS app &#8220;Appy Hour&#8221; that lets users spin the Harry&#8217;s &#8220;wheel of fortune&#8221; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
+<meta name="twitter:description" content="Harry’s bar is one of the most popular bar chains in Singapore. It has an iOS app “Appy Hour” that lets users spin the Harry’s “wheel of fortune” to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
 
 ">
 <meta name="twitter:site" content="@pank4j">
@@ -28,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dirty Harry: Hacking for free drinks in Singapore">
-<meta property="og:description" content="Harry&#8217;s bar is one of the most popular bar chains in Singapore. It has an iOS app &#8220;Appy Hour&#8221; that lets users spin the Harry&#8217;s &#8220;wheel of fortune&#8221; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
+<meta property="og:description" content="Harry’s bar is one of the most popular bar chains in Singapore. It has an iOS app “Appy Hour” that lets users spin the Harry’s “wheel of fortune” to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
 
 ">
 <meta property="og:url" content="/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html">
@@ -94,17 +93,11 @@
 		    <ul>
 		        
 				    
-				        
-				    
 				    <li><a href="/about/" >About</a></li>
 				
 				    
-				        
-				    
 				    <li><a href="/posts/" >Posts</a></li>
 				
-				    
-				        
 				    
 				    <li><a href="/archive/" >Archive</a></li>
 				
@@ -118,7 +111,6 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
-
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -170,7 +162,7 @@
 
 <p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the “luck factor” of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield ‘Better Luck Next Time’.</p>
 
-<div class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/venues.xml</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<figure class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/venues.xml</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">www.exhost.se</span>
 <span class="na">User-Agent</span><span class="o">:</span> <span class="l">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
 <span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
@@ -207,13 +199,13 @@ Via: 1.1 qt-mfc4:80
 &lt;IsPrize&gt;1&lt;/IsPrize&gt;
 &lt;PrizeFile&gt;img/2.png&lt;/PrizeFile&gt;
 &lt;/Prize&gt;
---snipped--</code></pre></div>
+--snipped--</code></pre></figure>
 
 <h2 id="time-restriction">Time Restriction</h2>
 
 <p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone’s UDID, a timestamp and the bar’s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
 
-<div class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<figure class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">www.exhost.se</span>
 <span class="na">User-Agent</span><span class="o">:</span> <span class="l">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
 <span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
@@ -228,13 +220,13 @@ Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
 
-true</code></pre></div>
+true</code></pre></figure>
 
 <h2 id="getting-past-everything">Getting past everything</h2>
 
 <p>Well, the simplest way to get past everything would be to make the app communicate with another server instead of <code>www.exhost.se</code>. First we will crawl <code>www.exhost.se</code> to get all the required files. The link <code>http://www.exhost.se/harrys_1_1_beta/</code> does not contain a default <code>index.html</code> or similar file, which makes crawling possible.</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -nv -r --no-parent --reject <span class="s2">&quot;index.html*&quot;</span> http://www.exhost.se/harrys_1_1_beta/
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -nv -r --no-parent --reject <span class="s2">&quot;index.html*&quot;</span> http://www.exhost.se/harrys_1_1_beta/
 
 2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ <span class="o">[</span>639/639<span class="o">]</span> -&gt; /<span class="s2">&quot;www.exhost.se/harrys_1_1_beta/index.html&quot;</span> <span class="o">[</span>1<span class="o">]</span> 
 http://www.exhost.se/robots.txt:
@@ -265,14 +257,14 @@ http://www.exhost.se/robots.txt:
 2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js <span class="o">[</span>85925/85925<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/js/jquery.min.js&quot;</span> <span class="o">[</span>1<span class="o">]</span>
 FINISHED --2013-11-03 23:37:52--
 Total wall clock <span class="nb">time</span>: 54s
-Downloaded: <span class="m">25</span> files, 950K in 34s <span class="o">(</span>28.1 KB/s<span class="o">)</span></code></pre></div>
+Downloaded: <span class="m">25</span> files, 950K in 34s <span class="o">(</span>28.1 KB/s<span class="o">)</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys <span class="p">|</span> grep <span class="s2">&quot;http://www.exhost.se&quot;</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys <span class="p">|</span> grep <span class="s2">&quot;http://www.exhost.se&quot;</span>
 <span class="m">839501</span> http://www.exhost.se/harrys_1_1_beta/
 <span class="m">842849</span> http://www.exhost.se/harrys_1_1_beta/venues.xml
-<span class="m">843075</span> http://www.exhost.se/harrys_1_1_beta/fetchdata.php</code></pre></div>
+<span class="m">843075</span> http://www.exhost.se/harrys_1_1_beta/fetchdata.php</code></pre></figure>
 
-<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. </p>
+<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor.</p>
 
 <figure align="center">
     <img src="/images/strings.png" />
@@ -328,7 +320,7 @@ Downloaded: <span class="m">25</span> files, 950K in 34s <span class="o">(</span
   <footer>
     
 
-<span>&copy; 2015 Pankaj Kohli. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+<span>&copy; 2016 Pankaj Kohli. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
 
   </footer>
 </div><!-- /.footer-wrap -->

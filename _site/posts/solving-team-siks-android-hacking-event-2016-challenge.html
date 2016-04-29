@@ -1,0 +1,486 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Solving Team SIK's Android Hacking Event 2016 challenge &#8211; Pankaj Kohli</title>
+<meta name="description" content="Team SIK organized a CTF based hacking event recently, which involved reverse engineering four android apps of varying difficulty levels, ranging from trivial to hard. Each app included a secret password hidden inside, which was to be found in order to complete that level. The apps are available at https://goo.gl/vMj6b6.
+
+">
+<meta name="keywords" content="Android, reverse engineering, cracking, hacking, team sik, android hacking event">
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Solving Team SIK's Android Hacking Event 2016 challenge">
+<meta name="twitter:description" content="Team SIK organized a CTF based hacking event recently, which involved reverse engineering four android apps of varying difficulty levels, ranging from trivial to hard. Each app included a secret password hidden inside, which was to be found in order to complete that level. The apps are available at https://goo.gl/vMj6b6.
+
+">
+<meta name="twitter:site" content="@pank4j">
+<meta name="twitter:creator" content="@pank4j">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solving Team SIK's Android Hacking Event 2016 challenge">
+<meta property="og:description" content="Team SIK organized a CTF based hacking event recently, which involved reverse engineering four android apps of varying difficulty levels, ranging from trivial to hard. Each app included a secret password hidden inside, which was to be found in order to complete that level. The apps are available at https://goo.gl/vMj6b6.
+
+">
+<meta property="og:url" content="/posts/solving-team-siks-android-hacking-event-2016-challenge.html">
+<meta property="og:site_name" content="Pankaj Kohli">
+
+<meta property="og:image" content="/images/default-thumb.png">
+
+
+
+
+
+
+<link rel="canonical" href="/posts/solving-team-siks-android-hacking-event-2016-challenge.html">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Pankaj Kohli Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="/">Pankaj Kohli</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				    <li><a href="/about/" >About</a></li>
+				
+				    
+				    <li><a href="/posts/" >Posts</a></li>
+				
+				    
+				    <li><a href="/archive/" >Archive</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+
+<div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="/images/pic.png" class="bio-photo" alt="Pankaj Kohli bio photo">
+
+
+  <h3 itemprop="name">Pankaj Kohli</h3>
+  <p>Security Researcher</p>
+  
+  <a href="http://twitter.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  
+  <a href="http://linkedin.com/in/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-linkedin-square"></i> LinkedIn</a>
+  
+  
+  
+  <a href="http://github.com/pank4j" class="author-social" target="_blank"><i class="fa fa-fw fa-github"></i> Github</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="/posts/solving-team-siks-android-hacking-event-2016-challenge.html" rel="bookmark" title="Solving Team SIK's Android Hacking Event 2016 challenge">Solving Team SIK's Android Hacking Event 2016 challenge</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Team SIK organized a <a href="https://team-sik.org/ahe16-overview/">CTF based hacking event</a> recently, which involved reverse engineering four android apps of varying difficulty levels, ranging from trivial to hard. Each app included a secret password hidden inside, which was to be found in order to complete that level. The apps are available at <a href="https://goo.gl/vMj6b6">https://goo.gl/vMj6b6</a>.</p>
+
+<p>This post discusses some of the ways that one could go about reverse engineering these apps in order to find the hidden password. I used <a href="https://sourceforge.net/projects/dex2jar/">dex2jar</a>, <a href="http://ibotpeaches.github.io/Apktool/">apktool</a> and <a href="http://jd.benow.ca/">JD-GUI</a> and jdb for decompiling and analysing the apps, and <a href="https://www.genymotion.com/">Genymotion</a> as the emulator. But, any other tools for these purposes should work as well.</p>
+
+<figure align="center">
+    <img src="/images/screen.png" />
+</figure>
+
+<h2 id="trivial">Trivial</h2>
+
+<p>Solving the trivial challenge is as simple as running the app in Genymotion and entering an incorrect password. Run <code>logcat</code> to watch the logs as you enter a password. The app prints out the password in the logs when verifying for password.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">D/dalvikvm<span class="o">(</span>  393<span class="o">)</span>: GC_CONCURRENT freed 1169K, 25% free 7591K/10064K, paused 0ms+2ms, total 11ms
+D/MobileDataStateTracker<span class="o">(</span>  393<span class="o">)</span>: default: setPolicyDataEnable<span class="o">(</span><span class="nv">enabled</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+D/Top Secret<span class="o">(</span> 1417<span class="o">)</span>: Checking <span class="k">if</span> input is equal to sik2016
+D/MobileDataStateTracker<span class="o">(</span>  393<span class="o">)</span>: default: setPolicyDataEnable<span class="o">(</span><span class="nv">enabled</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+D/MobileDataStateTracker<span class="o">(</span>  393<span class="o">)</span>: default: setPolicyDataEnable<span class="o">(</span><span class="nv">enabled</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span></code></pre></figure>
+
+<p>Another way to find the password is to unzip the APK file, use <code>dex2jar</code> to convert <code>classes.dex</code> to jar file, and studying the code for class <code>a</code>. The password can be found hardcoded in the code in base64 encoded form.</p>
+
+<figure align="center">
+    <img src="/images/jarfile-trivial.png" />
+</figure>
+
+<p>This can be decoded on the command line using <code>base64</code> command line tool.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>base64 -D <span class="o">&lt;&lt;&lt;</span> <span class="nv">c2lrMjAxNg</span><span class="o">==</span>
+sik2016</code></pre></figure>
+
+<h2 id="easy">Easy</h2>
+
+<p>The second app takes a bit more effort than the first one to reverse engineer. The <code>classes.dex</code> file can be converted to jar file and opened in JD-GUI for easier analysis. The app verifies the password by first running the user input through an encryption algorithm. The algorithm works by first swapping out the two nibbles of every byte and then XORing the result with <code>0x42</code>. It then matches this encrypted value to an encrypted value that is hardcoded in the app in base64 encoded form (<code>BFF1NwF1YRTl</code>).</p>
+
+<p>Here is the encryption algorithm.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">a</span><span class="o">(</span><span class="n">String</span> <span class="n">paramString</span><span class="o">)</span>
+  <span class="o">{</span>
+    <span class="n">paramString</span> <span class="o">=</span> <span class="n">paramString</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">paramString</span><span class="o">.</span><span class="na">length</span><span class="o">)</span>
+    <span class="o">{</span>
+      <span class="n">paramString</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">((</span><span class="kt">byte</span><span class="o">)(</span><span class="n">paramString</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">|</span> <span class="n">paramString</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="o">));</span>
+      <span class="n">paramString</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">((</span><span class="kt">byte</span><span class="o">)(</span><span class="n">paramString</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">^</span> <span class="mh">0x42</span><span class="o">));</span>
+      <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">paramString</span><span class="o">;</span>
+  <span class="o">}</span></code></pre></figure>
+
+<p>Since, we have the base64 encoded encrypted password, we can write a small script that decrypts the password by first base64 decoding it and running it through a decryption algorithm corresponding to the above alogrithm, i.e. first XORing the bytes with <code>0x42</code> and then swapping the nibbles. The python script below does just that.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">base64</span><span class="p">;</span>
+
+<span class="n">b64pass</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">encpass</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">b64pass</span><span class="p">);</span>
+<span class="n">encbytes</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">encpass</span><span class="p">);</span>
+<span class="n">decstr</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">encbytes</span><span class="p">)):</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="n">encbytes</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="mh">0x42</span><span class="p">;</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">));</span>
+	<span class="n">decstr</span> <span class="o">+=</span> <span class="nb">unichr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="k">print</span> <span class="n">decstr</span><span class="p">;</span></code></pre></figure>
+
+<p>Run the above script with the base64 encoded encrypted password, and you have the correct password.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python decrypt.py BFF1NwF1YRTl
+d1sW4s2ez</code></pre></figure>
+
+<h2 id="intermediate">Intermediate</h2>
+
+<h2 id="hard">Hard</h2>
+
+<p>The final challenge takes a number of measures to ensure that the password never leaves the application, and to conceal the runtime behaviour of the app. The password itself is never decrypted at runtime, and is secured using AES. Most of the method calls are made using reflection, to conceal the behavior of the app. The class names and method names are decrypted at runtime and then called, similar to the way it was done in the intermediate level. The hard level goes a step further by verifying if the app has been tampered with. This makes it difficult to run the modified version of the app, as we did in the previous level. Therefore, the analysis must be done is phases.</p>
+
+<p>In the first phase, we must gain a better insight of the runtime behavior of the app. The class and method names are encrypted using AES, and are decrypted by the following method of <code>d</code> class.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">a</span><span class="o">(</span><span class="n">String</span> <span class="n">paramString</span><span class="o">,</span> <span class="kt">long</span> <span class="n">paramLong</span><span class="o">)</span>
+  <span class="o">{</span>
+    <span class="n">Random</span> <span class="n">localRandom</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Random</span><span class="o">(</span><span class="n">paramLong</span><span class="o">);</span>
+    <span class="n">paramString</span> <span class="o">=</span> <span class="n">Base64</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">paramString</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+    <span class="n">Object</span> <span class="n">localObject</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="err">&#39;��&#39;</span><span class="o">];</span>
+    <span class="n">localRandom</span><span class="o">.</span><span class="na">nextBytes</span><span class="o">((</span><span class="kt">byte</span><span class="o">[])</span><span class="n">localObject</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">localRandom</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="mi">1024</span><span class="o">);</span>
+    <span class="n">localObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PBEKeySpec</span><span class="o">(</span><span class="n">Base64</span><span class="o">.</span><span class="na">encodeToString</span><span class="o">(</span><span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">localRandom</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="mi">32</span><span class="o">)</span> <span class="o">+</span> <span class="mi">16</span><span class="o">],</span> <span class="mi">2</span><span class="o">).</span><span class="na">toCharArray</span><span class="o">(),</span> <span class="o">(</span><span class="kt">byte</span><span class="o">[])</span><span class="n">localObject</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">512</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
+    <span class="n">localObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SecretKeySpec</span><span class="o">(</span><span class="n">SecretKeyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;PBKDF2WithHmacSHA1&quot;</span><span class="o">).</span><span class="na">generateSecret</span><span class="o">((</span><span class="n">KeySpec</span><span class="o">)</span><span class="n">localObject</span><span class="o">).</span><span class="na">getEncoded</span><span class="o">(),</span> <span class="s">&quot;AES&quot;</span><span class="o">);</span>
+    <span class="n">Cipher</span> <span class="n">localCipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;AES/CBC/PKCS5Padding&quot;</span><span class="o">);</span>
+    <span class="kt">byte</span><span class="o">[]</span> <span class="n">arrayOfByte</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">localCipher</span><span class="o">.</span><span class="na">getBlockSize</span><span class="o">()];</span>
+    <span class="n">localRandom</span><span class="o">.</span><span class="na">nextBytes</span><span class="o">(</span><span class="n">arrayOfByte</span><span class="o">);</span>
+    <span class="n">localCipher</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="o">(</span><span class="n">Key</span><span class="o">)</span><span class="n">localObject</span><span class="o">,</span> <span class="k">new</span> <span class="nf">IvParameterSpec</span><span class="o">(</span><span class="n">arrayOfByte</span><span class="o">));</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">localCipher</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">paramString</span><span class="o">));</span>
+  <span class="o">}</span></code></pre></figure>
+
+<p>One way to retreive the decrypted class and method names is by tampering the above method, just like we did in the intermediate level. We tamper it to make it log the decrypted values just before it returns them to the caller method. To do this, we decomple the APK using apktool, and modify the smali code of the above method to inject logging code.</p>
+
+<figure class="highlight"><pre><code class="language-smali" data-lang="smali">    invoke-virtual <span class="p">{</span><span class="nb">v2</span><span class="p">,</span> <span class="nb">v1</span><span class="p">},</span> <span class="kt">L</span>javax/crypto/<span class="nc">Cipher</span>;<span class="p">-&gt;</span><span class="nf">doFinal</span><span class="p">(</span><span class="kt">[B</span><span class="p">)</span><span class="kt">[B</span>
+
+    move-result-object <span class="nb">v0</span>
+
+    new-instance <span class="nb">v1</span><span class="p">,</span> <span class="kt">L</span>java/lang/<span class="nc">String</span>;
+
+    invoke-direct <span class="p">{</span><span class="nb">v1</span><span class="p">,</span> <span class="nb">v0</span><span class="p">},</span> <span class="kt">L</span>java/lang/<span class="nc">String</span>;<span class="p">-&gt;</span><span class="nf">&lt;init&gt;</span><span class="p">(</span><span class="kt">[B</span><span class="p">)</span><span class="kt">V</span>
+
+    <span class="c"># log decrypted values</span>
+    const-string <span class="nb">v2</span><span class="p">,</span> <span class="s">&quot;d.a() returning: &quot;</span>
+    invoke-static <span class="p">{</span><span class="nb">v2</span><span class="p">,</span> <span class="nb">v1</span><span class="p">},</span> <span class="kt">L</span>android/util/<span class="nc">Log</span>;<span class="p">-&gt;</span><span class="nf">i</span><span class="p">(</span><span class="kt">L</span>java/lang/<span class="nc">String</span>;<span class="kt">L</span>java/lang/<span class="nc">String</span>;<span class="p">)</span><span class="kt">I</span>
+
+    return-object <span class="nb">v1</span>
+<span class="k">.end method</span></code></pre></figure>
+
+<p>This tampering would be detected by the app, but it should still log the decrypted class and method names when we enter a password.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">D/MobileDataStateTracker<span class="o">(</span>  397<span class="o">)</span>: default: setPolicyDataEnable<span class="o">(</span><span class="nv">enabled</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+D/MobileDataStateTracker<span class="o">(</span>  397<span class="o">)</span>: default: setPolicyDataEnable<span class="o">(</span><span class="nv">enabled</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+D/dalvikvm<span class="o">(</span>  397<span class="o">)</span>: GC_CONCURRENT freed 1771K, 26% free 8164K/10984K, paused 0ms+0ms, total 7ms
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: java.security.cert.CertificateFactory
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: java.security.cert.Certificate
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: java.security.PublicKey
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: java.io.ByteArrayOutputStream
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: android.util.Base64
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: java.lang.String
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: getInstance
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: generateCertificate
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: getPublicKey
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: getEncoded
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: getEncoded
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: toByteArray
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: encodeToString
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: equals
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: NO_WRAP
+I/d.a<span class="o">()</span> returning: <span class="o">(</span> 1684<span class="o">)</span>: X.509
+D/MobileDataStateTracker<span class="o">(</span>  397<span class="o">)</span>: default: setPolicyDataEnable<span class="o">(</span><span class="nv">enabled</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+D/MobileDataStateTracker<span class="o">(</span>  397<span class="o">)</span>: default: setPolicyDataEnable<span class="o">(</span><span class="nv">enabled</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span></code></pre></figure>
+
+<p>The knowledge gained from the above log, when combined with the decompiled code in JD-GUI, makes it somewhat easier to figure out the runtime behaviour of the app. The app retrieves the public key of the signing certificate at runtime, and uses it as one of the parameters to the encryption algorithm that is used to encrypt the user input using AES. This encrypted value is then compared with a encrypted value hardcoded in the app in base64 encoded form. The encryption used here is a password based encryption, where password is derived from the public key of the signing certificate. The salt and the IV used in the AES encryption are also hardcoded in the app in base64 encoded form. The snipped below shows the code responsible for performing the encryption on the user input.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">      <span class="n">paramContext</span> <span class="o">=</span> <span class="s">&quot;rym6wS4ddfaGkTuLfwfDFA==:3I2sjvOYVSQRoclg3BNfCQ==:Lg/ocYTs564fO2W3Luh3QUQmMmDVkhLjsKzGPSZT2ws=&quot;</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">&quot;:&quot;</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">paramContext</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="n">localObject2</span> <span class="o">=</span> <span class="n">Base64</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">paramContext</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="mi">2</span><span class="o">);</span>
+      <span class="n">Object</span> <span class="n">localObject4</span> <span class="o">=</span> <span class="n">Base64</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">paramContext</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">2</span><span class="o">);</span>
+      <span class="n">localObject3</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PBEKeySpec</span><span class="o">(((</span><span class="n">String</span><span class="o">)</span><span class="n">localObject3</span><span class="o">).</span><span class="na">toCharArray</span><span class="o">(),</span> <span class="o">(</span><span class="kt">byte</span><span class="o">[])</span><span class="n">localObject4</span><span class="o">,</span> <span class="mi">8192</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
+      <span class="n">localObject3</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SecretKeySpec</span><span class="o">(</span><span class="n">SecretKeyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;PBKDF2WithHmacSHA1&quot;</span><span class="o">).</span><span class="na">generateSecret</span><span class="o">((</span><span class="n">KeySpec</span><span class="o">)</span><span class="n">localObject3</span><span class="o">).</span><span class="na">getEncoded</span><span class="o">(),</span> <span class="s">&quot;AES&quot;</span><span class="o">);</span>
+      <span class="n">localObject4</span> <span class="o">=</span> <span class="n">Cipher</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;AES/CBC/PKCS5Padding&quot;</span><span class="o">);</span>
+      <span class="o">((</span><span class="n">Cipher</span><span class="o">)</span><span class="n">localObject4</span><span class="o">).</span><span class="na">init</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="n">Key</span><span class="o">)</span><span class="n">localObject3</span><span class="o">,</span> <span class="k">new</span> <span class="nf">IvParameterSpec</span><span class="o">((</span><span class="kt">byte</span><span class="o">[])</span><span class="n">localObject2</span><span class="o">));</span>
+      <span class="n">paramString</span> <span class="o">=</span> <span class="o">((</span><span class="n">Cipher</span><span class="o">)</span><span class="n">localObject4</span><span class="o">).</span><span class="na">doFinal</span><span class="o">(</span><span class="n">paramString</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+      <span class="n">arrayOfObject</span><span class="o">[</span><span class="mi">6</span><span class="o">]</span> <span class="o">=</span> <span class="n">arrayOfMethod</span><span class="o">[</span><span class="mi">6</span><span class="o">].</span><span class="na">invoke</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[]</span> <span class="o">{</span> <span class="n">paramString</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="k">new</span> <span class="n">Field</span><span class="o">[]</span> <span class="o">{</span> <span class="n">localObject1</span> <span class="o">}[</span><span class="mi">0</span><span class="o">].</span><span class="na">getInt</span><span class="o">(</span><span class="kc">null</span><span class="o">))</span> <span class="o">});</span>
+      <span class="kt">boolean</span> <span class="n">bool</span> <span class="o">=</span> <span class="o">((</span><span class="n">Boolean</span><span class="o">)</span><span class="n">arrayOfMethod</span><span class="o">[</span><span class="mi">7</span><span class="o">].</span><span class="na">invoke</span><span class="o">(</span><span class="n">arrayOfObject</span><span class="o">[</span><span class="mi">6</span><span class="o">],</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[]</span> <span class="o">{</span> <span class="n">paramContext</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">})).</span><span class="na">booleanValue</span><span class="o">();</span>
+      <span class="k">return</span> <span class="n">bool</span><span class="o">;</span></code></pre></figure>
+
+<p>As tampering with the app would change the signing certificate and the public key, and hence the password for the AES encryption, we must use a runtime attack on the unmodified app to retrieve the password. The app does not use any anti-debugging techniques, which makes it easier to attach a debugger at runtime. So let’s install the original APK and run it. We must enter a password once to make sure all the relevant classes are loaded. Once the app is running and the password is entered, we can attach <code>jdb</code> to the running app.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>adb shell ps <span class="p">|</span> grep teamsik
+u0_a53    <span class="m">1789</span>  <span class="m">160</span>   <span class="m">534616</span> <span class="m">71884</span> ffffffff b75bf9eb S org.teamsik.apps.hackingchallenge.hard
+<span class="nv">$ </span>adb forward tcp:12345 jdwp:1789
+<span class="nv">$ </span>jdb -attach localhost:12345
+Set uncaught java.lang.Throwable
+Set deferred uncaught java.lang.Throwable
+Initializing jdb ...
+&gt; </code></pre></figure>
+
+<p>As seen in the above decompiled code, the password is used as the first argument to PBEKeySpec constructor. We can put a breakpoint on this constructor in order to dump the password.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">&gt; 
+Breakpoint hit: <span class="s2">&quot;thread=&lt;1&gt; main&quot;</span>, java.security.MessageDigest.digest<span class="o">()</span>, <span class="nv">line</span><span class="o">=</span><span class="m">276</span> <span class="nv">bci</span><span class="o">=</span>0
+
+&lt;1&gt; main<span class="o">[</span>1<span class="o">]</span> stop in javax.crypto.spec.PBEKeySpec.&lt;init&gt;<span class="o">(</span>char<span class="o">[]</span>, byte<span class="o">[]</span>, int, int<span class="o">)</span>
+Set breakpoint javax.crypto.spec.PBEKeySpec.&lt;init&gt;<span class="o">(</span>char<span class="o">[]</span>, byte<span class="o">[]</span>, int, int<span class="o">)</span>
+&lt;1&gt; main<span class="o">[</span>1<span class="o">]</span> cont
+&gt; 
+Breakpoint hit: <span class="s2">&quot;thread=&lt;1&gt; main&quot;</span>, javax.crypto.spec.PBEKeySpec.&lt;init&gt;<span class="o">()</span>, <span class="nv">line</span><span class="o">=</span><span class="m">74</span> <span class="nv">bci</span><span class="o">=</span>1
+
+&lt;1&gt; main<span class="o">[</span>1<span class="o">]</span> locals
+Method arguments:
+<span class="nv">password</span> <span class="o">=</span> instance of char<span class="o">[</span>28<span class="o">]</span> <span class="o">(</span><span class="nv">id</span><span class="o">=</span>831731734904<span class="o">)</span>
+Local variables:
+<span class="nv">salt</span> <span class="o">=</span> instance of byte<span class="o">[</span>16<span class="o">]</span> <span class="o">(</span><span class="nv">id</span><span class="o">=</span>831731734840<span class="o">)</span>
+<span class="nv">iterationCount</span> <span class="o">=</span> 8192
+<span class="nv">keyLength</span> <span class="o">=</span> 128
+&lt;1&gt; main<span class="o">[</span>1<span class="o">]</span> dump password
+ <span class="nv">password</span> <span class="o">=</span> <span class="o">{</span>
+p, X, K, M, g, /, 7, c, y, f, y, Y, O, E, v, 1, Z, 6, W, J, e, t, s, p, g, y, M, <span class="o">=</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Now that we have the AES encryption password, we can write a small decryption code that decrypts the hardcoded encrypted password for the app, using this dumped encryption password and the hardcoded salt and IV. Since I feel lazy after all the above hard work, I am just gonna rip off the decompiled code from JD-GUI to do this, with some modifications of course.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Base64</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.ByteArrayInputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Field</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Method</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.Key</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.MessageDigest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.spec.KeySpec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.Cipher</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.SecretKey</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.SecretKeyFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.spec.IvParameterSpec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.spec.PBEKeySpec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">decrypt</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">paramContext</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="s">&quot;rym6wS4ddfaGkTuLfwfDFA==&quot;</span><span class="o">,</span> <span class="s">&quot;3I2sjvOYVSQRoclg3BNfCQ==&quot;</span><span class="o">,</span> <span class="s">&quot;Lg/ocYTs564fO2W3Luh3QUQmMmDVkhLjsKzGPSZT2ws=&quot;</span> <span class="o">};</span>
+      <span class="n">Object</span> <span class="n">localObject3</span> <span class="o">=</span> <span class="s">&quot;pXKMg/7cyfyYOEv1Z6WJetspgyM=&quot;</span><span class="o">;</span>
+
+        <span class="n">Object</span> <span class="n">localObject2</span> <span class="o">=</span> <span class="n">Base64</span><span class="o">.</span><span class="na">getDecoder</span><span class="o">().</span><span class="na">decode</span><span class="o">(</span><span class="n">paramContext</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+        <span class="n">Object</span> <span class="n">localObject4</span> <span class="o">=</span> <span class="n">Base64</span><span class="o">.</span><span class="na">getDecoder</span><span class="o">().</span><span class="na">decode</span><span class="o">(</span><span class="n">paramContext</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">ct</span> <span class="o">=</span> <span class="n">Base64</span><span class="o">.</span><span class="na">getDecoder</span><span class="o">().</span><span class="na">decode</span><span class="o">(</span><span class="n">paramContext</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+        <span class="n">localObject3</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PBEKeySpec</span><span class="o">(((</span><span class="n">String</span><span class="o">)</span><span class="n">localObject3</span><span class="o">).</span><span class="na">toCharArray</span><span class="o">(),</span> <span class="o">(</span><span class="kt">byte</span><span class="o">[])</span><span class="n">localObject4</span><span class="o">,</span> <span class="mi">8192</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+          <span class="n">localObject3</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SecretKeySpec</span><span class="o">(</span><span class="n">SecretKeyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;PBKDF2WithHmacSHA1&quot;</span><span class="o">).</span><span class="na">generateSecret</span><span class="o">((</span><span class="n">KeySpec</span><span class="o">)</span><span class="n">localObject3</span><span class="o">).</span><span class="na">getEncoded</span><span class="o">(),</span> <span class="s">&quot;AES&quot;</span><span class="o">);</span>
+          <span class="n">localObject4</span> <span class="o">=</span> <span class="n">Cipher</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;AES/CBC/PKCS5Padding&quot;</span><span class="o">);</span>
+          <span class="o">((</span><span class="n">Cipher</span><span class="o">)</span><span class="n">localObject4</span><span class="o">).</span><span class="na">init</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="o">(</span><span class="n">Key</span><span class="o">)</span><span class="n">localObject3</span><span class="o">,</span> <span class="k">new</span> <span class="nf">IvParameterSpec</span><span class="o">((</span><span class="kt">byte</span><span class="o">[])</span><span class="n">localObject2</span><span class="o">));</span>
+          <span class="kt">byte</span><span class="o">[]</span> <span class="n">paramString</span> <span class="o">=</span> <span class="o">((</span><span class="n">Cipher</span><span class="o">)</span><span class="n">localObject4</span><span class="o">).</span><span class="na">doFinal</span><span class="o">(</span><span class="n">ct</span><span class="o">);</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">paramString</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span>
+      <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span></code></pre></figure>
+
+<p>Let’s compile and run the above code, and if all is well, it should print out the decrypted password.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>javac decrypt.java
+<span class="nv">$ </span>java decrypt
+t34mS1K<span class="nv">$4lut35Y0u</span>!</code></pre></figure>
+
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=/posts/solving-team-siks-android-hacking-event-2016-challenge.html" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/solving-team-siks-android-hacking-event-2016-challenge.html" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=/posts/solving-team-siks-android-hacking-event-2016-challenge.html" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Solving Team SIK's Android Hacking Event 2016 challenge</strong> was published on <time datetime="2016-04-29T03:38:07+08:00">April 29, 2016</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/posts/converting-ida-pro-graphs-to-images.html" title="Converting IDA Pro graphs to images">Converting IDA Pro graphs to images</a></li>
+    
+      <li><a href="/posts/appminder-jailbreak-detection-analysis.html" title="AppMinder jailbreak detection analysis">AppMinder jailbreak detection analysis</a></li>
+    
+      <li><a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html" title="Dirty Harry: Hacking for free drinks in Singapore">Dirty Harry: Hacking for free drinks in Singapore</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  
+  <footer>
+    
+
+<span>&copy; 2016 Pankaj Kohli. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  var _gaq = _gaq || [];
+  var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-69786233-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'pank4j'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+</body>
+</html>
