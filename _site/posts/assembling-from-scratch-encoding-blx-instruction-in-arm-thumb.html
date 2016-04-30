@@ -12,6 +12,7 @@
 <meta name="keywords" content="ARM, assembly, BLX instruction, encoding, Thumb, blog">
 
 
+
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">
 <meta name="twitter:description" content="If you have been working on x86 disassembly and moving on to ARM disassembly, one of the subtle differences you may notice is the lack of byte aligned opcodes in ARM (or THUMB) instruction set. Being based on RISC, ARM architecture provides fewer instructions as compared to x86. The need to implement an instruction set having functionally similar instructions as their x86 counterparts, only using fewer (and perhaps smaller) instructions gave rise to the instructions where opcodes are not dictated by bytes but by bits.
@@ -93,11 +94,17 @@
 		    <ul>
 		        
 				    
+				        
+				    
 				    <li><a href="/about/" >About</a></li>
 				
 				    
+				        
+				    
 				    <li><a href="/posts/" >Posts</a></li>
 				
+				    
+				        
 				    
 				    <li><a href="/archive/" >Archive</a></li>
 				
@@ -111,6 +118,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
+
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -172,29 +180,29 @@
 
 <p>The offset is then used to encode the instruction as follows:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">Offset</span> <span class="o">=</span> 0xD8010
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Offset <span class="o">=</span> 0xD8010
  
-      <span class="m">00</span>            0D            <span class="m">80</span>            10
+      00            0D            80            10
  
 Bits 31-24         23-16         15-8           7-0
-   <span class="m">0000</span> <span class="m">0000</span>     <span class="m">0000</span> <span class="m">1101</span>     <span class="m">1000</span> <span class="m">0000</span>     <span class="m">0001</span> 0000
+   0000 0000     0000 1101     1000 0000     0001 0000
  
-Bits 31-25      <span class="m">24</span> <span class="m">23</span> <span class="m">22</span>       21-12          11-2         10
-     <span class="m">0000000</span>     <span class="m">0</span>  <span class="m">0</span>  <span class="m">0</span>     <span class="m">0011011000</span>     <span class="m">0000000100</span>     00
+Bits 31-25      24 23 22       21-12          11-2         10
+     0000000     0  0  0     0011011000     0000000100     00
                  S I1  I2         H              L
  
-<span class="nv">J1</span> <span class="o">=</span> ~I1 ^ <span class="nv">S</span> <span class="o">=</span> 1
-<span class="nv">J2</span> <span class="o">=</span> ~I2 ^ <span class="nv">S</span> <span class="o">=</span> 1
+J1 <span class="o">=</span> ~I1 ^ S <span class="o">=</span> 1
+J2 <span class="o">=</span> ~I2 ^ S <span class="o">=</span> 1
  
 Encoded instruction:
  
-Bits 32-28    <span class="m">27</span>       26-17      16-15 <span class="m">14</span> <span class="m">13</span> <span class="m">12</span>     11-1          0
+Bits 32-28    27       26-17      16-15 14 13 12     11-1          0
                S          H             J1    J2        L
-     <span class="m">11110</span>     <span class="m">0</span>     <span class="m">0011011000</span>     <span class="m">11</span>  <span class="m">1</span>  <span class="m">0</span>  <span class="m">1</span>     <span class="m">0000000100</span>     0
+     11110     0     0011011000     11  1  0  1     0000000100     0
  
-      <span class="m">1111</span> <span class="m">0000</span>     <span class="m">1101</span> <span class="m">1000</span>     <span class="m">1110</span> <span class="m">1000</span>     <span class="m">0000</span> 1000
+      1111 0000     1101 1000     1110 1000     0000 1000
  
-         F0            D8             E8           08</code></pre></figure>
+         F0            D8             E8           08</code></pre></div>
 
 <p>which explains the encoding seen in the disassembler <code>(D8 F0 08 E8)</code>. :-)</p>
 
@@ -230,11 +238,11 @@ Bits 32-28    <span class="m">27</span>       26-17      16-15 <span class="m">1
   <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
     <ul>
     
+      <li><a href="/posts/solving-team-siks-android-hacking-event-2016-challenge.html" title="Solving Team SIK's Android Hacking Event 2016 challenge">Solving Team SIK's Android Hacking Event 2016 challenge</a></li>
+    
       <li><a href="/posts/converting-ida-pro-graphs-to-images.html" title="Converting IDA Pro graphs to images">Converting IDA Pro graphs to images</a></li>
     
       <li><a href="/posts/appminder-jailbreak-detection-analysis.html" title="AppMinder jailbreak detection analysis">AppMinder jailbreak detection analysis</a></li>
-    
-      <li><a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html" title="Dirty Harry: Hacking for free drinks in Singapore">Dirty Harry: Hacking for free drinks in Singapore</a></li>
     
     </ul>
     <hr />

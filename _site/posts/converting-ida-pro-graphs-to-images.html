@@ -6,15 +6,16 @@
 <head>
 <meta charset="utf-8">
 <title>Converting IDA Pro graphs to images &#8211; Pankaj Kohli</title>
-<meta name="description" content="It’s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.
+<meta name="description" content="It&#8217;s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.
 
 ">
 <meta name="keywords" content="IDA Pro, graph, control flow graph, CFG, blog">
 
 
+
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="Converting IDA Pro graphs to images">
-<meta name="twitter:description" content="It’s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.
+<meta name="twitter:description" content="It&#8217;s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.
 
 ">
 <meta name="twitter:site" content="@pank4j">
@@ -27,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Converting IDA Pro graphs to images">
-<meta property="og:description" content="It’s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.
+<meta property="og:description" content="It&#8217;s been a long time since my last post. I have been busy with work, and (thanks to IPR) could not post anything. This post is about a much needed feature in IDA Pro (specifically the wingraph32 utility), saving the graph as an image.
 
 ">
 <meta property="og:url" content="/posts/converting-ida-pro-graphs-to-images.html">
@@ -93,11 +94,17 @@
 		    <ul>
 		        
 				    
+				        
+				    
 				    <li><a href="/about/" >About</a></li>
 				
 				    
+				        
+				    
 				    <li><a href="/posts/" >Posts</a></li>
 				
+				    
+				        
 				    
 				    <li><a href="/archive/" >Archive</a></li>
 				
@@ -111,6 +118,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
+
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -163,11 +171,11 @@
 
 <p>To convert it into a PNG (or any other format) image, first install the Graph::Easy CPAN module. It requires <a href="http://www.graphviz.org/">Graphviz</a> to run, so install that as well.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">cpan Graph::Easy</code></pre></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">cpan Graph::Easy</code></pre></div>
 
 <p>Then, convert the .gdl file to an image.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">graph-easy --from gdl --input<span class="o">=</span>graph.gdl --png --output<span class="o">=</span>graph.png</code></pre></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">graph-easy --from gdl --input<span class="o">=</span>graph.gdl --png --output<span class="o">=</span>graph.png</code></pre></div>
 
 <p>This is how the final image of the above graph looks like.</p>
 
@@ -208,11 +216,11 @@
   <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
     <ul>
     
+      <li><a href="/posts/solving-team-siks-android-hacking-event-2016-challenge.html" title="Solving Team SIK's Android Hacking Event 2016 challenge">Solving Team SIK's Android Hacking Event 2016 challenge</a></li>
+    
       <li><a href="/posts/appminder-jailbreak-detection-analysis.html" title="AppMinder jailbreak detection analysis">AppMinder jailbreak detection analysis</a></li>
     
       <li><a href="/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html" title="Dirty Harry: Hacking for free drinks in Singapore">Dirty Harry: Hacking for free drinks in Singapore</a></li>
-    
-      <li><a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb.html" title="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">Assembling from scratch: Encoding BLX instruction in ARM / THUMB</a></li>
     
     </ul>
     <hr />

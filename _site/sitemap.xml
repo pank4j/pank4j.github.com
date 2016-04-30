@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/posts/solving-team-siks-android-hacking-event-2016-challenge.html</loc>
+    <lastmod>2016-04-30T19:38:07+08:00</lastmod>
+  </url>
+  <url>
     <loc>/posts/converting-ida-pro-graphs-to-images.html</loc>
     <lastmod>2015-05-16T23:23:25+08:00</lastmod>
   </url>
@@ -40,39 +44,12 @@
     <loc>/</loc>
   </url>
   <url>
-    <loc>/archive/</loc>
+    <loc>/about/</loc>
   </url>
   <url>
-    <loc>/about/</loc>
+    <loc>/archive/</loc>
   </url>
   <url>
     <loc>/posts/</loc>
   </url>
-    <url>
-      <loc>/posts/formatshield.html</loc>
-    </url>
-    <url>
-      <loc>/posts/vlc-media-player-smb-uri-handling-remote-buffer-overflow-vulnerability-exploit.html</loc>
-    </url>
-    <url>
-      <loc>/posts/htmldoc-html-file-handling-remote-stack-buffer-overflow-exploit-linux.html</loc>
-    </url>
-    <url>
-      <loc>/posts/httpdx-1-4-get-request-remote-buffer-overflow-exploit-0day.html</loc>
-    </url>
-    <url>
-      <loc>/posts/exploiting-file-uploads-for-fun-and-profit.html</loc>
-    </url>
-    <url>
-      <loc>/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb.html</loc>
-    </url>
-    <url>
-      <loc>/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html</loc>
-    </url>
-    <url>
-      <loc>/posts/appminder-jailbreak-detection-analysis.html</loc>
-    </url>
-    <url>
-      <loc>/posts/converting-ida-pro-graphs-to-images.html</loc>
-    </url>
 </urlset>

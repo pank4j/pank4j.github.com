@@ -6,15 +6,16 @@
 <head>
 <meta charset="utf-8">
 <title>Dirty Harry: Hacking for free drinks in Singapore &#8211; Pankaj Kohli</title>
-<meta name="description" content="Harry’s bar is one of the most popular bar chains in Singapore. It has an iOS app “Appy Hour” that lets users spin the Harry’s “wheel of fortune” to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
+<meta name="description" content="Harry&#8217;s bar is one of the most popular bar chains in Singapore. It has an iOS app &#8220;Appy Hour&#8221; that lets users spin the Harry&#8217;s &#8220;wheel of fortune&#8221; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
 
 ">
 <meta name="keywords" content="Appy Hour, free drinks, Harry's bar, iOS, blog">
 
 
+
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="Dirty Harry: Hacking for free drinks in Singapore">
-<meta name="twitter:description" content="Harry’s bar is one of the most popular bar chains in Singapore. It has an iOS app “Appy Hour” that lets users spin the Harry’s “wheel of fortune” to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
+<meta name="twitter:description" content="Harry&#8217;s bar is one of the most popular bar chains in Singapore. It has an iOS app &#8220;Appy Hour&#8221; that lets users spin the Harry&#8217;s &#8220;wheel of fortune&#8221; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
 
 ">
 <meta name="twitter:site" content="@pank4j">
@@ -27,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dirty Harry: Hacking for free drinks in Singapore">
-<meta property="og:description" content="Harry’s bar is one of the most popular bar chains in Singapore. It has an iOS app “Appy Hour” that lets users spin the Harry’s “wheel of fortune” to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
+<meta property="og:description" content="Harry&#8217;s bar is one of the most popular bar chains in Singapore. It has an iOS app &#8220;Appy Hour&#8221; that lets users spin the Harry&#8217;s &#8220;wheel of fortune&#8221; to win free drinks. The way it works is that a user would visit one of their strategically located bars and check in using the app. He would then spin the wheel, and if he is lucky, he would win a free drink. A time limit is imposed so that a user can spin the wheel only once in 24 hours while signed in a particular bar.
 
 ">
 <meta property="og:url" content="/posts/dirty-harry-hacking-for-free-drinks-in-singapore.html">
@@ -93,11 +94,17 @@
 		    <ul>
 		        
 				    
+				        
+				    
 				    <li><a href="/about/" >About</a></li>
 				
 				    
+				        
+				    
 				    <li><a href="/posts/" >Posts</a></li>
 				
+				    
+				        
 				    
 				    <li><a href="/archive/" >Archive</a></li>
 				
@@ -111,6 +118,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
+
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -162,11 +170,11 @@
 
 <p>The app communicates with <code>www.exhost.se</code> over HTTP. When started, the first thing the app does is to define the “luck factor” of the user, by downloading an XML file containing probabilities of various prizes. The probabilities are set in way such that 52% of the time a spin would yield ‘Better Luck Next Time’.</p>
 
-<figure class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/venues.xml</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-<span class="na">Host</span><span class="o">:</span> <span class="l">www.exhost.se</span>
-<span class="na">User-Agent</span><span class="o">:</span> <span class="l">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
-<span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
-<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip</span>
+<div class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/venues.xml</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">www.exhost.se</span>
+<span class="na">User-Agent</span><span class="p">:</span> <span class="s">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
+<span class="na">Connection</span><span class="p">:</span> <span class="s">keep-alive</span>
+<span class="na">Accept-Encoding</span><span class="p">:</span> <span class="s">gzip</span>
 
 HTTP/1.1 200 OK
 Age: 1659
@@ -174,12 +182,12 @@ Connection: Keep-Alive
 Content-Length: 3071
 Content-Type: application/xml
 Date: Fri, 01 Nov 2013 06:27:45 GMT
-ETag: &quot;3c8066-bff-4d7ddfaa98300&quot;
+ETag: "3c8066-bff-4d7ddfaa98300"
 Last-Modified: Thu, 14 Mar 2013 08:05:00 GMT
 Server: Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8e-fips-rhel5 DAV/2 mod_bwlimited/1.4 mod_fcgid/2.3.6
 Via: 1.1 qt-mfc4:80
  
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Prizes&gt;
 &lt;Prize&gt;
 &lt;Description&gt;Better Luck*Next Time&lt;/Description&gt;
@@ -199,17 +207,17 @@ Via: 1.1 qt-mfc4:80
 &lt;IsPrize&gt;1&lt;/IsPrize&gt;
 &lt;PrizeFile&gt;img/2.png&lt;/PrizeFile&gt;
 &lt;/Prize&gt;
---snipped--</code></pre></figure>
+--snipped--</code></pre></div>
 
 <h2 id="time-restriction">Time Restriction</h2>
 
 <p>Once the user has checked in the bar, the app checks if the user has already tried his luck in the past 24 hours in the same bar. It does so by sending a request with the iPhone’s UDID, a timestamp and the bar’s id. The response simply consists of <code>true</code> if the user is allowed to spin the wheel, or <code>false</code> otherwise.</p>
 
-<figure class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-<span class="na">Host</span><span class="o">:</span> <span class="l">www.exhost.se</span>
-<span class="na">User-Agent</span><span class="o">:</span> <span class="l">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
-<span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
-<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip</span>
+<div class="highlight"><pre><code class="language-http" data-lang="http"><span class="nf">GET</span> <span class="nn">/harrys_1_1_beta/fetchdata.php?udid=aba5372762118af8f6f0594f836cd0eb32d10986&amp;time=2013-01-11%02:56:15&amp;venue=30</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">www.exhost.se</span>
+<span class="na">User-Agent</span><span class="p">:</span> <span class="s">Appy Hour 1.1.0 (iPhone; iPhone OS 6.0.1; en_SG)</span>
+<span class="na">Connection</span><span class="p">:</span> <span class="s">keep-alive</span>
+<span class="na">Accept-Encoding</span><span class="p">:</span> <span class="s">gzip</span>
 
 HTTP/1.1 200 OK
 Date: Fri, 01 Nov 2013 06:56:16 GMT
@@ -220,51 +228,51 @@ Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
 
-true</code></pre></figure>
+true</code></pre></div>
 
 <h2 id="getting-past-everything">Getting past everything</h2>
 
 <p>Well, the simplest way to get past everything would be to make the app communicate with another server instead of <code>www.exhost.se</code>. First we will crawl <code>www.exhost.se</code> to get all the required files. The link <code>http://www.exhost.se/harrys_1_1_beta/</code> does not contain a default <code>index.html</code> or similar file, which makes crawling possible.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -nv -r --no-parent --reject <span class="s2">&quot;index.html*&quot;</span> http://www.exhost.se/harrys_1_1_beta/
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>wget -nv -r --no-parent --reject <span class="s2">"index.html*"</span> http://www.exhost.se/harrys_1_1_beta/
 
-2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ <span class="o">[</span>639/639<span class="o">]</span> -&gt; /<span class="s2">&quot;www.exhost.se/harrys_1_1_beta/index.html&quot;</span> <span class="o">[</span>1<span class="o">]</span> 
+2013-11-03 23:37:09 URL:http://www.exhost.se/harrys_1_1_beta/ <span class="o">[</span>639/639] -&gt; /<span class="s2">"www.exhost.se/harrys_1_1_beta/index.html"</span> <span class="o">[</span>1] 
 http://www.exhost.se/robots.txt:
 2013-11-03 23:37:09 ERROR 404: Not Found.
-2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/cms.php <span class="o">[</span>169<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/cms.php&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/connect.php <span class="o">[</span>0/0<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/connect.php&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/fetchdata.php <span class="o">[</span>5<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/fetchdata.php&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/img/ <span class="o">[</span>1037/1037<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/index.html&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/js/ <span class="o">[</span>461/461<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/js/index.html&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:12 URL:http://www.exhost.se/harrys_1_1_beta/venues.xml <span class="o">[</span>3071/3071<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/venues.xml&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:19 URL:http://www.exhost.se/harrys_1_1_beta/img/1.png <span class="o">[</span>50769/50769<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/1.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:23 URL:http://www.exhost.se/harrys_1_1_beta/img/10.png <span class="o">[</span>62543/62543<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/10.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:24 URL:http://www.exhost.se/harrys_1_1_beta/img/11.png <span class="o">[</span>23376/23376<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/11.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:26 URL:http://www.exhost.se/harrys_1_1_beta/img/12.png <span class="o">[</span>33471/33471<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/12.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:29 URL:http://www.exhost.se/harrys_1_1_beta/img/13.png <span class="o">[</span>58419/58419<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/13.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:31 URL:http://www.exhost.se/harrys_1_1_beta/img/14.png <span class="o">[</span>50769/50769<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/14.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:32 URL:http://www.exhost.se/harrys_1_1_beta/img/15.png <span class="o">[</span>50119/50119<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/15.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:33 URL:http://www.exhost.se/harrys_1_1_beta/img/16.png <span class="o">[</span>23376/23376<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/16.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:34 URL:http://www.exhost.se/harrys_1_1_beta/img/2.png <span class="o">[</span>44208/44208<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/2.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:36 URL:http://www.exhost.se/harrys_1_1_beta/img/3.png <span class="o">[</span>62543/62543<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/3.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:38 URL:http://www.exhost.se/harrys_1_1_beta/img/4.png <span class="o">[</span>50769/50769<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/4.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:40 URL:http://www.exhost.se/harrys_1_1_beta/img/5.png <span class="o">[</span>60030/60030<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/5.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:44 URL:http://www.exhost.se/harrys_1_1_beta/img/6.jpg <span class="o">[</span>124823/124823<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/6.jpg&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:46 URL:http://www.exhost.se/harrys_1_1_beta/img/6.png <span class="o">[</span>50119/50119<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/6.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:47 URL:http://www.exhost.se/harrys_1_1_beta/img/7.png <span class="o">[</span>45129/45129<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/7.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:49 URL:http://www.exhost.se/harrys_1_1_beta/img/8.png <span class="o">[</span>50769/50769<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/8.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:50 URL:http://www.exhost.se/harrys_1_1_beta/img/9.png <span class="o">[</span>40394/40394<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/img/9.png&quot;</span> <span class="o">[</span>1<span class="o">]</span>
-2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js <span class="o">[</span>85925/85925<span class="o">]</span> -&gt; <span class="s2">&quot;www.exhost.se/harrys_1_1_beta/js/jquery.min.js&quot;</span> <span class="o">[</span>1<span class="o">]</span>
+2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/cms.php <span class="o">[</span>169] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/cms.php"</span> <span class="o">[</span>1]
+2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/connect.php <span class="o">[</span>0/0] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/connect.php"</span> <span class="o">[</span>1]
+2013-11-03 23:37:10 URL:http://www.exhost.se/harrys_1_1_beta/fetchdata.php <span class="o">[</span>5] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/fetchdata.php"</span> <span class="o">[</span>1]
+2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/img/ <span class="o">[</span>1037/1037] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/index.html"</span> <span class="o">[</span>1]
+2013-11-03 23:37:11 URL:http://www.exhost.se/harrys_1_1_beta/js/ <span class="o">[</span>461/461] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/js/index.html"</span> <span class="o">[</span>1]
+2013-11-03 23:37:12 URL:http://www.exhost.se/harrys_1_1_beta/venues.xml <span class="o">[</span>3071/3071] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/venues.xml"</span> <span class="o">[</span>1]
+2013-11-03 23:37:19 URL:http://www.exhost.se/harrys_1_1_beta/img/1.png <span class="o">[</span>50769/50769] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/1.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:23 URL:http://www.exhost.se/harrys_1_1_beta/img/10.png <span class="o">[</span>62543/62543] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/10.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:24 URL:http://www.exhost.se/harrys_1_1_beta/img/11.png <span class="o">[</span>23376/23376] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/11.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:26 URL:http://www.exhost.se/harrys_1_1_beta/img/12.png <span class="o">[</span>33471/33471] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/12.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:29 URL:http://www.exhost.se/harrys_1_1_beta/img/13.png <span class="o">[</span>58419/58419] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/13.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:31 URL:http://www.exhost.se/harrys_1_1_beta/img/14.png <span class="o">[</span>50769/50769] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/14.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:32 URL:http://www.exhost.se/harrys_1_1_beta/img/15.png <span class="o">[</span>50119/50119] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/15.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:33 URL:http://www.exhost.se/harrys_1_1_beta/img/16.png <span class="o">[</span>23376/23376] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/16.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:34 URL:http://www.exhost.se/harrys_1_1_beta/img/2.png <span class="o">[</span>44208/44208] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/2.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:36 URL:http://www.exhost.se/harrys_1_1_beta/img/3.png <span class="o">[</span>62543/62543] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/3.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:38 URL:http://www.exhost.se/harrys_1_1_beta/img/4.png <span class="o">[</span>50769/50769] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/4.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:40 URL:http://www.exhost.se/harrys_1_1_beta/img/5.png <span class="o">[</span>60030/60030] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/5.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:44 URL:http://www.exhost.se/harrys_1_1_beta/img/6.jpg <span class="o">[</span>124823/124823] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/6.jpg"</span> <span class="o">[</span>1]
+2013-11-03 23:37:46 URL:http://www.exhost.se/harrys_1_1_beta/img/6.png <span class="o">[</span>50119/50119] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/6.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:47 URL:http://www.exhost.se/harrys_1_1_beta/img/7.png <span class="o">[</span>45129/45129] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/7.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:49 URL:http://www.exhost.se/harrys_1_1_beta/img/8.png <span class="o">[</span>50769/50769] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/8.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:50 URL:http://www.exhost.se/harrys_1_1_beta/img/9.png <span class="o">[</span>40394/40394] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/img/9.png"</span> <span class="o">[</span>1]
+2013-11-03 23:37:52 URL:http://www.exhost.se/harrys_1_1_beta/js/jquery.min.js <span class="o">[</span>85925/85925] -&gt; <span class="s2">"www.exhost.se/harrys_1_1_beta/js/jquery.min.js"</span> <span class="o">[</span>1]
 FINISHED --2013-11-03 23:37:52--
 Total wall clock <span class="nb">time</span>: 54s
-Downloaded: <span class="m">25</span> files, 950K in 34s <span class="o">(</span>28.1 KB/s<span class="o">)</span></code></pre></figure>
+Downloaded: 25 files, 950K <span class="k">in </span>34s <span class="o">(</span>28.1 KB/s<span class="o">)</span></code></pre></div>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys <span class="p">|</span> grep <span class="s2">&quot;http://www.exhost.se&quot;</span>
-<span class="m">839501</span> http://www.exhost.se/harrys_1_1_beta/
-<span class="m">842849</span> http://www.exhost.se/harrys_1_1_beta/venues.xml
-<span class="m">843075</span> http://www.exhost.se/harrys_1_1_beta/fetchdata.php</code></pre></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">iPhone:~ root# strings -o /var/mobile/Applications/0B57A351-CE6D-4B05-A5D0-8B12BB150791/Harrys.app/Harrys | grep <span class="s2">"http://www.exhost.se"</span>
+839501 http://www.exhost.se/harrys_1_1_beta/
+842849 http://www.exhost.se/harrys_1_1_beta/venues.xml
+843075 http://www.exhost.se/harrys_1_1_beta/fetchdata.php</code></pre></div>
 
-<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor.</p>
+<p>Once we have the crawled files, we can edit the <code>venues.xml</code> file to change the probabilities. We can even change the drinks! ;-) Also, the file <code>fetchdata.php</code> should contain <code>true</code> for us to spin any number of times. Now these files can be hosted on a different server and these URLs can be changed in the app mach-o binary. Changing only the above two URLs is sufficient to make it work without any restrictions. The strings utility comes handy when trying to find out the location of these strings in the binary. These strings can now be edited using a hex editor. </p>
 
 <figure align="center">
     <img src="/images/strings.png" />
@@ -307,11 +315,11 @@ Downloaded: <span class="m">25</span> files, 950K in 34s <span class="o">(</span
   <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
     <ul>
     
+      <li><a href="/posts/solving-team-siks-android-hacking-event-2016-challenge.html" title="Solving Team SIK's Android Hacking Event 2016 challenge">Solving Team SIK's Android Hacking Event 2016 challenge</a></li>
+    
       <li><a href="/posts/converting-ida-pro-graphs-to-images.html" title="Converting IDA Pro graphs to images">Converting IDA Pro graphs to images</a></li>
     
       <li><a href="/posts/appminder-jailbreak-detection-analysis.html" title="AppMinder jailbreak detection analysis">AppMinder jailbreak detection analysis</a></li>
-    
-      <li><a href="/posts/assembling-from-scratch-encoding-blx-instruction-in-arm-thumb.html" title="Assembling from scratch: Encoding BLX instruction in ARM / THUMB">Assembling from scratch: Encoding BLX instruction in ARM / THUMB</a></li>
     
     </ul>
     <hr />
