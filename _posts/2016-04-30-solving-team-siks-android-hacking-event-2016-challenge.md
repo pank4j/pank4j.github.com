@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2016-04-30 09:38:07+00:00
+date: 2016-04-29 11:38:07+00:00
 layout: post
 slug: solving-team-siks-android-hacking-event-2016-challenge
 title: Solving Team SIK's Android Hacking Event 2016 challenge
