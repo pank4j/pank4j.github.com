@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-04-30T18:01:16+08:00</updated>
+<updated>2016-04-30T18:15:32+08:00</updated>
 <id>/</id>
 <author>
   <name>Pankaj Kohli</name>
@@ -27,7 +27,7 @@
     
   </author>
   <content type="html">
-    &lt;p&gt;Team SIK is organizing a &lt;a href=&quot;https://team-sik.org/ahe16-overview/&quot;&gt;CTF based hacking event&lt;/a&gt;, to participate in which every hacker needs to reverse engineer four android apps (well, at least one of them) of varying difficulty levels, ranging from trivial to hard. Each app included a secret password hidden inside, which is to be found in order to complete that level. The apps are available at &lt;a href=&quot;https://goo.gl/vMj6b6&quot;&gt;https://goo.gl/vMj6b6&lt;/a&gt;.&lt;/p&gt;
+    &lt;p&gt;Team SIK is organizing a &lt;a href=&quot;https://team-sik.org/ahe16-overview/&quot;&gt;CTF based hacking event&lt;/a&gt;, to participate in which every hacker needs to reverse engineer four android apps (well, at least one of them) of varying difficulty levels, ranging from trivial to hard. Each app includes a secret password hidden inside, which is to be found in order to complete that level. The apps are available at &lt;a href=&quot;https://goo.gl/vMj6b6&quot;&gt;https://goo.gl/vMj6b6&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;This post discusses some of the ways that one could go about reverse engineering these apps in order to find the hidden password. I used &lt;a href=&quot;https://sourceforge.net/projects/dex2jar/&quot;&gt;dex2jar&lt;/a&gt;, &lt;a href=&quot;http://ibotpeaches.github.io/Apktool/&quot;&gt;apktool&lt;/a&gt; and &lt;a href=&quot;http://jd.benow.ca/&quot;&gt;JD-GUI&lt;/a&gt; and jdb for decompiling and analysing the apps, and &lt;a href=&quot;https://www.genymotion.com/&quot;&gt;Genymotion&lt;/a&gt; as the emulator. But, any other tools for these purposes should work as well.&lt;/p&gt;
 

@@ -17,7 +17,7 @@ tags:
 - android hacking event
 ---
 
-Team SIK is organizing a [CTF based hacking event](https://team-sik.org/ahe16-overview/), to participate in which every hacker needs to reverse engineer four android apps (well, at least one of them) of varying difficulty levels, ranging from trivial to hard. Each app included a secret password hidden inside, which is to be found in order to complete that level. The apps are available at [https://goo.gl/vMj6b6](https://goo.gl/vMj6b6).
+Team SIK is organizing a [CTF based hacking event](https://team-sik.org/ahe16-overview/), to participate in which every hacker needs to reverse engineer four android apps (well, at least one of them) of varying difficulty levels, ranging from trivial to hard. Each app includes a secret password hidden inside, which is to be found in order to complete that level. The apps are available at [https://goo.gl/vMj6b6](https://goo.gl/vMj6b6).
 
 This post discusses some of the ways that one could go about reverse engineering these apps in order to find the hidden password. I used [dex2jar](https://sourceforge.net/projects/dex2jar/), [apktool](http://ibotpeaches.github.io/Apktool/) and [JD-GUI](http://jd.benow.ca/) and jdb for decompiling and analysing the apps, and [Genymotion](https://www.genymotion.com/) as the emulator. But, any other tools for these purposes should work as well.
 
